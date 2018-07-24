@@ -61,10 +61,11 @@ with open(file, 'r') as f:
 		regex = r' '
 		pattern = re.compile(regex)
 		matchObj = pattern.match(race_name_9char)
-		w_end = matchObj.end()
 		
-		if w_end >0:
+		if isinstance(matchObj,type(None)) == False:
+			w_end = matchObj.end()
 			ns = ns + w_end + 1
+			print("異常ファイル")
 		
 		data_kbn=after_line[ns+17:ns+18]
 		money1st=after_line[ns+18:ns+23]
