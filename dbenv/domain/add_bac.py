@@ -16,7 +16,7 @@ session = Session()
 with open(file, 'r') as f:
 	for line in f:
 		racekey=line[0:8]
-		kaisaikey=line[0,6]
+		kaisaikey=line[0:6]
 		ymd=line[8:16]
 		start_time=line[16:20]
 		distance=line[20:24]
