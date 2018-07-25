@@ -33,12 +33,14 @@ with open(file, 'r') as f:
 		after_line = line[61:]
 		s = after_line
 		n_start = s.find('第')
-		
+		n_end = s.find('回') - n_start
 		if n_start < 0:
 			kai = "　"
 		else :
-			kai = after_line[n_start:n_start+5]
-			n_start = n_start + 5
+			if n_end < 0:
+				n_end = 4
+			kai = after_line[n_start:n_start+n_end+1]
+			n_start = n_start + n_end
 			s = after_line[n_start:]
 			after_line = s
 		
