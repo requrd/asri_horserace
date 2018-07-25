@@ -19,14 +19,60 @@ with open(file, 'r') as f:
 		delete_flg=line[5:6]
 		delete_ymd=line[6:14]
 		trainer_name=line[14:20]
+		
+		#各種スペースズレ対応
+		import re
+		regex = r' '
+		pattern = re.compile(regex)
+
+		#名前ズレ対応
+		matchObj = pattern.findall(trainer_name)
+		w_end = len(matchObj)
+		if w_end >0:
+			print("スペース位置:",w_end)
+			print("異常ファイル")
+			line = line[w_end:]
+		
 		trainer_kana=line[20:35]
+		#カナズレ対応
+		matchObj = pattern.findall(trainer_kana)
+		w_end = len(matchObj)
+		if w_end >0:
+			print("スペース位置:",w_end)
+			print("異常ファイル")
+			line = line[w_end:]
+		
 		trainer_name_short=line[35:38]
+		matchObj = pattern.findall(trainer_name_short)
+		w_end = len(matchObj)
+		if w_end >0:
+			print("スペース位置:",w_end)
+			print("異常ファイル")
+			line = line[w_end:]
+
 		shozoku_code=line[38:39]
 		shozoku_region=line[39:41]
 		birthday=line[41:49]
+		
+		#国籍ズレ対応
+		matchObj = pattern.findall(birthday)
+		w_end = len(matchObj)
+		if w_end >0:
+			print("スペース位置:",w_end)
+			print("異常ファイル")
+			line = line[w_end:]
+		
 		get_licence_year=line[49:53]
 		trainer_comment=line[53:73]
-		commennt_ymd=line[73:81]
+		
+		#コメントズレ対策
+		if trainer_comment[0] != "　":
+			comment_ymd=line[73:81]
+			slide = comment_ymd.find("2")
+			if slide > 0:
+				line = line[slide:]
+		
+		comment_ymd=line[73:81]
 		this_leading=line[81:84]
 		this_seiseki_flat_1st=line[84:87]
 		this_seiseki_flat_2nd=line[87:90]
@@ -73,7 +119,7 @@ with open(file, 'r') as f:
 			birthday=birthday,
 			get_licence_year=get_licence_year,
 			trainer_comment=trainer_comment,
-			commennt_ymd=commennt_ymd,
+			comment_ymd=comment_ymd,
 			this_leading=this_leading,
 			this_seiseki_flat_1st=this_seiseki_flat_1st,
 			this_seiseki_flat_2nd=this_seiseki_flat_2nd,
