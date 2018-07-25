@@ -2017,5 +2017,98 @@ class WorkTable(Base):
             'trainer_index':self.trainer_index
         }
 
+class HorseIndex(Base):
+    __tablename__ = 'horseindex'
+    blood = Column(Integer,primary_key = True)
+    index = Column(Integer)
+
+    @property
+    def serialize(self):
+        """Return object data in easily serializeable format"""
+        return {
+            'blood':self.blood,
+            'index':self.index
+        }
+
+class JockeyIndex(Base):
+    __tablename__ = 'jockeyindex'
+    jockey_code = Column(Integer,primary_key = True)
+    index = Column(Integer)
+
+    @property
+    def serialize(self):
+        """Return object data in easily serializeable format"""
+        return {
+            'jockey_code':self.jockey_code,
+            'index':self.index
+        }
+
+class TrainerIndex(Base):
+    __tablename__ = 'trainerindex'
+    trainer_code = Column(Integer,primary_key = True)
+    index = Column(Integer)
+
+    @property
+    def serialize(self):
+        """Return object data in easily serializeable format"""
+        return {
+            'trainer_code':self.trainer_code,
+            'index':self.index
+        }
+
+class OikiriStateIndex(Base):
+    __tablename__ = 'oikiristateindex'
+    oikiri_state = Column(Integer,primary_key = True)
+    index = Column(Integer)
+
+    @property
+    def serialize(self):
+        """Return object data in easily serializeable format"""
+        return {
+            'oikiri_state':self.oikiri_state,
+            'index':self.index
+        }
+
+class TrainCourseCodeIndex(Base):
+    __tablename__ = 'traincoursecodeindex'
+    train_course_code = Column(String,primary_key = True)
+    index = Column(Integer)
+
+    @property
+    def serialize(self):
+        """Return object data in easily serializeable format"""
+        return {
+            'train_course_code':self.train_course_code,
+            'index':self.index
+        }
+
+class HobokusakiIndex(Base):
+    __tablename__ = 'hobokusakiindex'
+    index = Column(Integer,primary_key = True)
+    hobokusaki = Column(String)
+    
+
+    @property
+    def serialize(self):
+        """Return object data in easily serializeable format"""
+        return {
+            'index':self.index,
+            'hobokusaki':self.hobokusaki
+        }
+
+class HidumeCodeIndex(Base):
+    __tablename__ = 'hidumecodeindex'
+    hidume_code = Column(Integer,primary_key = True)
+    index = Column(Integer,primary_key = True)    
+
+    @property
+    def serialize(self):
+        """Return object data in easily serializeable format"""
+        return {
+            'hidume_code':self.hidume_code,
+            'index':self.index
+        }
+
+
 engine = create_engine('sqlite:///jrdb.db')
 Base.metadata.create_all(engine)
