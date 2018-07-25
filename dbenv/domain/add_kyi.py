@@ -68,6 +68,19 @@ with open(file, 'r') as f:
 		minarai=line[162:163]
 		trainer_name=line[163:169]
 		trainer_shozoku=line[169:171]
+		
+		#ズレチェック（F.フーラハ問題）
+		import re
+		regex = r'0'
+		pattern = re.compile(regex)
+		matchObj = pattern.findall(trainer_shozoku)
+		w_end = len(matchObj)
+		if w_end >0:
+			print("スペース位置:",w_end)
+			print("異常ファイル")
+			line = line[w_end:]
+			trainer_shozoku=line[169:171]
+		
 		zenso_seiseki_key_1=line[171:187]
 		zenso_seiseki_key_2=line[187:203]
 		zenso_seiseki_key_3=line[203:219]
