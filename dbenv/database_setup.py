@@ -1263,7 +1263,7 @@ class TrainerData(Base):
     birthday=Column(Integer)
     get_licence_year=Column(Integer)
     trainer_comment=Column(String)
-    commennt_ymd=Column(Integer)
+    comment_ymd=Column(Integer)
     this_leading=Column(Integer)
     this_seiseki_flat_1st=Column(Integer)
     this_seiseki_flat_2nd=Column(Integer)
@@ -1312,7 +1312,7 @@ class TrainerData(Base):
             'birthday':self.birthday,
             'get_licence_year':self.get_licence_year,
             'trainer_comment':self.trainer_comment,
-            'commennt_ymd':self.commennt_ymd,
+            'comment_ymd':self.comment_ymd,
             'this_leading':self.this_leading,
             'this_seiseki_flat_1st':self.this_seiseki_flat_1st,
             'this_seiseki_flat_2nd':self.this_seiseki_flat_2nd,
