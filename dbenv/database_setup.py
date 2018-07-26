@@ -103,6 +103,14 @@ class RacehorseData(Base):
     #1:1
     trainanalysis = relationship("TrainAnalysisData",uselist=False, backref="racehorse")
     trainoikiri = relationship("TrainOikiriData",uselist=False, backref="racehorse")
+    #インデックスに対して
+    horseidx = relationship("HorseIndex",uselist=False,backref="racehorse")
+    jockeyidx = relationship("JockeyIndex",uselist=False,backref="racehorse")
+    traineridx = relationship("JockeyIndex",uselist=False,backref="racehorse")
+    hobokusakiidx = relationship("HobokusakiIndex",uselist=False,backref="racehorse")
+    hidumeidx = relationship("HidumeCodeIndex",uselist=False,backref="racehorse")
+    oikiristateidx = relationship("OikiriStateIndex",uselist=False,backref="racehorse")
+    traincoureidx = relationship("TrainCourseIndex",uselist=False,backref="racehorse")
     bacode = Column(Integer)
     year = Column(Integer)
     kai = Column(Integer)
@@ -2035,7 +2043,7 @@ class WorkTable(Base):
 
 class HorseIndex(Base):
     __tablename__ = 'horseindex'
-    blood = Column(Integer,primary_key = True)
+    blood = Column(Integer,ForeignKey('RacehorseData.blood'),primary_key = True)
     index = Column(Integer)
 
     @property
@@ -2048,7 +2056,7 @@ class HorseIndex(Base):
 
 class JockeyIndex(Base):
     __tablename__ = 'jockeyindex'
-    jockey_code = Column(Integer,primary_key = True)
+    jockey_code = Column(Integer,ForeignKey('RacehorseData.jockey_code'),primary_key = True)
     index = Column(Integer)
 
     @property
@@ -2061,7 +2069,7 @@ class JockeyIndex(Base):
 
 class TrainerIndex(Base):
     __tablename__ = 'trainerindex'
-    trainer_code = Column(Integer,primary_key = True)
+    trainer_code = Column(Integer,ForeignKey('RacehorseData.trainer_code'),primary_key = True)
     index = Column(Integer)
 
     @property
@@ -2074,7 +2082,7 @@ class TrainerIndex(Base):
 
 class OikiriStateIndex(Base):
     __tablename__ = 'oikiristateindex'
-    oikiri_state = Column(Integer,primary_key = True)
+    oikiri_state = Column(Integer,ForeignKey('TrainOikiriData.oikiri_state'),primary_key = True)
     index = Column(Integer)
 
     @property
@@ -2087,7 +2095,7 @@ class OikiriStateIndex(Base):
 
 class TrainCourseCodeIndex(Base):
     __tablename__ = 'traincoursecodeindex'
-    train_course_code = Column(String,primary_key = True)
+    train_course_code = Column(String,ForeignKey('TrainOikiriData.train_course_code'),primary_key = True)
     index = Column(Integer)
 
     @property
@@ -2101,7 +2109,7 @@ class TrainCourseCodeIndex(Base):
 class HobokusakiIndex(Base):
     __tablename__ = 'hobokusakiindex'
     index = Column(Integer,primary_key = True)
-    hobokusaki = Column(String)
+    hobokusaki = Column(String,ForeignKey('RacehorseData.hobokusaki'))
     
 
     @property
@@ -2114,8 +2122,8 @@ class HobokusakiIndex(Base):
 
 class HidumeCodeIndex(Base):
     __tablename__ = 'hidumecodeindex'
-    hidume_code = Column(Integer,primary_key = True)
-    index = Column(Integer,primary_key = True)    
+    hidume_code = Column(Integer,ForeignKey('RacehorseData.hidume_code'),primary_key = True)
+    index = Column(Integer)    
 
     @property
     def serialize(self):
@@ -2124,7 +2132,6 @@ class HidumeCodeIndex(Base):
             'hidume_code':self.hidume_code,
             'index':self.index
         }
-
 
 engine = create_engine('sqlite:///jrdb.db')
 Base.metadata.create_all(engine)
