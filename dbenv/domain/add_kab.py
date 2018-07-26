@@ -23,6 +23,8 @@ with open(file, 'r') as f:
 		course_name=line[16:18]
 		tenko=line[18:19]
 		turf_baba=line[19:21]
+		turf_baba_abst=line[19:20]
+		turf_baba_detail=line[20:21]
 		turf_baba_in=line[21:22]
 		turf_baba_center=line[22:23]
 		turf_baba_out=line[23:24]
@@ -54,6 +56,8 @@ with open(file, 'r') as f:
 			course_name=course_name,
 			tenko=tenko,
 			turf_baba=turf_baba,
+			turf_baba_abst=turf_baba_abst,
+			turf_baba_detail=turf_baba_detail,
 			turf_baba_in=turf_baba_in,
 			turf_baba_center=turf_baba_center,
 			turf_baba_out=turf_baba_out,
@@ -64,6 +68,8 @@ with open(file, 'r') as f:
 			turf_baba_straight_out=turf_baba_straight_out,
 			turf_baba_straight_oosoto=turf_baba_straight_oosoto,
 			dart_baba=dart_baba,
+			dart_baba_abst=dart_baba_abst,
+			dart_baba_detail=dart_baba_detail,
 			dart_baba_in=dart_baba_in,
 			dart_baba_center=dart_baba_center,
 			dart_baba_out=dart_baba_out,

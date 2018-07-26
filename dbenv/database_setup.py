@@ -448,6 +448,8 @@ class SeisekiData(Base):
     right_left=Column(Integer)
     in_out=Column(Integer)
     baba=Column(Integer)
+    baba_abst=Column(Integer)
+    baba_detail=Column(Integer)
     shubetsu=Column(Integer)
     joken=Column(String)
     kigo=Column(Integer)
@@ -537,6 +539,8 @@ class SeisekiData(Base):
             'right_left':self.right_left,
             'in_out':self.in_out,
             'baba':self.baba,
+            'baba_abst':self.baba_abst,
+            'baba_detail':self.baba_detail,
             'shubetsu':self.shubetsu,
             'joken':self.joken,
             'kigo':self.kigo,
@@ -720,6 +724,8 @@ class KaisaiData(Base):
     course_name=Column(String)
     tenko=Column(Integer,ForeignKey('tenkomaster.tenko'))
     turf_baba=Column(Integer)
+    turf_baba_abst=Column(Integer)
+    turf_baba_detail=Column(Integer)
     turf_baba_in=Column(Integer)
     turf_baba_center=Column(Integer)
     turf_baba_out=Column(Integer)
@@ -730,6 +736,8 @@ class KaisaiData(Base):
     turf_baba_straight_out=Column(Integer)
     turf_baba_straight_oosoto=Column(Integer)
     dart_baba=Column(Integer)
+    dart_baba_abst=Column(Integer)
+    dart_baba_detail=Column(Integer)
     dart_baba_in=Column(Integer)
     dart_baba_center=Column(Integer)
     dart_baba_out=Column(Integer)
@@ -753,6 +761,8 @@ class KaisaiData(Base):
             'course_name':self.course_name,
             'tenko':self.tenko,
             'turf_baba':self.turf_baba,
+            'turf_baba_abst':self.turf_baba_abst,
+            'turf_baba_detail':self.turf_baba_detail,
             'turf_baba_in':self.turf_baba_in,
             'turf_baba_center':self.turf_baba_center,
             'turf_baba_out':self.turf_baba_out,
@@ -763,6 +773,8 @@ class KaisaiData(Base):
             'turf_baba_straight_out':self.turf_baba_straight_out,
             'turf_baba_straight_oosoto':self.turf_baba_straight_oosoto,
             'dart_baba':self.dart_baba,
+            'dart_baba_abst':self.dart_baba_abst,
+            'dart_baba_detail':self.dart_baba_detail,
             'dart_baba_in':self.dart_baba_in,
             'dart_baba_center':self.dart_baba_center,
             'dart_baba_out':self.dart_baba_out,
@@ -1672,6 +1684,8 @@ class WorkTable(Base):
     right_left=Column(Integer)
     in_out=Column(Integer)
     baba=Column(Integer)
+    baba_abst=Column(Integer)
+    baba_detail=Column(Integer)
     shubetsu=Column(Integer)
     joken=Column(String)
     kigo=Column(Integer)
@@ -1931,6 +1945,8 @@ class WorkTable(Base):
             'right_left':self.right_left,
             'in_out':self.in_out,
             'baba':self.baba,
+            'baba_abst':self.baba_abst,
+            'baba_detail':self.baba_detail,
             'shubetsu':self.shubetsu,
             'joken':self.joken,
             'kigo':self.kigo,

@@ -33,6 +33,8 @@ with open(file, 'r') as f:
 		right_left=line[49:50]
 		in_out=line[50:51]
 		baba=line[51:53]
+		baba_abst=line[51:52]
+		baba_detail=line[52:53]
 		shubetsu=line[53:55]
 		joken=line[55:57]
 		kigo=line[57:60]
@@ -139,6 +141,8 @@ with open(file, 'r') as f:
 			right_left=right_left,
 			in_out=in_out,
 			baba=baba,
+			baba_abst=baba_abst,
+			baba_detail=baba_detail,
 			shubetsu=shubetsu,
 			joken=joken,
 			kigo=kigo,
