@@ -13,10 +13,10 @@ class BangumiData(Base):
     kaisaikey=Column(String,ForeignKey('kaisai.kaisaikey'))
     #子に対して
     racehorses = relationship("RacehorseData",backref='bangumi')
-    racehorses_w = relationship("RacehorseData",backref='bangumi',lazy='subquery')
+    racehorses_w = relationship("WorkTable",backref='bangumi',lazy='subquery')
 
     #1:1
-    returninfo = relationship("ReturninfoData",uselist=False, backref= "bangumi",lazy='subquery')
+    returninfo = relationship("ReturninfoData",uselist=False, backref= 'bangumi',lazy='subquery')
     ymd=Column(String)
     start_time=Column(String)
     distance=Column(Integer)
@@ -106,11 +106,11 @@ class RacehorseData(Base):
     trainanalysis = relationship("TrainAnalysisData",uselist=False, backref="racehorse")
     trainoikiri = relationship("TrainOikiriData",uselist=False, backref="racehorse")
     #インデックスに対して
-    horseidx = relationship("HorseIndex",uselist=False,backref="racehorse",lazy='subquery')
-    jockeyidx = relationship("JockeyIndex",uselist=False,backref="racehorse",lazy='subquery')
-    traineridx = relationship("TrainerIndex",uselist=False,backref="racehorse",lazy='subquery')
+    horseidx = relationship("HorseIndex",uselist=False,backref="racehorse")
+    jockeyidx = relationship("JockeyIndex",uselist=False,backref="racehorse")
+    traineridx = relationship("TrainerIndex",uselist=False,backref="racehorse")
     hobokusakiidx = relationship("HobokusakiIndex",uselist=False,backref="racehorse")
-    hidumeidx = relationship("HidumeCodeIndex",uselist=False,backref="racehorse",lazy='subquery')
+    hidumeidx = relationship("HidumeCodeIndex",uselist=False,backref="racehorse")
     bacode = Column(Integer)
     year = Column(Integer)
     kai = Column(Integer)
@@ -1525,7 +1525,7 @@ class HorsebaseData(Base):
 class WorkTable(Base):
     __tablename__ = 'worktable'
     racehorsekey=Column(String,primary_key=True)
-    racekey=Column(String,ForeignKey(bangumi.racekey))
+    racekey=Column(String,ForeignKey('bangumi.racekey'))
     bacode=Column(Integer)
     year=Column(Integer)
     kai=Column(Integer)
