@@ -1688,11 +1688,11 @@ class WorkTable(Base):
     politruck=Column(Integer)
     train_distance=Column(Integer)
     train_juten=Column(Integer)
-    oikiri_score=Column(Integer)
+    train_oikiri_score=Column(Integer)
     shiage_score=Column(Integer)
     train_vol_hyoka=Column(String)
     shiage_score_change=Column(Integer)
-    num=Column(Integer)
+    oikiri_num=Column(Integer)
     kaisu=Column(Integer)
     train_course_code=Column(String)
     train_course_code_index=Column(Integer)
@@ -2079,11 +2079,11 @@ class WorkTable(Base):
             'politruck':self.politruck,
             'train_distance':self.train_distance,
             'train_juten':self.train_juten,
-            'oikiri_score':self.oikiri_score,
+            'train_oikiri_score':self.train_oikiri_score,
             'shiage_score':self.shiage_score,
             'train_vol_hyoka':self.train_vol_hyoka,
             'shiage_score_change':self.shiage_score_change,
-            'num':self.num,
+            'oikiri_num':self.oikiri_num,
             'kaisu':self.kaisu,
             'train_course_code':self.train_course_code,
             'train_course_code_index':self.train_course_code_index,
