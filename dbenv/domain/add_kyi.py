@@ -142,27 +142,25 @@ with open(file, 'r') as f:
 		yuso=line[416:417]
 		soho=line[417:425]
 		taikei_data=line[425:449]
-		
-		#数値データ用に改良。デフォルト値を2に設定
-		taikei = line[425].replace("0","2")
-		senaka = line[426].replace("0","2")
-		do = line[427].replace("0","2")
-		siri = line[428].replace("0","2")
-		tomo = line[429].replace("0","2")
-		harabukuro = line[430].replace("0","2")
-		head = line[431].replace("0","2")
-		neck = line[432].replace("0","2")
-		breast = line[433].replace("0","2")
-		shoulder = line[434].replace("0","2")
-		zencho = line[435].replace("0","2")
-		kocho = line[436].replace("0","2")
-		maehaba = line[437].replace("0","2")
-		ushirohaba = line[438].replace("0","2")
-		maetsunagi = line[439].replace("0","2")
-		ushirotsunagi = line[440].replace("0","2")
+		taikei = line[425]
+		senaka = line[426]
+		do = line[427]
+		siri = line[428]
+		tomo = line[429]
+		harabukuro = line[430]
+		head = line[431]
+		neck = line[432]
+		breast = line[433]
+		shoulder = line[434]
+		zencho = line[435]
+		kocho = line[436]
+		maehaba = line[437]
+		ushirohaba = line[438]
+		maetsunagi = line[439]
+		ushirotsunagi = line[440]
 		#尻尾は、上げるか下げるかのため、修正なし
 		tail = line[441]
-		furikata = line[442].replace("0","2")
+		furikata = line[442]
 		taikei_sogo1=line[449:452]
 		taikei_sogo2=line[452:455]
 		taikei_sogo3=line[455:458]
@@ -193,8 +191,7 @@ with open(file, 'r') as f:
 		w_gaikyu = line[520:].encode('sjis')
 		hobokusaki = w_gaikyu[0:50].decode('sjis')
 		hobokusaki_rank = w_gaikyu[50:51].decode('sjis')
-		#厩舎ランクは、デフォルト5(普通)に設定
-		trainer_rank = w_gaikyu[51:52].decode('sjis').replace("0","5")
+		trainer_rank = w_gaikyu[51:52].decode('sjis')
 		
 		#ここからDB操作
 		new_racehorse = RacehorseData(
