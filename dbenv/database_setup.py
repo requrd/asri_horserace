@@ -107,7 +107,7 @@ class RacehorseData(Base):
     horseidx = relationship("HorseIndex",uselist=False,backref="racehorse",lazy='subquery')
     jockeyidx = relationship("JockeyIndex",uselist=False,backref="racehorse",lazy='subquery')
     traineridx = relationship("TrainerIndex",uselist=False,backref="racehorse",lazy='subquery')
-    hobokusakiidx = relationship("HobokusakiIndex",uselist=False,backref="racehorse")
+    hobokusakiidx = relationship("HobokusakiIndex",uselist=False,backref="racehorse",lazy='subquery')
     hidumeidx = relationship("HidumeCodeIndex",uselist=False,backref="racehorse",lazy='subquery')
     bacode = Column(Integer)
     year = Column(Integer)
