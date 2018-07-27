@@ -107,7 +107,7 @@ class RacehorseData(Base):
     horseidx = relationship("HorseIndex",uselist=False,backref="racehorse",lazy='subquery')
     jockeyidx = relationship("JockeyIndex",uselist=False,backref="racehorse",lazy='subquery')
     traineridx = relationship("TrainerIndex",uselist=False,backref="racehorse",lazy='subquery')
-    hobokusakiidx = relationship("HobokusakiIndex",uselist=False,backref="racehorse",lazy='subquery')
+    hobokusakiidx = relationship("HobokusakiIndex",uselist=False,backref="racehorse")
     hidumeidx = relationship("HidumeCodeIndex",uselist=False,backref="racehorse",lazy='subquery')
     bacode = Column(Integer)
     year = Column(Integer)
@@ -1535,9 +1535,6 @@ class WorkTable(Base):
     idm=Column(Integer)
     jockey_score=Column(Integer)
     info_score=Column(Integer)
-    yobi1=Column(String)
-    yobi2=Column(String)
-    yobi3=Column(String)
     sogo_score=Column(Integer)
     leg_type=Column(Integer)
     distance_adjust=Column(Integer)
@@ -1565,9 +1562,9 @@ class WorkTable(Base):
     jockey_rate_rentai=Column(Integer)
     gekiso_score=Column(Integer)
     hidume_code=Column(Integer)
+    hidume_code_index=Column(Integer)
     omotekisei_code=Column(Integer)
     class_code=Column(Integer)
-    yobi4=Column(String)
     brinkers=Column(String)
     jockey_name=Column(String)
     kinryo=Column(Integer)
@@ -1585,7 +1582,6 @@ class WorkTable(Base):
     zenso_racekey_4=Column(String)
     zenso_racekey_5=Column(String)
     waku=Column(Integer)
-    yobi5=Column(String)
     sogo_shirushi=Column(Integer)
     idm_shiruishi=Column(Integer)
     info_shirushi=Column(Integer)
@@ -1597,7 +1593,6 @@ class WorkTable(Base):
     dart_adjust_code=Column(Integer)
     jockey_code=Column(Integer)
     trainer_code=Column(Integer)
-    yobi6=Column(String)
     kakutoku_money=Column(Integer)
     shukaku_money=Column(Integer)
     joken=Column(Integer)
@@ -1679,73 +1674,9 @@ class WorkTable(Base):
     date_first_train=Column(Integer)
     days_after_first_train=Column(Integer)
     hobokusaki=Column(String)
+    hobokusaki_index=Column(Integer)
     hobokusaki_rank=Column(String)
     trainer_rank=Column(Integer)
-    bacode=Column(Integer)
-    year=Column(Integer)
-    kai=Column(Integer)
-    day=Column(Integer)
-    raceno=Column(Integer)
-    num=Column(Integer)
-    distance=Column(Integer)
-    tdscode=Column(Integer)
-    right_left=Column(Integer)
-    in_out=Column(Integer)
-    baba=Column(Integer)
-    baba_abst=Column(Integer)
-    baba_detail=Column(Integer)
-    shubetsu=Column(Integer)
-    joken=Column(String)
-    kigo=Column(Integer)
-    juryo=Column(Integer)
-    grade=Column(Integer)
-    num_of_all_horse=Column(Integer)
-    order=Column(Integer)
-    ijo_kbn=Column(Integer)
-    time=Column(Integer)
-    kinryo=Column(Integer)
-    decided_odds=Column(Integer)
-    decided_pop_order=Column(Integer)
-    natural_score=Column(Integer)
-    baba_sa=Column(Integer)
-    pace=Column(Integer)
-    start_late=Column(Integer)
-    position=Column(Integer)
-    furi=Column(Integer)
-    mae_furi=Column(Integer)
-    naka_furi=Column(Integer)
-    ushiro_furi=Column(Integer)
-    race=Column(Integer)
-    course_position=Column(Integer)
-    up_code=Column(Integer)
-    class_code=Column(Integer)
-    batai_code=Column(Integer)
-    kehai_code=Column(Integer)
-    racepace=Column(String)
-    umapace=Column(String)
-    ten_score=Column(Integer)
-    up_score=Column(Integer)
-    pace_score=Column(Integer)
-    racep_score=Column(Integer)
-    time_sa=Column(Integer)
-    mae3f_time=Column(Integer)
-    agari3f_time=Column(Integer)
-    corner_order1=Column(Integer)
-    corner_order2=Column(Integer)
-    corner_order3=Column(Integer)
-    corner_order4=Column(Integer)
-    mae3f_sa=Column(Integer)
-    agari3f_sa=Column(Integer)
-    jockey_code=Column(Integer)
-    trainer_code=Column(Integer)
-    weight=Column(Integer)
-    weight_increase=Column(Integer)
-    tenko=Column(Integer)
-    course=Column(Integer)
-    race_leg_type=Column(String)
-    race_pace_flow=Column(Integer)
-    horse_pace_flow=Column(Integer)
-    corner4_course_position=Column(Integer)
     train_type=Column(String)
     train_course_kind=Column(String)
     saka=Column(Integer)
@@ -1764,8 +1695,10 @@ class WorkTable(Base):
     num=Column(Integer)
     kaisu=Column(Integer)
     train_course_code=Column(String)
+    train_course_code_index=Column(Integer)
     oikiri_kind=Column(Integer)
     oikiri_state=Column(Integer)
+    oikiri_state_index=Column(Integer)
     train_f=Column(Integer)
     ten_f=Column(Integer)
     mid_f=Column(Integer)
@@ -1774,10 +1707,207 @@ class WorkTable(Base):
     mid_f_score=Column(Integer)
     end_f_score=Column(Integer)
     oikiri_score=Column(Integer)
-    paceupposition=Column(Integer)
     horse_index=Column(Integer)
     jockey_index=Column(Integer)
     trainer_index=Column(Integer)
+    zenso1_bacode=Column(Integer)
+    zenso1_year=Column(Integer)
+    zenso1_kai=Column(Integer)
+    zenso1_day=Column(Integer)
+    zenso1_raceno=Column(Integer)
+    zenso1_num=Column(Integer)
+    zenso1_distance=Column(Integer)
+    zenso1_tdscode=Column(Integer)
+    zenso1_right_left=Column(Integer)
+    zenso1_in_out=Column(Integer)
+    zenso1_baba=Column(Integer)
+    zenso1_baba_abst=Column(Integer)
+    zenso1_baba_detail=Column(Integer)
+    zenso1_shubetsu=Column(Integer)
+    zenso1_joken=Column(String)
+    zenso1_kigo=Column(Integer)
+    zenso1_juryo=Column(Integer)
+    zenso1_grade=Column(Integer)
+    zenso1_num_of_all_horse=Column(Integer)
+    zenso1_order=Column(Integer)
+    zenso1_ijo_kbn=Column(Integer)
+    zenso1_time=Column(Integer)
+    zenso1_kinryo=Column(Integer)
+    zenso1_decided_odds=Column(Integer)
+    zenso1_decided_pop_order=Column(Integer)
+    zenso1_natural_score=Column(Integer)
+    zenso1_baba_sa=Column(Integer)
+    zenso1_pace=Column(Integer)
+    zenso1_start_late=Column(Integer)
+    zenso1_position=Column(Integer)
+    zenso1_furi=Column(Integer)
+    zenso1_mae_furi=Column(Integer)
+    zenso1_naka_furi=Column(Integer)
+    zenso1_ushiro_furi=Column(Integer)
+    zenso1_race=Column(Integer)
+    zenso1_course_position=Column(Integer)
+    zenso1_up_code=Column(Integer)
+    zenso1_class_code=Column(Integer)
+    zenso1_batai_code=Column(Integer)
+    zenso1_kehai_code=Column(Integer)
+    zenso1_racepace=Column(String)
+    zenso1_umapace=Column(String)
+    zenso1_ten_score=Column(Integer)
+    zenso1_up_score=Column(Integer)
+    zenso1_pace_score=Column(Integer)
+    zenso1_racep_score=Column(Integer)
+    zenso1_time_sa=Column(Integer)
+    zenso1_mae3f_time=Column(Integer)
+    zenso1_agari3f_time=Column(Integer)
+    zenso1_corner_order1=Column(Integer)
+    zenso1_corner_order2=Column(Integer)
+    zenso1_corner_order3=Column(Integer)
+    zenso1_corner_order4=Column(Integer)
+    zenso1_mae3f_sa=Column(Integer)
+    zenso1_agari3f_sa=Column(Integer)
+    zenso1_jockey_code=Column(Integer)
+    zenso1_trainer_code=Column(Integer)
+    zenso1_weight=Column(Integer)
+    zenso1_weight_increase=Column(Integer)
+    zenso1_tenko=Column(Integer)
+    zenso1_course=Column(Integer)
+    zenso1_race_leg_type=Column(String)
+    zenso1_race_pace_flow=Column(Integer)
+    zenso1_horse_pace_flow=Column(Integer)
+    zenso1_corner4_course_position=Column(Integer)
+    zenso1_paceupposition=Column(Integer)
+    zenso2_bacode=Column(Integer)
+    zenso2_year=Column(Integer)
+    zenso2_kai=Column(Integer)
+    zenso2_day=Column(Integer)
+    zenso2_raceno=Column(Integer)
+    zenso2_num=Column(Integer)
+    zenso2_distance=Column(Integer)
+    zenso2_tdscode=Column(Integer)
+    zenso2_right_left=Column(Integer)
+    zenso2_in_out=Column(Integer)
+    zenso2_baba=Column(Integer)
+    zenso2_baba_abst=Column(Integer)
+    zenso2_baba_detail=Column(Integer)
+    zenso2_shubetsu=Column(Integer)
+    zenso2_joken=Column(String)
+    zenso2_kigo=Column(Integer)
+    zenso2_juryo=Column(Integer)
+    zenso2_grade=Column(Integer)
+    zenso2_num_of_all_horse=Column(Integer)
+    zenso2_order=Column(Integer)
+    zenso2_ijo_kbn=Column(Integer)
+    zenso2_time=Column(Integer)
+    zenso2_kinryo=Column(Integer)
+    zenso2_decided_odds=Column(Integer)
+    zenso2_decided_pop_order=Column(Integer)
+    zenso2_natural_score=Column(Integer)
+    zenso2_baba_sa=Column(Integer)
+    zenso2_pace=Column(Integer)
+    zenso2_start_late=Column(Integer)
+    zenso2_position=Column(Integer)
+    zenso2_furi=Column(Integer)
+    zenso2_mae_furi=Column(Integer)
+    zenso2_naka_furi=Column(Integer)
+    zenso2_ushiro_furi=Column(Integer)
+    zenso2_race=Column(Integer)
+    zenso2_course_position=Column(Integer)
+    zenso2_up_code=Column(Integer)
+    zenso2_class_code=Column(Integer)
+    zenso2_batai_code=Column(Integer)
+    zenso2_kehai_code=Column(Integer)
+    zenso2_racepace=Column(String)
+    zenso2_umapace=Column(String)
+    zenso2_ten_score=Column(Integer)
+    zenso2_up_score=Column(Integer)
+    zenso2_pace_score=Column(Integer)
+    zenso2_racep_score=Column(Integer)
+    zenso2_time_sa=Column(Integer)
+    zenso2_mae3f_time=Column(Integer)
+    zenso2_agari3f_time=Column(Integer)
+    zenso2_corner_order1=Column(Integer)
+    zenso2_corner_order2=Column(Integer)
+    zenso2_corner_order3=Column(Integer)
+    zenso2_corner_order4=Column(Integer)
+    zenso2_mae3f_sa=Column(Integer)
+    zenso2_agari3f_sa=Column(Integer)
+    zenso2_jockey_code=Column(Integer)
+    zenso2_trainer_code=Column(Integer)
+    zenso2_weight=Column(Integer)
+    zenso2_weight_increase=Column(Integer)
+    zenso2_tenko=Column(Integer)
+    zenso2_course=Column(Integer)
+    zenso2_race_leg_type=Column(String)
+    zenso2_race_pace_flow=Column(Integer)
+    zenso2_horse_pace_flow=Column(Integer)
+    zenso2_corner4_course_position=Column(Integer)
+    zenso2_paceupposition=Column(Integer)
+    zenso3_bacode=Column(Integer)
+    zenso3_year=Column(Integer)
+    zenso3_kai=Column(Integer)
+    zenso3_day=Column(Integer)
+    zenso3_raceno=Column(Integer)
+    zenso3_num=Column(Integer)
+    zenso3_distance=Column(Integer)
+    zenso3_tdscode=Column(Integer)
+    zenso3_right_left=Column(Integer)
+    zenso3_in_out=Column(Integer)
+    zenso3_baba=Column(Integer)
+    zenso3_baba_abst=Column(Integer)
+    zenso3_baba_detail=Column(Integer)
+    zenso3_shubetsu=Column(Integer)
+    zenso3_joken=Column(String)
+    zenso3_kigo=Column(Integer)
+    zenso3_juryo=Column(Integer)
+    zenso3_grade=Column(Integer)
+    zenso3_num_of_all_horse=Column(Integer)
+    zenso3_order=Column(Integer)
+    zenso3_ijo_kbn=Column(Integer)
+    zenso3_time=Column(Integer)
+    zenso3_kinryo=Column(Integer)
+    zenso3_decided_odds=Column(Integer)
+    zenso3_decided_pop_order=Column(Integer)
+    zenso3_natural_score=Column(Integer)
+    zenso3_baba_sa=Column(Integer)
+    zenso3_pace=Column(Integer)
+    zenso3_start_late=Column(Integer)
+    zenso3_position=Column(Integer)
+    zenso3_furi=Column(Integer)
+    zenso3_mae_furi=Column(Integer)
+    zenso3_naka_furi=Column(Integer)
+    zenso3_ushiro_furi=Column(Integer)
+    zenso3_race=Column(Integer)
+    zenso3_course_position=Column(Integer)
+    zenso3_up_code=Column(Integer)
+    zenso3_class_code=Column(Integer)
+    zenso3_batai_code=Column(Integer)
+    zenso3_kehai_code=Column(Integer)
+    zenso3_racepace=Column(String)
+    zenso3_umapace=Column(String)
+    zenso3_ten_score=Column(Integer)
+    zenso3_up_score=Column(Integer)
+    zenso3_pace_score=Column(Integer)
+    zenso3_racep_score=Column(Integer)
+    zenso3_time_sa=Column(Integer)
+    zenso3_mae3f_time=Column(Integer)
+    zenso3_agari3f_time=Column(Integer)
+    zenso3_corner_order1=Column(Integer)
+    zenso3_corner_order2=Column(Integer)
+    zenso3_corner_order3=Column(Integer)
+    zenso3_corner_order4=Column(Integer)
+    zenso3_mae3f_sa=Column(Integer)
+    zenso3_agari3f_sa=Column(Integer)
+    zenso3_jockey_code=Column(Integer)
+    zenso3_trainer_code=Column(Integer)
+    zenso3_weight=Column(Integer)
+    zenso3_weight_increase=Column(Integer)
+    zenso3_tenko=Column(Integer)
+    zenso3_course=Column(Integer)
+    zenso3_race_leg_type=Column(String)
+    zenso3_race_pace_flow=Column(Integer)
+    zenso3_horse_pace_flow=Column(Integer)
+    zenso3_corner4_course_position=Column(Integer)
+    zenso3_paceupposition=Column(Integer)
 
     @property
     def serialize(self):
@@ -1796,9 +1926,6 @@ class WorkTable(Base):
             'idm':self.idm,
             'jockey_score':self.jockey_score,
             'info_score':self.info_score,
-            'yobi1':self.yobi1,
-            'yobi2':self.yobi2,
-            'yobi3':self.yobi3,
             'sogo_score':self.sogo_score,
             'leg_type':self.leg_type,
             'distance_adjust':self.distance_adjust,
@@ -1826,9 +1953,9 @@ class WorkTable(Base):
             'jockey_rate_rentai':self.jockey_rate_rentai,
             'gekiso_score':self.gekiso_score,
             'hidume_code':self.hidume_code,
+            'hidume_code_index':self.hidume_code_index,
             'omotekisei_code':self.omotekisei_code,
             'class_code':self.class_code,
-            'yobi4':self.yobi4,
             'brinkers':self.brinkers,
             'jockey_name':self.jockey_name,
             'kinryo':self.kinryo,
@@ -1846,7 +1973,6 @@ class WorkTable(Base):
             'zenso_racekey_4':self.zenso_racekey_4,
             'zenso_racekey_5':self.zenso_racekey_5,
             'waku':self.waku,
-            'yobi5':self.yobi5,
             'sogo_shirushi':self.sogo_shirushi,
             'idm_shiruishi':self.idm_shiruishi,
             'info_shirushi':self.info_shirushi,
@@ -1858,7 +1984,6 @@ class WorkTable(Base):
             'dart_adjust_code':self.dart_adjust_code,
             'jockey_code':self.jockey_code,
             'trainer_code':self.trainer_code,
-            'yobi6':self.yobi6,
             'kakutoku_money':self.kakutoku_money,
             'shukaku_money':self.shukaku_money,
             'joken':self.joken,
@@ -1940,73 +2065,9 @@ class WorkTable(Base):
             'date_first_train':self.date_first_train,
             'days_after_first_train':self.days_after_first_train,
             'hobokusaki':self.hobokusaki,
+            'hobokusaki_index':self.hobokusaki_index,
             'hobokusaki_rank':self.hobokusaki_rank,
             'trainer_rank':self.trainer_rank,
-            'bacode':self.bacode,
-            'year':self.year,
-            'kai':self.kai,
-            'day':self.day,
-            'raceno':self.raceno,
-            'num':self.num,
-            'distance':self.distance,
-            'tdscode':self.tdscode,
-            'right_left':self.right_left,
-            'in_out':self.in_out,
-            'baba':self.baba,
-            'baba_abst':self.baba_abst,
-            'baba_detail':self.baba_detail,
-            'shubetsu':self.shubetsu,
-            'joken':self.joken,
-            'kigo':self.kigo,
-            'juryo':self.juryo,
-            'grade':self.grade,
-            'num_of_all_horse':self.num_of_all_horse,
-            'order':self.order,
-            'ijo_kbn':self.ijo_kbn,
-            'time':self.time,
-            'kinryo':self.kinryo,
-            'decided_odds':self.decided_odds,
-            'decided_pop_order':self.decided_pop_order,
-            'natural_score':self.natural_score,
-            'baba_sa':self.baba_sa,
-            'pace':self.pace,
-            'start_late':self.start_late,
-            'position':self.position,
-            'furi':self.furi,
-            'mae_furi':self.mae_furi,
-            'naka_furi':self.naka_furi,
-            'ushiro_furi':self.ushiro_furi,
-            'race':self.race,
-            'course_position':self.course_position,
-            'up_code':self.up_code,
-            'class_code':self.class_code,
-            'batai_code':self.batai_code,
-            'kehai_code':self.kehai_code,
-            'racepace':self.racepace,
-            'umapace':self.umapace,
-            'ten_score':self.ten_score,
-            'up_score':self.up_score,
-            'pace_score':self.pace_score,
-            'racep_score':self.racep_score,
-            'time_sa':self.time_sa,
-            'mae3f_time':self.mae3f_time,
-            'agari3f_time':self.agari3f_time,
-            'corner_order1':self.corner_order1,
-            'corner_order2':self.corner_order2,
-            'corner_order3':self.corner_order3,
-            'corner_order4':self.corner_order4,
-            'mae3f_sa':self.mae3f_sa,
-            'agari3f_sa':self.agari3f_sa,
-            'jockey_code':self.jockey_code,
-            'trainer_code':self.trainer_code,
-            'weight':self.weight,
-            'weight_increase':self.weight_increase,
-            'tenko':self.tenko,
-            'course':self.course,
-            'race_leg_type':self.race_leg_type,
-            'race_pace_flow':self.race_pace_flow,
-            'horse_pace_flow':self.horse_pace_flow,
-            'corner4_course_position':self.corner4_course_position,
             'train_type':self.train_type,
             'train_course_kind':self.train_course_kind,
             'saka':self.saka,
@@ -2025,8 +2086,10 @@ class WorkTable(Base):
             'num':self.num,
             'kaisu':self.kaisu,
             'train_course_code':self.train_course_code,
+            'train_course_code_index':self.train_course_code_index,
             'oikiri_kind':self.oikiri_kind,
             'oikiri_state':self.oikiri_state,
+            'oikiri_state_index':self.oikiri_state_index,
             'train_f':self.train_f,
             'ten_f':self.ten_f,
             'mid_f':self.mid_f,
@@ -2035,10 +2098,207 @@ class WorkTable(Base):
             'mid_f_score':self.mid_f_score,
             'end_f_score':self.end_f_score,
             'oikiri_score':self.oikiri_score,
-            'paceupposition':self.paceupposition,
             'horse_index':self.horse_index,
             'jockey_index':self.jockey_index,
-            'trainer_index':self.trainer_index
+            'trainer_index':self.trainer_index,
+            'zenso1_bacode':self.zenso1_bacode,
+            'zenso1_year':self.zenso1_year,
+            'zenso1_kai':self.zenso1_kai,
+            'zenso1_day':self.zenso1_day,
+            'zenso1_raceno':self.zenso1_raceno,
+            'zenso1_num':self.zenso1_num,
+            'zenso1_distance':self.zenso1_distance,
+            'zenso1_tdscode':self.zenso1_tdscode,
+            'zenso1_right_left':self.zenso1_right_left,
+            'zenso1_in_out':self.zenso1_in_out,
+            'zenso1_baba':self.zenso1_baba,
+            'zenso1_baba_abst':self.zenso1_baba_abst,
+            'zenso1_baba_detail':self.zenso1_baba_detail,
+            'zenso1_shubetsu':self.zenso1_shubetsu,
+            'zenso1_joken':self.zenso1_joken,
+            'zenso1_kigo':self.zenso1_kigo,
+            'zenso1_juryo':self.zenso1_juryo,
+            'zenso1_grade':self.zenso1_grade,
+            'zenso1_num_of_all_horse':self.zenso1_num_of_all_horse,
+            'zenso1_order':self.zenso1_order,
+            'zenso1_ijo_kbn':self.zenso1_ijo_kbn,
+            'zenso1_time':self.zenso1_time,
+            'zenso1_kinryo':self.zenso1_kinryo,
+            'zenso1_decided_odds':self.zenso1_decided_odds,
+            'zenso1_decided_pop_order':self.zenso1_decided_pop_order,
+            'zenso1_natural_score':self.zenso1_natural_score,
+            'zenso1_baba_sa':self.zenso1_baba_sa,
+            'zenso1_pace':self.zenso1_pace,
+            'zenso1_start_late':self.zenso1_start_late,
+            'zenso1_position':self.zenso1_position,
+            'zenso1_furi':self.zenso1_furi,
+            'zenso1_mae_furi':self.zenso1_mae_furi,
+            'zenso1_naka_furi':self.zenso1_naka_furi,
+            'zenso1_ushiro_furi':self.zenso1_ushiro_furi,
+            'zenso1_race':self.zenso1_race,
+            'zenso1_course_position':self.zenso1_course_position,
+            'zenso1_up_code':self.zenso1_up_code,
+            'zenso1_class_code':self.zenso1_class_code,
+            'zenso1_batai_code':self.zenso1_batai_code,
+            'zenso1_kehai_code':self.zenso1_kehai_code,
+            'zenso1_racepace':self.zenso1_racepace,
+            'zenso1_umapace':self.zenso1_umapace,
+            'zenso1_ten_score':self.zenso1_ten_score,
+            'zenso1_up_score':self.zenso1_up_score,
+            'zenso1_pace_score':self.zenso1_pace_score,
+            'zenso1_racep_score':self.zenso1_racep_score,
+            'zenso1_time_sa':self.zenso1_time_sa,
+            'zenso1_mae3f_time':self.zenso1_mae3f_time,
+            'zenso1_agari3f_time':self.zenso1_agari3f_time,
+            'zenso1_corner_order1':self.zenso1_corner_order1,
+            'zenso1_corner_order2':self.zenso1_corner_order2,
+            'zenso1_corner_order3':self.zenso1_corner_order3,
+            'zenso1_corner_order4':self.zenso1_corner_order4,
+            'zenso1_mae3f_sa':self.zenso1_mae3f_sa,
+            'zenso1_agari3f_sa':self.zenso1_agari3f_sa,
+            'zenso1_jockey_code':self.zenso1_jockey_code,
+            'zenso1_trainer_code':self.zenso1_trainer_code,
+            'zenso1_weight':self.zenso1_weight,
+            'zenso1_weight_increase':self.zenso1_weight_increase,
+            'zenso1_tenko':self.zenso1_tenko,
+            'zenso1_course':self.zenso1_course,
+            'zenso1_race_leg_type':self.zenso1_race_leg_type,
+            'zenso1_race_pace_flow':self.zenso1_race_pace_flow,
+            'zenso1_horse_pace_flow':self.zenso1_horse_pace_flow,
+            'zenso1_corner4_course_position':self.zenso1_corner4_course_position,
+            'zenso1_paceupposition':self.zenso1_paceupposition,
+            'zenso2_bacode':self.zenso2_bacode,
+            'zenso2_year':self.zenso2_year,
+            'zenso2_kai':self.zenso2_kai,
+            'zenso2_day':self.zenso2_day,
+            'zenso2_raceno':self.zenso2_raceno,
+            'zenso2_num':self.zenso2_num,
+            'zenso2_distance':self.zenso2_distance,
+            'zenso2_tdscode':self.zenso2_tdscode,
+            'zenso2_right_left':self.zenso2_right_left,
+            'zenso2_in_out':self.zenso2_in_out,
+            'zenso2_baba':self.zenso2_baba,
+            'zenso2_baba_abst':self.zenso2_baba_abst,
+            'zenso2_baba_detail':self.zenso2_baba_detail,
+            'zenso2_shubetsu':self.zenso2_shubetsu,
+            'zenso2_joken':self.zenso2_joken,
+            'zenso2_kigo':self.zenso2_kigo,
+            'zenso2_juryo':self.zenso2_juryo,
+            'zenso2_grade':self.zenso2_grade,
+            'zenso2_num_of_all_horse':self.zenso2_num_of_all_horse,
+            'zenso2_order':self.zenso2_order,
+            'zenso2_ijo_kbn':self.zenso2_ijo_kbn,
+            'zenso2_time':self.zenso2_time,
+            'zenso2_kinryo':self.zenso2_kinryo,
+            'zenso2_decided_odds':self.zenso2_decided_odds,
+            'zenso2_decided_pop_order':self.zenso2_decided_pop_order,
+            'zenso2_natural_score':self.zenso2_natural_score,
+            'zenso2_baba_sa':self.zenso2_baba_sa,
+            'zenso2_pace':self.zenso2_pace,
+            'zenso2_start_late':self.zenso2_start_late,
+            'zenso2_position':self.zenso2_position,
+            'zenso2_furi':self.zenso2_furi,
+            'zenso2_mae_furi':self.zenso2_mae_furi,
+            'zenso2_naka_furi':self.zenso2_naka_furi,
+            'zenso2_ushiro_furi':self.zenso2_ushiro_furi,
+            'zenso2_race':self.zenso2_race,
+            'zenso2_course_position':self.zenso2_course_position,
+            'zenso2_up_code':self.zenso2_up_code,
+            'zenso2_class_code':self.zenso2_class_code,
+            'zenso2_batai_code':self.zenso2_batai_code,
+            'zenso2_kehai_code':self.zenso2_kehai_code,
+            'zenso2_racepace':self.zenso2_racepace,
+            'zenso2_umapace':self.zenso2_umapace,
+            'zenso2_ten_score':self.zenso2_ten_score,
+            'zenso2_up_score':self.zenso2_up_score,
+            'zenso2_pace_score':self.zenso2_pace_score,
+            'zenso2_racep_score':self.zenso2_racep_score,
+            'zenso2_time_sa':self.zenso2_time_sa,
+            'zenso2_mae3f_time':self.zenso2_mae3f_time,
+            'zenso2_agari3f_time':self.zenso2_agari3f_time,
+            'zenso2_corner_order1':self.zenso2_corner_order1,
+            'zenso2_corner_order2':self.zenso2_corner_order2,
+            'zenso2_corner_order3':self.zenso2_corner_order3,
+            'zenso2_corner_order4':self.zenso2_corner_order4,
+            'zenso2_mae3f_sa':self.zenso2_mae3f_sa,
+            'zenso2_agari3f_sa':self.zenso2_agari3f_sa,
+            'zenso2_jockey_code':self.zenso2_jockey_code,
+            'zenso2_trainer_code':self.zenso2_trainer_code,
+            'zenso2_weight':self.zenso2_weight,
+            'zenso2_weight_increase':self.zenso2_weight_increase,
+            'zenso2_tenko':self.zenso2_tenko,
+            'zenso2_course':self.zenso2_course,
+            'zenso2_race_leg_type':self.zenso2_race_leg_type,
+            'zenso2_race_pace_flow':self.zenso2_race_pace_flow,
+            'zenso2_horse_pace_flow':self.zenso2_horse_pace_flow,
+            'zenso2_corner4_course_position':self.zenso2_corner4_course_position,
+            'zenso2_paceupposition':self.zenso2_paceupposition,
+            'zenso3_bacode':self.zenso3_bacode,
+            'zenso3_year':self.zenso3_year,
+            'zenso3_kai':self.zenso3_kai,
+            'zenso3_day':self.zenso3_day,
+            'zenso3_raceno':self.zenso3_raceno,
+            'zenso3_num':self.zenso3_num,
+            'zenso3_distance':self.zenso3_distance,
+            'zenso3_tdscode':self.zenso3_tdscode,
+            'zenso3_right_left':self.zenso3_right_left,
+            'zenso3_in_out':self.zenso3_in_out,
+            'zenso3_':self.zenso3_baba,
+            'zenso3_baba':self.zenso3_baba_abst,
+            'zenso3_':self.zenso3_baba_detail,
+            'zenso3_shubetsu':self.zenso3_shubetsu,
+            'zenso3_joken':self.zenso3_joken,
+            'zenso3_kigo':self.zenso3_kigo,
+            'zenso3_juryo':self.zenso3_juryo,
+            'zenso3_grade':self.zenso3_grade,
+            'zenso3_num_of_all_horse':self.zenso3_num_of_all_horse,
+            'zenso3_order':self.zenso3_order,
+            'zenso3_ijo_kbn':self.zenso3_ijo_kbn,
+            'zenso3_time':self.zenso3_time,
+            'zenso3_kinryo':self.zenso3_kinryo,
+            'zenso3_decided_odds':self.zenso3_decided_odds,
+            'zenso3_decided_pop_order':self.zenso3_decided_pop_order,
+            'zenso3_natural_score':self.zenso3_natural_score,
+            'zenso3_baba_sa':self.zenso3_baba_sa,
+            'zenso3_pace':self.zenso3_pace,
+            'zenso3_start_late':self.zenso3_start_late,
+            'zenso3_position':self.zenso3_position,
+            'zenso3_furi':self.zenso3_furi,
+            'zenso3_mae_furi':self.zenso3_mae_furi,
+            'zenso3_naka_furi':self.zenso3_naka_furi,
+            'zenso3_ushiro_furi':self.zenso3_ushiro_furi,
+            'zenso3_race':self.zenso3_race,
+            'zenso3_course_position':self.zenso3_course_position,
+            'zenso3_up_code':self.zenso3_up_code,
+            'zenso3_class_code':self.zenso3_class_code,
+            'zenso3_batai_code':self.zenso3_batai_code,
+            'zenso3_kehai_code':self.zenso3_kehai_code,
+            'zenso3_racepace':self.zenso3_racepace,
+            'zenso3_umapace':self.zenso3_umapace,
+            'zenso3_ten_score':self.zenso3_ten_score,
+            'zenso3_up_score':self.zenso3_up_score,
+            'zenso3_pace_score':self.zenso3_pace_score,
+            'zenso3_racep_score':self.zenso3_racep_score,
+            'zenso3_time_sa':self.zenso3_time_sa,
+            'zenso3_mae3f_time':self.zenso3_mae3f_time,
+            'zenso3_agari3f_time':self.zenso3_agari3f_time,
+            'zenso3_corner_order1':self.zenso3_corner_order1,
+            'zenso3_corner_order2':self.zenso3_corner_order2,
+            'zenso3_corner_order3':self.zenso3_corner_order3,
+            'zenso3_corner_order4':self.zenso3_corner_order4,
+            'zenso3_mae3f_sa':self.zenso3_mae3f_sa,
+            'zenso3_agari3f_sa':self.zenso3_agari3f_sa,
+            'zenso3_jockey_code':self.zenso3_jockey_code,
+            'zenso3_trainer_code':self.zenso3_trainer_code,
+            'zenso3_weight':self.zenso3_weight,
+            'zenso3_weight_increase':self.zenso3_weight_increase,
+            'zenso3_tenko':self.zenso3_tenko,
+            'zenso3_course':self.zenso3_course,
+            'zenso3_race_leg_type':self.zenso3_race_leg_type,
+            'zenso3_race_pace_flow':self.zenso3_race_pace_flow,
+            'zenso3_horse_pace_flow':self.zenso3_horse_pace_flow,
+            'zenso3_corner4_course_position':self.zenso3_corner4_course_position,
+            'zenso3_paceupposition':self.zenso3_paceupposition
         }
 
 class HorseIndex(Base):
