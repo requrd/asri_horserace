@@ -12,7 +12,9 @@ class BangumiData(Base):
     #親に対して
     kaisaikey=Column(String,ForeignKey('kaisai.kaisaikey'))
     #子に対して
-    racehorses = relationship("RacehorseData",backref='bangumi',lazy='subquery')
+    racehorses = relationship("RacehorseData",backref='bangumi')
+    racehorses_w = relationship("RacehorseData",backref='bangumi',lazy='subquery')
+
     #1:1
     returninfo = relationship("ReturninfoData",uselist=False, backref= "bangumi",lazy='subquery')
     ymd=Column(String)
@@ -1523,7 +1525,7 @@ class HorsebaseData(Base):
 class WorkTable(Base):
     __tablename__ = 'worktable'
     racehorsekey=Column(String,primary_key=True)
-    racekey=Column(String)
+    racekey=Column(String,ForeignKey(bangumi.racekey))
     bacode=Column(Integer)
     year=Column(Integer)
     kai=Column(Integer)
