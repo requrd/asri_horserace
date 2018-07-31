@@ -506,6 +506,7 @@ class CategoryGetter:
             five_d[3] = 1
         else:
             five_d[4] = 1
+        return five_d
 
     def getSixcat(self,num):
         six_d = np.zeros([6])
