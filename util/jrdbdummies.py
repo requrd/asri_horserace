@@ -27,38 +27,64 @@ class CategoryGetter:
         tenko_d = self.getSixcat(tenko)
         return tenko_d
         
-    def getBaba_abst(self,baba):
-        baba_d = getFourcat(baba)
+    def getBabaabst(self,baba):
+        baba_d = self.getFourcat(baba)
         return baba_d
         
-    def getBaba_detail(self,baba):
-        baba_d = getThreecat(baba)
+    def getBabadetail(self,baba):
+        baba_d = self.getThreecat(baba)
         return baba_d
         
     def getTurfkind(self,kind):
-        kind_d = self.getTreecat(kind)
+        kind_d = self.getThreecat(kind)
         return kind_d
         
     def getTennatsu(self,ten):
-        ten_d = getTwocat(ten)
+        ten_d = self.getTwocat(ten)
         return ten_d
         
     def getStopfreeze(self,st):
-        stf_d = getTwocat(st)
+        stf_d = self.getTwocat(st)
         return stf_d
         
     #番組データ
     def getDistance(self,dis):
-        dis_d = dis
+        dis_d = np.zeros([13])
+        if dis == 1000:
+            dis_d[0] = 1
+        elif dis > 1000 and dis <= 1200:
+            dis_d[1] = 1
+        elif dis > 1200 and dis <= 1400:
+            dis_d[2] = 1
+        elif dis > 1400 and dis <= 1600:
+            dis_d[3] = 1
+        elif dis > 1600 and dis <= 1800:
+            dis_d[4] = 1
+        elif dis > 1800 and dis <= 2000:
+            dis_d[5] = 1
+        elif dis > 2000 and dis <= 2200:
+            dis_d[6] = 1
+        elif dis > 2200 and dis <= 2400:
+            dis_d[7] = 1
+        elif dis > 2400 and dis <= 2500:
+            dis_d[8] = 1
+        elif dis > 2500 and dis <= 3000:
+            dis_d[9] = 1
+        elif dis > 3000 and dis <= 3200:
+            dis_d[10] = 1
+        elif dis > 3000 and dis <= 3200:
+            dis_d[11] = 1
+        else :
+            dis_d[12] = 1
         return dis_d
         
     def getTdscode(self,tds):
-        tds_d = getThreecat(tds)
+        tds_d = self.getThreecat(tds)
         return tds_d
         
     def getRightleft(self,rl):
         rl_d = self.getFourcat(rl)
-        return lr_d
+        return rl_d
         
     def getInout(self,inout):
         io_d = self.getFourcat(inout)
@@ -112,11 +138,11 @@ class CategoryGetter:
         num_d = self.getEighteencat(num)
         return num_d
 
-    def getLeg_type(self, leg_type):
+    def getLegtype(self, leg_type):
         leg_type_d = self.getSevencat(leg_type)
         return leg_type_d
 
-    def getOmotekisei_code(self, omotekisei_code):
+    def getOmotekiseicode(self, omotekisei_code):
         omotekisei_code_d = self.getFourcat(omotekisei_code)
         return omotekisei_code_d
 
@@ -132,7 +158,7 @@ class CategoryGetter:
         waku_d = self.getEightcat(waku)
         return waku_d
 
-    def getTurf_adjust_code(self, turf_adjust_code):
+    def getTurfadjustcode(self, turf_adjust_code):
         turf_adjust_code_d = self.getFivecat(turf_adjust_code)
         return turf_adjust_code_d
 
@@ -144,7 +170,7 @@ class CategoryGetter:
         sex_d = self.getThreecat(sex)
         return sex_d
 
-    def getBanushikai_code(self, banushikai_code):
+    def getBanushikaicode(self, banushikai_code):
         banushikai_code_d = self.getElevencat(banushikai_code)
         return banushikai_code_d
 
@@ -152,31 +178,31 @@ class CategoryGetter:
         yuso_d = self.getFivecat(yuso)
         return yuso_d
 
-    def getKokyu_flg(self, kokyu_flg):
+    def getKokyuflg(self, kokyu_flg):
         kokyu_flg_d = self.getThreecat(kokyu_flg)
         return kokyu_flg_d
 
-    def getTurf_dart_steeple_flg(self, turf_dart_steeple_flg):
+    def getTurfdartsteepleflg(self, turf_dart_steeple_flg):
         turf_dart_steeple_flg_d = self.getThreecat(turf_dart_steeple_flg)
         return turf_dart_steeple_flg_d
 
-    def getDistance_flg(self, distance_flg):
+    def getDistanceflg(self, distance_flg):
         distance_flg_d = self.getTwocat(distance_flg)
         return distance_flg_d
 
-    def getClass_flg(self, class_flg):
+    def getClassflg(self, class_flg):
         class_flg_d = self.getFourcat(class_flg)
         return class_flg_d
 
-    def getTenkyu_flg(self, tenkyu_flg):
+    def getTenkyuflg(self, tenkyu_flg):
         tenkyu_flg_d = self.getFourcat(tenkyu_flg)
         return tenkyu_flg_d
 
-    def getKyosei_flg(self, kyosei_flg):
+    def getKyoseiflg(self, kyosei_flg):
         kyosei_flg_d = self.getFourcat(kyosei_flg)
         return kyosei_flg_d
 
-    def getTrain_course_kind(self, train_course_kind):
+    def getTraincoursekind(self, train_course_kind):
         train_course_kind_d = self.getSixcat(train_course_kind)
         return train_course_kind_d
 
@@ -208,31 +234,31 @@ class CategoryGetter:
         politruck_d = self.getTwocat(politruck)
         return politruck_d
 
-    def getTrain_distance(self, train_distance):
+    def getTraindistance(self, train_distance):
         train_distance_d = self.getFivecat(train_distance)
         return train_distance_d
 
-    def getTrain_juten(self, train_juten):
+    def getTrainjuten(self, train_juten):
         train_juten_d = self.getFivecat(train_juten)
         return train_juten_d
 
-    def getOikiri_kind(self, oikiri_kind):
+    def getOikirikind(self, oikiri_kind):
         oikiri_kind_d = self.getFourcat(oikiri_kind)
         return oikiri_kind_d
 
-    def getZenso_ijo_kbn(self, zenso_ijo_kbn):
+    def getZensoIjokbn(self, zenso_ijo_kbn):
         zenso_ijo_kbn_d = self.getSevencat(zenso_ijo_kbn)
         return zenso_ijo_kbn_d
 
-    def getZenso_course_position(self, zenso_course_position):
+    def getZensoCourseposition(self, zenso_course_position):
         zenso_course_position_d = self.getNinecat(zenso_course_position)
         return zenso_course_position_d
 
-    def getZenso_race_leg_type(self, zenso_race_leg_type):
+    def getZensoRacelegtype(self, zenso_race_leg_type):
         zenso_race_leg_type_d = self.getSevencat(zenso_race_leg_type)
         return zenso_race_leg_type_d
 
-    def getZenso_corner4_course_position(self, zenso_corner4_course_position):
+    def getZensoCorner4courseposition(self, zenso_corner4_course_position):
         zenso_corner4_course_position = self.getEightcat(zenso_corner4_course_position)
         return zenso_corner4_course_position
 
@@ -264,7 +290,7 @@ class CategoryGetter:
             b_d[10] = 1
         return b_d
         
-    def getDistance_adjust(self, d):
+    def getDistanceadjust(self, d):
         d_d = np.zeros([8])
         if d == 0:
             d_d[0] = 1
@@ -284,7 +310,7 @@ class CategoryGetter:
             d_d[7] = 1
         return d_d
 
-    def getJockye_shirushi(self, j):
+    def getJockeyshirushi(self, j):
         j_d = np.zeros([8])
         if j == 0:
             j_d[0] = 1
@@ -300,11 +326,11 @@ class CategoryGetter:
             j_d[5] = 1
         if j == 6:
             j_d[6] = 1
-        if d == 9:
+        if j == 9:
             j_d[7] = 1
         return j_d
 
-    def getDart_adjust_code(self, d):
+    def getDartadjustcode(self, d):
         d_d = np.zeros([5])
         if d == 0:
             d_d[0] = 1
@@ -318,7 +344,7 @@ class CategoryGetter:
             d_d[4] = 1
         return d_d
 
-    def getGekiso_type(self, g):
+    def getGekisotype(self, g):
         g_d = np.zeros([7])
         if g == '00':
             g_d[0] = 1
@@ -336,8 +362,8 @@ class CategoryGetter:
             g_d[6] = 1
         return g_d
 
-    def getRest_reason_code(self, r):
-        r_d = np.zeros([7])
+    def getRestreasoncode(self, r):
+        r_d = np.zeros([15])
         if r == 0:
             r_d[0] = 1
         if r == 1:
@@ -370,7 +396,7 @@ class CategoryGetter:
             r_d[14] = 1
         return r_d
 
-    def getNorikae_flg(self, n):
+    def getNorikaeflg(self, n):
         n_d = np.zeros([3])
         if n == 0:
             n_d[0] = 1
@@ -380,7 +406,7 @@ class CategoryGetter:
             n_d[2] = 1
         return n_d
 
-    def getHobokusaki_rank(self, h):
+    def getHobokusakirank(self, h):
         h_d = np.zeros([6])
         if h == '0':
             h_d[0] = 1
@@ -396,7 +422,7 @@ class CategoryGetter:
             h_d[5] = 1
         return h_d
 
-    def getTrain_type(self, t):
+    def getTraintype(self, t):
         t_d = np.zeros([12])
         if t == '01':
             t_d[0] = 1
@@ -422,7 +448,7 @@ class CategoryGetter:
             t_d[10] = 1
         return t_d
 
-    def getTrain_vol_hyoka(self, t):
+    def getTrainvolhyoka(self, t):
         t_d = np.zeros([5])
         if t == 'A':
             t_d[0] = 1
@@ -608,33 +634,69 @@ class CategoryGetter:
         return eleven_d
 
     def getTwelvecat(self,num):
-        twelve_d = np.zeros([12])
+        d = np.zeros([12])
         if num == 1:
-            twelve_d[0] = 1
+            d[0] = 1
         elif num == 2:
-            twelve_d[1] = 1
+            d[1] = 1
         elif num == 3:
-            twelve_d[2] = 1
+            d[2] = 1
         elif num == 4:
-            twelve_d[3] = 1
+            d[3] = 1
         elif num == 5:
-            twelve_d[4] = 1
+            d[4] = 1
         elif num == 6:
-            twelve_d[5] = 1
+            d[5] = 1
         elif num == 7:
-            twelve_d[6] = 1
+            d[6] = 1
         elif num == 8:
-            twelve_d[7] = 1
+            d[7] = 1
         elif num == 9:
-            twelve_d[8] = 1
+            d[8] = 1
         elif num == 10:
-            twelve_d[9] = 1
+            d[9] = 1
         elif num == 11:
-            twelve_d[10] = 1
+            d[10] = 1
         else:
-            twelve_d[11] = 1
-        return eleven_d
+            d[11] = 1
+        return d
 
-
-
-
+    def getEighteencat(self,num):
+        d = np.zeros([18])
+        if num == 1:
+            d[0] = 1
+        elif num == 2:
+            d[1] = 1
+        elif num == 3:
+            d[2] = 1
+        elif num == 4:
+            d[3] = 1
+        elif num == 5:
+            d[4] = 1
+        elif num == 6:
+            d[5] = 1
+        elif num == 7:
+            d[6] = 1
+        elif num == 8:
+            d[7] = 1
+        elif num == 9:
+            d[8] = 1
+        elif num == 10:
+            d[9] = 1
+        elif num == 11:
+            d[10] = 1
+        elif num == 12:
+            d[11] = 1
+        elif num == 13:
+            d[12] = 1
+        elif num == 14:
+            d[13] = 1
+        elif num == 15:
+            d[14] = 1
+        elif num == 16:
+            d[15] = 1
+        elif num == 17:
+            d[16] = 1
+        else:
+            d[17] = 1
+        return d
