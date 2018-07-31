@@ -1,11 +1,11 @@
-﻿import numpy as np
-class CategoryGetter:
+import numpy as np
+class CategoryGetter():
     #開催データ
-    def getKaisaikbn(self,kaisaikbn):
+    def getKaisaikbn(self, kaisaikbn):
         kaisaikbn_d = self.getThreecat(kaisaikbn)
         return kaisaikbn_d
             
-    def getDayofweek(self,dayofweek):
+    def getDayofweek(dayofweek):
         dayofweek_d = np.zeros([7])
         if dayofweek == '日':
             dayofweek_d[0] = 1
@@ -23,52 +23,52 @@ class CategoryGetter:
             dayofweek_d[6] = 1
         return dayofweek_d
         
-    def getTenko(self,tenko):
+    def getTenko(tenko):
         tenko_d = self.getSixcat(tenko)
         return tenko_d
         
-    def getBaba_abst(self,baba):
+    def getBaba_abst(baba):
         baba_d = getFourcat(baba)
         return baba_d
         
-    def getBaba_detail(self,baba):
+    def getBaba_detail(baba):
         baba_d = getThreecat(baba)
         return baba_d
         
-    def getTurfkind(self,kind):
+    def getTurfkind(kind):
         kind_d = self.getTreecat(kind)
         return kind_d
         
-    def getTennatsu(self,ten):
-        ten_d = getTwocat(ten)
+    def getTennatsu(self, ten):
+        ten_d = self.getTwocat(ten)
         return ten_d
         
-    def getStopfreeze(self,st):
+    def getStopfreeze(st):
         stf_d = getTwocat(st)
         return stf_d
         
     #番組データ
-    def getDistance(self,dis):
+    def getDistance(dis):
         dis_d = dis
         return dis_d
         
-    def getTdscode(self,tds):
+    def getTdscode(tds):
         tds_d = getThreecat(tds)
         return tds_d
         
-    def getRightleft(self,rl):
+    def getRightleft(rl):
         rl_d = self.getFourcat(rl)
         return lr_d
         
-    def getInout(self,inout):
+    def getInout(inout):
         io_d = self.getFourcat(inout)
         return io_d
         
-    def getShubetsu(self,s):
+    def getShubetsu(s):
         s_d = self.getFivecat(s)
         return s_d
         
-    def getJoken(self,j):
+    def getJoken(j):
         j_d = np.zeros([11])
         if j == '04':
             j_d[0] = 1
@@ -94,152 +94,152 @@ class CategoryGetter:
             j_d[10] = 1
         return j_d
         
-    def getJuryo(self,j):
+    def getJuryo(j):
         j_d = self.getFourcat(j)
         return j_d
         
-    def getGrade(self,g):
+    def getGrade(g):
         g_d = self.getFivecat(g)
         return g_d
         
-    def getCourse(self,c):
+    def getCourse(c):
         c_d = self.getFivecat(c)
         return c_d
         
 
-    #競走馬データ
+    #WORKTABLEデータ
     #汎用メソッド利用
-    def getNum(num):
+    def getNum(self, num):
         num_d = self.getEighteencat(num)
         return num_d
 
-    def getLeg_type(leg_type):
+    def getLeg_type(self, leg_type):
         leg_type_d = self.getSevencat(leg_type)
         return leg_type_d
 
-    def getOmotekisei_code(omotekisei_code):
+    def getOmotekisei_code(self, omotekisei_code):
         omotekisei_code_d = self.getFourcat(omotekisei_code)
         return omotekisei_code_d
 
-    def getBrinkers(brinkers):
+    def getBrinkers(self, brinkers):
         brinkers_d = self.getFourcat(brinkers)
         return brinkers_d
 
-    def getMinarai(minarai):
+    def getMinarai(self, minarai):
         minarai_d = self.getFourcat(minarai)
         return minarai_d
 
-    def getWaku(waku):
+    def getWaku(self, waku):
         waku_d = self.getEightcat(waku)
         return waku_d
 
-    def getTurf_adjust_code(turf_adjust_code):
+    def getTurf_adjust_code(self, turf_adjust_code):
         turf_adjust_code_d = self.getFivecat(turf_adjust_code)
         return turf_adjust_code_d
 
-    def getTorikeshi(torikeshi):
+    def getTorikeshi(self, torikeshi):
         torikeshi_d = self.getTwocat(torikeshi)
         return torikeshi_d
 
-    def getSex(sex):
+    def getSex(self, sex):
         sex_d = self.getThreecat(sex)
         return sex_d
 
-    def getBanushikai_code(banushikai_code):
+    def getBanushikai_code(self, banushikai_code):
         banushikai_code_d = self.getElevencat(banushikai_code)
         return banushikai_code_d
 
-    def getYuso(yuso):
+    def getYuso(self, yuso):
         yuso_d = self.getFivecat(yuso)
         return yuso_d
 
-    def getKokyu_flg(kokyu_flg):
+    def getKokyu_flg(self, kokyu_flg):
         kokyu_flg_d = self.getThreecat(kokyu_flg)
         return kokyu_flg_d
 
-    def getTurf_dart_steeple_flg(turf_dart_steeple_flg):
+    def getTurf_dart_steeple_flg(self, turf_dart_steeple_flg):
         turf_dart_steeple_flg_d = self.getThreecat(turf_dart_steeple_flg)
         return turf_dart_steeple_flg_d
 
-    def getDistance_flg(distance_flg):
+    def getDistance_flg(self, distance_flg):
         distance_flg_d = self.getTwocat(distance_flg)
         return distance_flg_d
 
-    def getClass_flg(class_flg):
+    def getClass_flg(self, class_flg):
         class_flg_d = self.getFourcat(class_flg)
         return class_flg_d
 
-    def getTenkyu_flg(tenkyu_flg):
+    def getTenkyu_flg(self, tenkyu_flg):
         tenkyu_flg_d = self.getFourcat(tenkyu_flg)
         return tenkyu_flg_d
 
-    def getKyosei_flg(kyosei_flg):
+    def getKyosei_flg(self, kyosei_flg):
         kyosei_flg_d = self.getFourcat(kyosei_flg)
         return kyosei_flg_d
 
-    def getTrain_course_kind(train_course_kind):
+    def getTrain_course_kind(self, train_course_kind):
         train_course_kind_d = self.getSixcat(train_course_kind)
         return train_course_kind_d
 
-    def getSaka(saka):
+    def getSaka(self, saka):
         saka_d = self.getTwocat(saka)
         return saka_d
 
-    def getWood(wood):
+    def getWood(self, wood):
         wood_d = self.getTwocat(wood)
         return wood_d
 
-    def getDart(dart):
+    def getDart(self, dart):
         dart_d = self.getTwocat(dart)
         return dart_d
 
-    def getTurf(turf):
+    def getTurf(self, turf):
         turf_d = self.getTwocat(turf)
         return turf_d
 
-    def getPool(pool):
+    def getPool(self, pool):
         pool_d = self.getTwocat(pool)
         return pool_d
 
-    def getSteeple(steeple):
+    def getSteeple(self, steeple):
         steeple_d = self.getTwocat(steeple)
         return steeple_d
 
-    def getPolitruck(politruck):
+    def getPolitruck(self, politruck):
         politruck_d = self.getTwocat(politruck)
         return politruck_d
 
-    def getTrain_distance(train_distance):
+    def getTrain_distance(self, train_distance):
         train_distance_d = self.getFivecat(train_distance)
         return train_distance_d
 
-    def getTrain_juten(train_juten):
+    def getTrain_juten(self, train_juten):
         train_juten_d = self.getFivecat(train_juten)
         return train_juten_d
 
-    def getOikiri_kind(oikiri_kind):
+    def getOikiri_kind(self, oikiri_kind):
         oikiri_kind_d = self.getFourcat(oikiri_kind)
         return oikiri_kind_d
 
-    def getZenso_ijo_kbn(zenso_ijo_kbn):
+    def getZenso_ijo_kbn(self, zenso_ijo_kbn):
         zenso_ijo_kbn_d = self.getSevencat(zenso_ijo_kbn)
         return zenso_ijo_kbn_d
 
-    def getZenso_course_position(zenso_course_position):
+    def getZenso_course_position(self, zenso_course_position):
         zenso_course_position_d = self.getNinecat(zenso_course_position)
         return zenso_course_position_d
 
-    def getZenso_race_leg_type(zenso_race_leg_type):
+    def getZenso_race_leg_type(self, zenso_race_leg_type):
         zenso_race_leg_type_d = self.getSevencat(zenso_race_leg_type)
         return zenso_race_leg_type_d
 
-    def getZenso_corner4_course_position(zenso_corner4_course_position):
+    def getZenso_corner4_course_position(self, zenso_corner4_course_position):
         zenso_corner4_course_position = self.getEightcat(zenso_corner4_course_position)
         return zenso_corner4_course_position
 
-    #競走馬データ
+    #WORKTABLEデータ
     #独自メソッド利用
-    def getBacode(b):
+    def getBacode(self, b):
         b_d = np.zeros([11])
         if b == 1:
             b_d[0] = 1
@@ -265,7 +265,7 @@ class CategoryGetter:
             b_d[10] = 1
         return b_d
         
-    def getDistance_adjust(d):
+    def getDistance_adjust(self, d):
         d_d = np.zeros([8])
         if d == 0:
             d_d[0] = 1
@@ -285,7 +285,7 @@ class CategoryGetter:
             d_d[7] = 1
         return d_d
 
-    def getJockye_shirushi(j):
+    def getJockye_shirushi(self, j):
         j_d = np.zeros([8])
         if j == 0:
             j_d[0] = 1
@@ -305,7 +305,7 @@ class CategoryGetter:
             j_d[7] = 1
         return j_d
 
-    def getDart_adjust_code(d):
+    def getDart_adjust_code(self, d):
         d_d = np.zeros([5])
         if d == 0:
             d_d[0] = 1
@@ -319,7 +319,7 @@ class CategoryGetter:
             d_d[4] = 1
         return d_d
 
-    def getGekiso_type(g):
+    def getGekiso_type(self, g):
         g_d = np.zeros([7])
         if g == '00':
             g_d[0] = 1
@@ -337,7 +337,7 @@ class CategoryGetter:
             g_d[6] = 1
         return g_d
 
-    def getRest_reason_code(r):
+    def getRest_reason_code(self, r):
         r_d = np.zeros([7])
         if r == 0:
             r_d[0] = 1
@@ -371,7 +371,7 @@ class CategoryGetter:
             r_d[14] = 1
         return r_d
 
-    def getNorikae_flg(n):
+    def getNorikae_flg(self, n):
         n_d = np.zeros([3])
         if n == 0:
             n_d[0] = 1
@@ -381,7 +381,7 @@ class CategoryGetter:
             n_d[2] = 1
         return n_d
 
-    def getHobokusaki_rank(h):
+    def getHobokusaki_rank(self, h):
         h_d = np.zeros([6])
         if h == '0':
             h_d[0] = 1
@@ -397,7 +397,7 @@ class CategoryGetter:
             h_d[5] = 1
         return h_d
 
-    def getTrain_type(t):
+    def getTrain_type(self, t):
         t_d = np.zeros([12])
         if t == '01':
             t_d[0] = 1
@@ -423,7 +423,7 @@ class CategoryGetter:
             t_d[10] = 1
         return t_d
 
-    def getTrain_vol_hyoka(t):
+    def getTrain_vol_hyoka(self, t):
         t_d = np.zeros([5])
         if t == 'A':
             t_d[0] = 1
@@ -439,16 +439,15 @@ class CategoryGetter:
 
 
     #汎用メソッド
-
-    def getTwocat(self,num):
-        two_d = np.zeros([2])
+    def getTwocat(self, num):
+        four_d = np.zeros([2])
         if  num == 1:
-            two_d[0] = 1
+            four_d[0] = 1
         else:
-            two_d[1] = 1
-        return two_d
-        
-    def getThreecat(self,num):
+            four_d[1] = 1
+        return four_d
+            
+    def getThreecat(self, num):
         three_d = np.zeros([3])
         if num == 1:
             three_d[0] = 1
@@ -457,8 +456,8 @@ class CategoryGetter:
         else:
             three_d[2] = 1
         return three_d
-            
-    def getFourcat(self,num):
+
+    def getFourcat(self, num):
         four_d = np.zeros([4])
         if  num == 1:
             four_d[0] = 1
@@ -470,20 +469,21 @@ class CategoryGetter:
             four_d[3] = 1
         return four_d
             
-    def getFivecat(self,num):
-        five_d = np.zeros([5])
+    def getFivecat(self, num):
+        four_d = np.zeros([5])
         if  num == 1:
-            five_d[0] = 1
+            four_d[0] = 1
         elif num == 2:
-            five_d[1] = 1
+            four_d[1] = 1
         elif num == 3:
-            five_d[2] = 1
+            four_d[2] = 1
         elif num == 4:
-            five_d[3] = 1
+            four_d[3] = 1
         else:
-            five_d[4] = 1
+            four_d[4] = 1
+        return four_d
 
-    def getSixcat(self,num):
+    def getSixcat(self, num):
         six_d = np.zeros([6])
         if num == 1:
             six_d[0] = 1
@@ -499,7 +499,7 @@ class CategoryGetter:
             six_d[5] = 1
         return six_d
 
-    def getSevencat(self,num):
+    def getSevencat(self, num):
         seven_d = np.zeros([7])
         if num == 1:
             seven_d[0] = 1
@@ -517,7 +517,7 @@ class CategoryGetter:
             seven_d[6] = 1
         return seven_d
 
-    def getEightcat(self,num):
+    def getEightcat(self, num):
         eight_d = np.zeros([8])
         if num == 1:
             eight_d[0] = 1
@@ -537,7 +537,7 @@ class CategoryGetter:
             eight_d[7] = 1
         return eight_d
 
-    def getNinecat(self,num):
+    def getNinecat(self, num):
         nine_d = np.zeros([9])
         if num == 1:
             nine_d[0] = 1
@@ -559,7 +559,7 @@ class CategoryGetter:
             nine_d[8] = 1
         return nine_d
 
-    def getTencat(self,num):
+    def getTencat(self, num):
         ten_d = np.zeros([10])
         if num == 1:
             ten_d[0] = 1
@@ -583,7 +583,7 @@ class CategoryGetter:
             ten_d[9] = 1
         return ten_d
 
-    def getElevencat(self,num):
+    def getElevencat(self, num):
         eleven_d = np.zeros([11])
         if num == 1:
             eleven_d[0] = 1
@@ -609,7 +609,7 @@ class CategoryGetter:
             eleven_d[10] = 1
         return eleven_d
 
-    def getTwelvecat(self,num):
+    def getTwelvecat(self, num):
         twelve_d = np.zeros([12])
         if num == 1:
             twelve_d[0] = 1
