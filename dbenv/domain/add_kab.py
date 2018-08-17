@@ -35,6 +35,8 @@ with open(file, 'r') as f:
 		turf_baba_straight_out=line[33:35]
 		turf_baba_straight_oosoto=line[35:37]
 		dart_baba=line[37:39]
+		dart_baba_abst=line[37:38]
+		dart_baba_detail=line[38:39]
 		dart_baba_in=line[39:40]
 		dart_baba_center=line[40:41]
 		dart_baba_out=line[41:42]

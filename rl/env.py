@@ -7,13 +7,13 @@ import random
 
 class MyEnv(gym.Env):
     metadata = {'render.modes': ['human', 'ansi']}
-    MAX_STEPS = 10000
 
-    def __init__(self,racemat,labels,returns):
+    def __init__(self,racemat,labels,returns,pocket_money):
         super().__init__()
         self.racemat = racemat
         self.labels = labels
         self.returns = returns
+        self.pocket_money = pocket_money
 
         # action_space, observation_space, reward_range を設定する
         self.action_space = gym.spaces.Discrete(len(self.labels[0]))  #馬券の買い目全て
@@ -28,7 +28,7 @@ class MyEnv(gym.Env):
     def reset(self):
         # 諸々の変数を初期化する
         self.p_race = 0 #現在のレース番号
-        self.money = 100000 #スタートの所持金
+        self.money = self.pocket_money #スタートの所持金
         self.num_race = len(self.racemat)
         self.MAX_STEP = self.num_race
         self.p_label = self.labels[self.p_race] #今回のレースの勝ち馬券
@@ -79,7 +79,7 @@ class MyEnv(gym.Env):
 
     def is_done(self):
         # 今回は最大で self.MAX_STEPS までとした
-        if (self.money >= 1000000 or self.money < 0):
+        if (self.money >= self.pockey_money * 10 or self.money < 0):
             return True
         elif self.steps > self.MAX_STEPS:
             return True
