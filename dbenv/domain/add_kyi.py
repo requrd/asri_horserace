@@ -59,6 +59,16 @@ with open(file, 'r') as f:
 		jockey_rate_rentai=line[138:142]
 		gekiso_score=line[142:145].replace("0-","-")
 		hidume_code=line[145:147]
+		#蹄コード分割
+		if hidume_code == 0:
+			hidume_shape = 0
+			hidume_size = 0
+		else :
+			hidume_shape = (hidume_code-1) / 4 + 1
+			hidume_size = hidume_code % 4
+			if hidume_size == 0:
+				hidume_size = 4
+
 		omotekisei_code=line[147:148]
 		class_code=line[148:150]
 		yobi4=line[150:152]
@@ -238,6 +248,8 @@ with open(file, 'r') as f:
 			jockey_rate_rentai=jockey_rate_rentai,
 			gekiso_score=gekiso_score,
 			hidume_code=hidume_code,
+			hidume_shape=hidume_shape,
+			hidume_size=hidume_size,
 			omotekisei_code=omotekisei_code,
 			class_code=class_code,
 			yobi4=yobi4,

@@ -152,6 +152,8 @@ class RacehorseData(Base):
     jockey_rate_rentai=Column(Integer)
     gekiso_score=Column(Integer)
     hidume_code=Column(Integer)
+    hidume_shape=Column(Integer)
+    hidume_size=Column(Integer)
     omotekisei_code=Column(Integer)
     class_code=Column(Integer)
     yobi4=Column(String)
@@ -321,6 +323,8 @@ class RacehorseData(Base):
             'jockey_rate_rentai':self.jockey_rate_rentai,
             'gekiso_score':self.gekiso_score,
             'hidume_code':self.hidume_code,
+            'hidume_shape':self.hidume_shape,
+            'hidume_size':self.hidume_size,
             'omotekisei_code':self.omotekisei_code,
             'class_code':self.class_code,
             'yobi4':self.yobi4,
