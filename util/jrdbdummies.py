@@ -261,6 +261,10 @@ class CategoryGetter:
     def getZensoCorner4courseposition(self, zenso_corner4_course_position):
         zenso_corner4_course_position = self.getEightcat(zenso_corner4_course_position)
         return zenso_corner4_course_position
+        
+    def getUmakigocode(self, uk):
+        uk_d = self.getTwentyeightcat(uk)
+        return uk_d
 
     #WORKTABLEデータ
     #独自メソッド利用
@@ -700,4 +704,64 @@ class CategoryGetter:
             d[16] = 1
         else:
             d[17] = 1
+        return d
+
+    def getTwentyeightcat(self,num):
+        d = np.zeros([28])
+        if num == 1:
+            d[0] = 1
+        elif num == 2:
+            d[1] = 1
+        elif num == 3:
+            d[2] = 1
+        elif num == 4:
+            d[3] = 1
+        elif num == 5:
+            d[4] = 1
+        elif num == 6:
+            d[5] = 1
+        elif num == 7:
+            d[6] = 1
+        elif num == 8:
+            d[7] = 1
+        elif num == 9:
+            d[8] = 1
+        elif num == 10:
+            d[9] = 1
+        elif num == 11:
+            d[10] = 1
+        elif num == 12:
+            d[11] = 1
+        elif num == 13:
+            d[12] = 1
+        elif num == 14:
+            d[13] = 1
+        elif num == 15:
+            d[14] = 1
+        elif num == 16:
+            d[15] = 1
+        elif num == 17:
+            d[16] = 1
+        elif num == 18:
+            d[17] = 1
+        elif num == 19:
+            d[18] = 1
+        elif num == 20:
+            d[19] = 1
+        elif num == 21:
+            d[20] = 1
+        elif num == 22:
+            d[21] = 1
+        elif num == 23:
+            d[22] = 1
+        elif num == 24:
+            d[23] = 1
+        elif num == 25:
+            d[24] = 1
+        elif num == 26:
+            d[25] = 1
+        elif num == 27:
+            d[26] = 1
+        else:
+            d[27] = 1
         return d
