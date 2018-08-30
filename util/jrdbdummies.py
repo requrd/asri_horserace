@@ -139,7 +139,7 @@ class CategoryGetter:
         return num_d
 
     def getLegtype(self, leg_type):
-        leg_type_d = self.getSevencat(leg_type)
+        leg_type_d = self.getSevencat(int(leg_type))
         return leg_type_d
 
     def getOmotekiseicode(self, omotekisei_code):
