@@ -37,7 +37,34 @@ with open(file, 'r') as f:
 		mother_phylogeny=line[164:168]
 		horse_index=line[284:290]
 		jockey_index=0
+		exist_flg = 0
 		
+		hs = session.query(HorsebaseData).filter(HorsebaseData.blood==blood).first()
+		
+		if hs is not None:
+			hs.horse = horse
+			hs.sex=sex
+			hs.hair=hair
+			hs.umakigo=umakigo
+			hs.father=father
+			hs.mother=mother
+			hs.mother_father=mother_father
+			hs.birthday=birthday
+			hs.father_birthyear=father_birthyear
+			hs.mother_birthyear=mother_birthyear
+			hs.mother_father_birthyear=mother_father_birthyear
+			hs.owner=owner
+			hs.owner_kai_code=owner_kai_code
+			hs.producer=producer
+			hs.locality=locality
+			hs.delete_flg=delete_flg
+			hs.data_ymd=data_ymd
+			hs.father_phylogeny=father_phylogeny
+			hs.mother_phylogeny=mother_phylogeny
+			hs.horse_index=horse_index
+			session.add(hs)
+			exist_flg = 1
+
 		#ここからDB操作
 		new_horse = HorsebaseData(
 			blood=blood,
@@ -62,6 +89,6 @@ with open(file, 'r') as f:
 			mother_phylogeny=mother_phylogeny,
 			horse_index=horse_index
 		)
-		session.add(new_horse)
-
+		if exist_flg == 0:
+			session.add(new_horse)
 session.commit()
