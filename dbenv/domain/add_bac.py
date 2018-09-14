@@ -26,6 +26,9 @@ with open(file, 'r') as f:
 		shubetsu=line[27:29]
 		joken=line[29:31]
 		kigo=line[31:34]
+		horse_kind_joken = line[31:32]
+		horse_sex_joken = line[32:33]
+		inter_race_joken = line[33:34]
 		juryo=line[34:35]
 		grade=line[35:36]
 		race_name=line[36:61]
@@ -105,6 +108,9 @@ with open(file, 'r') as f:
 			shubetsu=shubetsu,
 			joken=joken,
 			kigo=kigo,
+			horse_kind_joken = horse_kind_joken,
+			horse_sex_joken = horse_sex_joken,
+			inter_race_joken = inter_race_joken,
 			juryo=juryo,
 			grade=grade,
 			race_name=race_name,

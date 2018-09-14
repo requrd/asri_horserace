@@ -26,6 +26,9 @@ class BangumiData(Base):
     shubetsu=Column(Integer)
     joken=Column(String)
     kigo=Column(Integer)
+    horse_kind_joken = Column(Integer)
+    horse_sex_joken = Column(Integer)
+    inter_race_joken = Column(Integer)
     juryo=Column(Integer)
     grade=Column(Integer)
     race_name=Column(String)
@@ -68,6 +71,9 @@ class BangumiData(Base):
             'shubetsu':self.shubetsu,
             'joken':self.joken,
             'kigo':self.kigo,
+            'horse_kind_joken':self.horse_kind_joken,
+            'horse_sex_joken':horse_sex_joken,
+            'inter_race_joken':inter_race_joken,
             'juryo':self.juryo,
             'grade':self.grade,
             'race_name':self.race_name,
