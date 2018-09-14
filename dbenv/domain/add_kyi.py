@@ -64,8 +64,8 @@ with open(file, 'r') as f:
 			hidume_shape = 0
 			hidume_size = 0
 		else :
-			hidume_shape = (hidume_code-1) / 4 + 1
-			hidume_size = hidume_code % 4
+			hidume_shape = (int(hidume_code)-1) / 4 + 1
+			hidume_size = int(hidume_code) % 4
 			if hidume_size == 0:
 				hidume_size = 4
 
