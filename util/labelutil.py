@@ -2,9 +2,17 @@
 
 class Labelref:
 	def __init__(self):
-		ut = np.zeros([18,18])
+		ur = np.zeros([18,18])
+		s0 = 1
+		for i in range(18):
+			for j in range(i+1,18):
+				if i != j:
+					ur[i,j] = s0
+					s0 += 1
+		self.umaren_ref = ur
 		
-		s1 = 0
+		ut = np.zeros([18,18])
+		s1 = 1
 		for i in range(18):
 			for j in range(18):
 				if i != j:
@@ -13,7 +21,7 @@ class Labelref:
 		self.umatan_ref = ut
 		
 		sp = np.zeros([18,18,18])
-		s2 = 0
+		s2 = 1
 		for i in range(18):
 			for j in range(i+1,18):
 				for k in range(j+1,18):
@@ -22,7 +30,7 @@ class Labelref:
 		self.sanrenpuku_ref = sp
 		
 		st = np.zeros([18,18,18])
-		s3 = 0
+		s3 = 1
 		for i in range(18):
 			for j in range(18):
 				if i != j:
@@ -32,10 +40,28 @@ class Labelref:
 							s3 += 1
 		self.sanrentan_ref = st
 		
+	def getUmarenNumbers(self,n):
+		one = 0
+		two = 0
+		if n == 1:
+			one = 1
+			two = 2
+		else:
+			for i in range(18):
+				for j in range(i+1,18):
+					if self.umaren_ref[i,j] == n:
+						one = i+1
+						two = j+1
+						break
+		return(one,two)
+
+	def getUmarenCatnumber(self,n,m):
+		return int(self.umaren_ref[n-1,m-1])
+        
 	def getUmatanNumbers(self,n):
 		one = 0
 		two = 0
-		if n == 0:
+		if n == 1:
 			one = 1
 			two = 2
 		else:
@@ -54,7 +80,7 @@ class Labelref:
 		one = 0
 		two = 0
 		three = 0
-		if n == 0:
+		if n == 1:
 			one = 1
 			two = 2
 			three = 3
@@ -76,7 +102,7 @@ class Labelref:
 		one = 0
 		two = 0
 		three = 0
-		if n == 0:
+		if n == 1:
 			one = 1
 			two = 2
 			three = 3
@@ -92,7 +118,5 @@ class Labelref:
 								break
 		return(one,two,three)
 
-		def getSanrentanCatnumber(self,n,m,l):
-			return int(self.sanrentantan_ref[n-1,m-1,l-1])
-
-
+	def getSanrentanCatnumber(self,n,m,l):
+		return int(self.sanrentan_ref[n-1,m-1,l-1])
