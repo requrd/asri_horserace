@@ -31,7 +31,15 @@ with open(file, 'r') as f:
 		train_distance=line[27:28].decode("Shift-jis")
 		train_juten=line[28:29].decode("Shift-jis")
 		oikiri_score=line[29:32].decode("Shift-jis")
+		
+		if oikiri_score == '   ':
+			oikiri_score = 0
+		
 		shiage_score=line[32:35].decode("Shift-jis")
+		
+		if shieage_score == '   ':
+			shiage_score = 0
+		
 		train_vol_hyoka=line[35:36].decode("Shift-jis")
 		shiage_score_change=line[36:37].decode("Shift-jis")
 		train_comment=line[37:77].decode("Shift-jis")
