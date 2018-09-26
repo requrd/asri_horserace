@@ -12,11 +12,11 @@ class BangumiData(Base):
     #親に対して
     kaisaikey=Column(String,ForeignKey('kaisai.kaisaikey'))
     #子に対して
-    racehorses = relationship("RacehorseData",backref='bangumi')
-    racehorses_w = relationship("WorkTable",backref='bangumi',lazy='subquery')
+    racehorses = relationship("RacehorseData",backref='bangumi',lazy='subquery',innerjoin=True)
+    racehorses_w = relationship("WorkTable",backref='bangumi')
 
     #1:1
-    returninfo = relationship("ReturninfoData",uselist=False, backref= 'bangumi',lazy='subquery')
+    returninfo = relationship("ReturninfoData",uselist=False, backref= 'bangumi',lazy='joined',innerjoin=True)
     ymd=Column(String)
     start_time=Column(String)
     distance=Column(Integer)
@@ -105,18 +105,19 @@ class BangumiData(Base):
 
 class RacehorseData(Base):
     __tablename__ = 'racehorse'
-    racehorsekey = Column(String,primary_key=True)
+    racehorsekey = Column(String,ForeignKey('seiseki.racehorsekey'),primary_key=True)
     #親に対して
     racekey = Column(String,ForeignKey('bangumi.racekey'))
     #1:1
-    trainanalysis = relationship("TrainAnalysisData",uselist=False, backref="racehorse")
-    trainoikiri = relationship("TrainOikiriData",uselist=False, backref="racehorse")
+    trainanalysis = relationship("TrainAnalysisData",uselist=False, backref="racehorse",lazy='joined',innerjoin=True)
+    trainoikiri = relationship("TrainOikiriData",uselist=False, backref="racehorse",lazy='joined',innerjoin=True)
+    horse_base = relationship("HorsebaseData",uselist=False,backref="racehorse",lazy='joined',innerjoin=True)
+    result = relationship("SeisekiData",uselist=False,foreign_keys=[racehorsekey],lazy='joined',innerjoin=False)
     #インデックスに対して
     horseidx = relationship("HorseIndex",uselist=False,backref="racehorse")
     jockeyidx = relationship("JockeyIndex",uselist=False,backref="racehorse")
     traineridx = relationship("TrainerIndex",uselist=False,backref="racehorse")
     hobokusakiidx = relationship("HobokusakiIndex",uselist=False,backref="racehorse")
-    hidumeidx = relationship("HidumeCodeIndex",uselist=False,backref="racehorse")
     bacode = Column(Integer)
     year = Column(Integer)
     kai = Column(Integer)
@@ -170,15 +171,15 @@ class RacehorseData(Base):
     trainer_name=Column(String)
     trainer_shozoku=Column(String)
     zenso_seiseki_key_1=Column(String,ForeignKey('seiseki.raceseisekikey'))
-    seiseki1 = relationship("SeisekiData",foreign_keys=[zenso_seiseki_key_1],backref="racehorse1")
     zenso_seiseki_key_2=Column(String,ForeignKey('seiseki.raceseisekikey'))
-    seiseki2 = relationship("SeisekiData",foreign_keys=[zenso_seiseki_key_2],backref="racehorse2")
     zenso_seiseki_key_3=Column(String,ForeignKey('seiseki.raceseisekikey'))
-    seiseki3 = relationship("SeisekiData",foreign_keys=[zenso_seiseki_key_3],backref="racehorse3")
     zenso_seiseki_key_4=Column(String,ForeignKey('seiseki.raceseisekikey'))
-    seiseki4 = relationship("SeisekiData",foreign_keys=[zenso_seiseki_key_4],backref="racehorse4")
     zenso_seiseki_key_5=Column(String,ForeignKey('seiseki.raceseisekikey'))
-    seiseki5 = relationship("SeisekiData",foreign_keys=[zenso_seiseki_key_5],backref="racehorse5")
+    zenso1 = relationship("SeisekiData",uselist=False,foreign_keys=[zenso_seiseki_key_1],lazy='joined',innerjoin = False)
+    zenso2 = relationship("SeisekiData",uselist=False,foreign_keys=[zenso_seiseki_key_2],lazy='joined',innerjoin = False)
+    zenso3 = relationship("SeisekiData",uselist=False,foreign_keys=[zenso_seiseki_key_3],lazy='joined',innerjoin = False)
+    zenso4 = relationship("SeisekiData",uselist=False,foreign_keys=[zenso_seiseki_key_4],lazy='joined',innerjoin = False)
+    zenso5 = relationship("SeisekiData",uselist=False,foreign_keys=[zenso_seiseki_key_5],lazy='joined',innerjoin = False)
     zenso_racekey_1=Column(String)
     zenso_racekey_2=Column(String)
     zenso_racekey_3=Column(String)
@@ -735,7 +736,7 @@ class KaisaiData(Base):
     __tablename__ = 'kaisai'
     kaisaikey=Column(String,primary_key=True)
     #子に対して
-    races = relationship("BangumiData",backref="kaisai",lazy='joined')
+    races = relationship("BangumiData",backref="kaisai",lazy='subquery',innerjoin=True)
     ymd=Column(Integer)
     kaisai_kbn=Column(Integer)
     day_of_week=Column(String)
@@ -1482,7 +1483,7 @@ class JockeyData(Base):
 
 class HorsebaseData(Base):
     __tablename__ = 'horsebase'
-    blood=Column(Integer,primary_key=True)
+    blood=Column(Integer,ForeignKey('racehorse.blood'),primary_key=True)
     horse=Column(String)
     sex=Column(Integer)
     hair=Column(Integer)
@@ -1543,6 +1544,8 @@ class WorkTable(Base):
     race=Column(Integer)
     num=Column(Integer)
     blood=Column(Integer)
+#    horse_base = relationship("HorsebaseData",uselist=False,backref="racehorse",lazy='subquery')
+#    result = relationship("SeisekiData",uselist=False,backref="racehorse",lazy='subquery')
     horse=Column(String)
     idm=Column(Integer)
     jockey_score=Column(Integer)
@@ -1575,6 +1578,8 @@ class WorkTable(Base):
     gekiso_score=Column(Integer)
     hidume_code=Column(Integer)
     hidume_code_index=Column(Integer)
+    hidume_shape=Column(Integer)
+    hidume_size=Column(Integer)
     omotekisei_code=Column(Integer)
     class_code=Column(Integer)
     brinkers=Column(String)
@@ -1966,6 +1971,8 @@ class WorkTable(Base):
             'gekiso_score':self.gekiso_score,
             'hidume_code':self.hidume_code,
             'hidume_code_index':self.hidume_code_index,
+            'hidume_shape':self.hidume_shape,
+            'hidume_size':self.hidume_size,
             'omotekisei_code':self.omotekisei_code,
             'class_code':self.class_code,
             'brinkers':self.brinkers,
