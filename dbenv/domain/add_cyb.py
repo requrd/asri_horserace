@@ -37,7 +37,7 @@ with open(file, 'r') as f:
 		
 		shiage_score=line[32:35].decode("Shift-jis")
 		
-		if shieage_score == '   ':
+		if shiage_score == '   ':
 			shiage_score = 0
 		
 		train_vol_hyoka=line[35:36].decode("Shift-jis")

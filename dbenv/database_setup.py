@@ -16,7 +16,7 @@ class BangumiData(Base):
     racehorses_w = relationship("WorkTable",backref='bangumi')
 
     #1:1
-    returninfo = relationship("ReturninfoData",uselist=False, backref= 'bangumi',lazy='joined',innerjoin=True)
+    returninfo = relationship("ReturninfoData",uselist=False, backref= 'bangumi',lazy='joined')
     ymd=Column(String)
     start_time=Column(String)
     distance=Column(Integer)
@@ -114,10 +114,10 @@ class RacehorseData(Base):
     horse_base = relationship("HorsebaseData",uselist=False,backref="racehorse",lazy='joined',innerjoin=True)
     result = relationship("SeisekiData",uselist=False,foreign_keys=[racehorsekey],lazy='joined',innerjoin=False)
     #インデックスに対して
-    horseidx = relationship("HorseIndex",uselist=False,backref="racehorse")
-    jockeyidx = relationship("JockeyIndex",uselist=False,backref="racehorse")
-    traineridx = relationship("TrainerIndex",uselist=False,backref="racehorse")
-    hobokusakiidx = relationship("HobokusakiIndex",uselist=False,backref="racehorse")
+    horseidx = relationship("HorseIndex",uselist=False,backref="racehorse",lazy='joined')
+    jockeyidx = relationship("JockeyIndex",uselist=False,backref="racehorse",lazy='joined')
+    traineridx = relationship("TrainerIndex",uselist=False,backref="racehorse",lazy='joined')
+    hobokusakiidx = relationship("HobokusakiIndex",uselist=False,backref="racehorse",lazy='joined')
     bacode = Column(Integer)
     year = Column(Integer)
     kai = Column(Integer)
