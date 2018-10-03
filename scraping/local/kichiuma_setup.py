@@ -342,5 +342,59 @@ class BangumiData(Base):
             'prize5':self.prize5
         }
 
+class SpeedData(Base):
+    __tablename__ = 'speed'
+    racehorsekey = Column(String,primary_key=True)
+    sp_mod = Column(Integer)
+    sp_mod_mark = Column(String)
+    sp_mean = Column(Integer)
+    sp_mean_mark = Column(String)
+    sp_max = Column(Integer)
+    sp_max_mark = Column(String)
+    zenso1_speed_score = Column(Integer)
+    zenso1_senko_score = Column(Integer)
+    zenso1_agari_score = Column(Integer)
+    zenso2_speed_score = Column(Integer)
+    zenso2_senko_score = Column(Integer)
+    zenso2_agari_score = Column(Integer)
+    zenso3_speed_score = Column(Integer)
+    zenso3_senko_score = Column(Integer)
+    zenso3_agari_score = Column(Integer)
+    zenso4_speed_score = Column(Integer)
+    zenso4_senko_score = Column(Integer)
+    zenso4_agari_score = Column(Integer)
+    zenso5_speed_score = Column(Integer)
+    zenso5_senko_score = Column(Integer)
+    zenso5_agari_score = Column(Integer)
+
+    @property
+    def serialize(self):
+        """Return object data in easily serializeable format"""
+        return {
+            'racehorsekey':self.racehorsekey,
+            'sp_mod':self.sp_mod,
+            'sp_mod_mark':self.sp_mod_mark,
+            'sp_mean':self.sp_mean,
+            'sp_mean_mark':self.sp_mean_mark,
+            'sp_max':self.sp_max,
+            'sp_max_mark':self.sp_max_mark,
+            'zenso1_speed_score':self.zenso1_speed_score,
+            'zenso1_senko_score':self.zenso1_senko_score,
+            'zenso1_agari_score':self.zenso1_agari_score,
+            'zenso2_speed_score':self.zenso2_speed_score,
+            'zenso2_senko_score':self.zenso2_senko_score,
+            'zenso2_agari_score':self.zenso2_agari_score,
+            'zenso3_speed_score':self.zenso3_speed_score,
+            'zenso3_senko_score':self.zenso3_senko_score,
+            'zenso3_agari_score':self.zenso3_agari_score,
+            'zenso4_speed_score':self.zenso4_speed_score,
+            'zenso4_senko_score':self.zenso4_senko_score,
+            'zenso4_agari_score':self.zenso4_agari_score,
+            'zenso5_speed_score':self.zenso5_speed_score,
+            'zenso5_senko_score':self.zenso5_senko_score,
+            'zenso5_agari_score':self.zenso5_agari_score
+        }
+
+
 engine = create_engine('sqlite:///kichiuma.db')
 Base.metadata.create_all(engine)
