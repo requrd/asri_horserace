@@ -1,9 +1,8 @@
 ﻿from sqlalchemy import create_engine
 from kichiuma_setup import Base,BangumiData,HorsePillar
 from sqlalchemy.orm import sessionmaker
-import requests
+import requests,sys,re
 from bs4 import BeautifulSoup
-import sys
 
 ymd = sys.argv[1]
 course_code = sys.argv[2]
@@ -21,12 +20,12 @@ day = int(ymd[6:8])
 
 url ='http://www.kichiuma-chiho.net/php/search.php'
 
-race_id = str(year) + str(month).zfill(2) + str(day).zfill(2) + str(race_num).zfill(2) + str(course_code)
+race_id = str(year) + str(month).zfill(2) + str(day).zfill(2) + str(race_num).zfill(2) + str(course_code).zfill(2)
 date = str(year) + '/' + str(month) + '/' + str(day)
 no = race_num
 p = 'rf'
-params = {'race_id':race_id,'date':date,'no':no,'id':course_code,'p':p}
 
+params = {'race_id':race_id,'date':date,'no':no,'id':course_code,'p':p}
 response = requests.get(url,params=params)
 print(response.url)
 response.encoding = response.apparent_encoding
@@ -192,24 +191,26 @@ for r in tr:
             goal_info = str(race_infos[4]).split(' ')
             
             if order_of_arrival == 0:
-                aragi_3f = 9999
+                agari_3f = 9999
                 chakusa = 9999
             else :
                 agari_3f = float(goal_info[0])
                 chakusa = float(goal_info[1])
                 
             kinryo_z = float(str(race_infos[5])[0:4])
-            jockey_name_z = str(race_infos[5])[4:7]
+            jockey_name_z = re.findall(r'(\d+|\D+)', str(race_infos[5]))[3]
             
             if len(race_infos) > 7:
-                pop_order = int(str(race_infos[5])[7])
+                pop_order = int(re.findall(r'(\d+|\D+)', str(race_infos[5]))[4])
             else :
                 pop_order = 0
             
             gate_infos = str(race_infos[6]).split(' ')
             num_of_all_horse = int(str(gate_infos[0]).replace('ト',''))
             waku = str(gate_infos[1])[0]
-            weight = int(gate_infos[2])
+            weight = 0
+            if gate_infos[2] != '－' and gate_infos[2] != '計不':
+                weight = int(gate_infos[2])
             corner1 = 0
             corner2 = 0
             corner3 = 0
