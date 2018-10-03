@@ -82,12 +82,6 @@ for w_id in id_list:
             if str(i).find("br") < 0 and str(i).find("賞金"):
                 prizelist.append(int(str(i).replace(',','')))
 
-        prize1 = prizelist[0]
-        prize2 = prizelist[1]
-        prize3 = prizelist[2]
-        prize4 = prizelist[3]
-        prize5 = prizelist[4]
-
         bd = BangumiData(racekey = race_id,
                          ymd = ymd,
                          course_code = course_code,
@@ -96,13 +90,12 @@ for w_id in id_list:
                          race_name = race_name,
                          left_right = left_right,
                          distance = distance,
-                         start_time = start_time,
-                         prize1 = prize1,
-                         prize2 = prize2,
-                         prize3 = prize3,
-                         prize4 = prize4,
-                         prize5 = prize5,
-                        )
+                         start_time = start_time
+                         )
+
+        for i in range(len(prizelist)):
+            setattr(bd,"prize"+ str(i+1),prizelist[i])
+
         session.add(bd)
         
         #馬柱情報
