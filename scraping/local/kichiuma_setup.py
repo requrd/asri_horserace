@@ -395,6 +395,61 @@ class SpeedData(Base):
             'zenso5_agari_score':self.zenso5_agari_score
         }
 
+class SpeedRankData(Base):
+    __tablename__ = 'speedrank'
+    racehorsekey = Column(String,primary_key=True)
+    zenso_rank = Column(String)
+    kakoso_rank = Column(String)
+    zenso1_sp = Column(Integer)
+    zenso2_sp = Column(Integer)
+    zenso3_sp = Column(Integer)
+    zenso4_sp = Column(Integer)
+    zenso5_sp = Column(Integer)
+
+    @property
+    def serialize(self):
+        """Return object data in easily serializeable format"""
+        return {
+            'racehorsekey':self.racehorsekey,
+            'zenso_rank':zenso_rank,
+            'kakoso_rank':self.kakoso_rank,
+            'zenso1_sp':self.zenso1_sp,
+            'zenso2_sp':self.zenso2_sp,
+            'zenso3_sp':self.zenso3_sp,
+            'zenso4_sp':self.zenso4_sp,
+            'zenso5_sp':self.zenso5_sp
+        }
+
+class RecommendData(Base):
+    __tablename__ = 'recommend'
+    racehorsekey = Column(String,primary_key=True)
+    hyoka = Column(String)
+    sp = Column(Integer)
+    senko_score = Column(Integer)
+    sp_credit = Column(Integer)
+    sp_credit_mark = Column(String)
+    sp_mod = Column(Integer)
+    sp_mod_mark = Column(String)
+    sp_max = Column(Integer)
+    sp_max_mark = Column(String)
+    last_leg_power = Column(Integer)
+    last_leg_power_mark = Column(String)
+
+    @property
+    def serialize(self):
+        """Return object data in easily serializeable format"""
+        return {
+            'racehorsekey':self.racehorsekey,
+            'hyoka':self.hyoka,
+            'sp':self.sp,
+            'senko_score':self.senko_score,
+            'sp_credit':self.sp_credit,
+            'sp_credit_mark':self.sp_credit_mark,
+            'sp_mod':self.sp_mod,
+            'sp_mod_mark':self.sp_mod_mark,
+            'last_leg_power':self.last_leg_power,
+            'last_leg_power_mark':self.last_leg_power_mark
+        }
 
 engine = create_engine('sqlite:///kichiuma.db')
 Base.metadata.create_all(engine)

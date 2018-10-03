@@ -1,5 +1,5 @@
 ﻿from sqlalchemy import create_engine
-from kichiuma_setup import Base,BangumiData,HorsePillar
+from kichiuma_setup import Base,BangumiData,HorsePillar,SpeedData,SpeedRankData,RecommendData
 from sqlalchemy.orm import sessionmaker
 import requests,sys,re
 from bs4 import BeautifulSoup
@@ -48,12 +48,15 @@ for w_id in id_list:
     response = requests.get(url,params=racelist_params)
     response.encoding = response.apparent_encoding
     soup = BeautifulSoup(response.text,'lxml')
-    num_race = len(soup.select(".bango"))
+    start_race = int(soup.find("div",class_="bango").text)
+    num_race = len(soup.select(".bango")) + start_race
 
     #レース内容を取得
-    for no in range(num_race):
-        p_num = no + 1
+    for no in range(start_race,num_race):
+        p_num = no
         race_id = ymd + str(p_num).zfill(2) + str(course_code).zfill(2)
+        
+        #馬柱取得
         params = {'race_id':race_id,'date':date,'no':p_num,'id':course_code,'p':p}
         response = requests.get(url,params=params)
         print(response.url)
@@ -61,7 +64,7 @@ for w_id in id_list:
         soup = BeautifulSoup(response.text,'lxml')
         title = soup.title.string
         print(title)
-
+        
         #レース情報
         year = soup.title.string.split("　")[2].split("年")[0]
         month = soup.title.string.split("　")[2].split("年")[1].split("月")[0].zfill(2)
@@ -101,7 +104,8 @@ for w_id in id_list:
                          prize5 = prize5,
                         )
         session.add(bd)
-
+        
+        #馬柱情報
         tr = soup.find_all("tr")
         cnt = 0
         hpl = []
@@ -242,9 +246,9 @@ for w_id in id_list:
                     gate_infos = str(race_infos[6]).split(' ')
                     num_of_all_horse = int(str(gate_infos[0]).replace('ト',''))
                     waku = str(gate_infos[1])[0]
-                    weight = 0
-                    if gate_infos[2] != '－' and gate_infos[2] != '計不':
-                        weight = int(gate_infos[2])
+                    weight = re.sub(r'\D', '',gate_infos[2])
+                    if gate_infos[2] == "":
+                        weight = 0
                     corner1 = 0
                     corner2 = 0
                     corner3 = 0
@@ -286,9 +290,92 @@ for w_id in id_list:
                     setattr(hp,"zenso"+str(zenso_no)+"_corner3",corner3)
                     setattr(hp,"zenso"+str(zenso_no)+"_corner4",corner4)
                     setattr(hp,"zenso"+str(zenso_no)+"_win_horse",win_horse)
-
                     zenso_no += 1
                 session.add(hp)
                 cnt += 1
+                
+        #スピード指数取得
+        params = {'race_id':race_id,'date':date,'no':p_num,'id':course_code,'p':'sp'}
+        sp_res = requests.get(url,params=params)
+        sp_res.encoding = sp_res.apparent_encoding
+        sp_soup = BeautifulSoup(sp_res.text,'lxml')
 
+        #スピード指数追加処理
+        tr = sp_soup.find_all("tr")
+        w_no = 1
+        for r in tr:
+            if len(r) == 29:
+                wsp = r.find_all("td",align="center")
+                sp_mod_mark = wsp[2].text
+                sp_mod = re.sub(r'\D', '', wsp[3].text)
+                sp_mean_mark = wsp[4].text
+                sp_mean = re.sub(r'\D', '', wsp[5].text)
+                sp_max_mark = wsp[6].text
+                sp_max = re.sub(r'\D', '', wsp[7].text)
+                spd = SpeedData(racehorsekey = race_id + str(w_no).zfill(2),sp_mod = sp_mod,sp_mod_mark = sp_mod_mark,sp_mean = sp_mean,sp_mean_mark = sp_mean_mark,sp_max = sp_max,sp_max_mark = sp_max_mark)
+                #前走以前の指数
+                tb = r.find_all("table")
+                zenso_no = 1
+                for s in tb:
+                    t = s.find_all("td")
+                    speed_score = re.sub(r'\D', '',t[1].text)
+                    senko_score = re.sub(r'\D', '',t[2].text)
+                    agari_score = re.sub(r'\D', '',t[3].text)
+                    setattr(spd,"zenso" + str(zenso_no)+"_speed_score",speed_score)
+                    setattr(spd,"zenso" + str(zenso_no)+"_senko_score",senko_score)
+                    setattr(spd,"zenso" + str(zenso_no)+"_agari_score",agari_score)
+                    zenso_no += 1
+                session.add(spd)
+                w_no += 1
+
+        #スピード指数ランク取得
+        params = {'race_id':race_id,'date':date,'no':p_num,'id':course_code,'p':'ls'}
+        ls_res = requests.get(url,params=params)
+        ls_res.encoding = ls_res.apparent_encoding
+        ls_soup = BeautifulSoup(ls_res.text,'lxml')
+        
+        #スピード指数ランク追加処理
+        tr = ls_soup.find_all("tr")
+        w_no = 1
+        for r in tr:
+            if len(r) == 21:
+                s = r.find_all('td')
+                zenso_rank = s[2].text
+                kakoso_rank = s[3].text
+                zenso1_sp = re.sub(r'\D', '',s[5].text)
+                zenso2_sp = re.sub(r'\D', '',s[6].text)
+                zenso3_sp = re.sub(r'\D', '',s[7].text)
+                zenso4_sp = re.sub(r'\D', '',s[8].text)
+                zenso5_sp = re.sub(r'\D', '',s[9].text)
+                spr = SpeedRankData(racehorsekey = race_id + str(w_no).zfill(2),zenso_rank = zenso_rank,kakoso_rank = kakoso_rank,zenso1_sp = zenso1_sp,zenso2_sp = zenso2_sp,zenso3_sp = zenso3_sp,zenso4_sp = zenso4_sp,zenso5_sp = zenso5_sp)
+                session.add(spr)
+                w_no += 1
+
+        #推奨馬取得
+        params = {'race_id':race_id,'date':date,'no':p_num,'id':course_code,'p':'fp'}
+        fp_res = requests.get(url,params=params)
+        fp_res.encoding = fp_res.apparent_encoding
+        fp_soup = BeautifulSoup(fp_res.text,'lxml')
+        
+        #推奨馬追加処理
+        tr = fp_soup.find_all("tr")
+        w_no = 1
+        for r in tr:
+            if len(r) == 29:
+                s = r.find_all("td")
+                hyoka = s[2].text
+                sp = re.sub(r'\D', '',s[3].text)
+                senko_score = re.sub(r'\D', '',s[5].text)
+                sp_credit_mark = s[6].text
+                sp_credit = re.sub(r'\D', '',s[7].text)
+                sp_mod_mark = s[8].text
+                sp_mod = re.sub(r'\D', '',s[9].text)
+                sp_max_mark = s[10].text
+                sp_max = re.sub(r'\D', '',s[11].text)
+                last_leg_power_mark = s[10].text
+                last_leg_power = re.sub(r'\D', '',s[11].text)
+                rd = RecommendData(racehorsekey = race_id + str(w_no).zfill(2),hyoka = hyoka,sp = sp,senko_score = senko_score,sp_credit_mark = sp_credit_mark,sp_credit = sp_credit,sp_mod_mark = sp_mod_mark,sp_mod = sp_mod,sp_max_mark = sp_max_mark,sp_max = sp_max,last_leg_power_mark = last_leg_power_mark,last_leg_power = last_leg_power)
+                session.add(rd)
+                w_no += 1
+        
 session.commit()
