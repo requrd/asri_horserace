@@ -195,9 +195,17 @@ for w_id in id_list:
                 zenso_no = 1
                 for s in sl:
                     race_infos = []
+                    q = 0
                     for s_elm in s.childGenerator():
                         if str(s_elm).find('br') < 0:
                             race_infos.append(s_elm)
+                            q += 1
+                            if q == 2:
+                                break
+                    ql = str(s).split('<br/>')[1:6]
+                    for e in ql:
+                        race_infos.append(e)
+
                     kaisai_infos = race_infos[0].split('.')
                     course_name_z = kaisai_infos[0][:-2]
                     year = kaisai_infos[0][-2:]
@@ -222,16 +230,22 @@ for w_id in id_list:
                         agari_3f = 9999
                         chakusa = 9999
                     else :
-                        if goal_info[0] == '非計測':
+                        pattern=r'([+-]?[0-9]+\.?[0-9]*)'
+                        a3 = re.findall(pattern,goal_info[0])
+                        if a3 == []:
                             agari_3f = 9999
                         else :
-                            agari_3f = float(goal_info[0])
-                        chakusa = float(goal_info[1])
+                            agari_3f = float(a3[0])
+                        ck = re.findall(pattern,goal_info[1])
+                        if ck == []:
+                            chakusa = 9999
+                        else :
+                            chakusa = float(ck[0])
                         
                     kinryo_z = float(str(race_infos[5])[0:4])
                     jockey_name_z = re.findall(r'(\d+|\D+)', str(race_infos[5]))[3]
                     
-                    if len(race_infos) > 7:
+                    if len(re.findall(r'(\d+|\D+)', str(race_infos[5]))) > 4:
                         pop_order = int(re.findall(r'(\d+|\D+)', str(race_infos[5]))[4])
                     else :
                         pop_order = 0
