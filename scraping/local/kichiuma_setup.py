@@ -456,12 +456,17 @@ class SeisekiData(Base):
     racehorsekey = Column(String,primary_key=True)
     num = Column(Integer)
     waku = Column(Integer)
+    lineage_login_code = Column(Integer) 
     order_of_arrival = Column(Integer)
     kinryo = Column(Integer)
+    jockey_license_no = Column(Integer)
     jockey_name = Column(String)
+    trainer_license_no = Column(Integer)
     trainer_name = Column(String)
     weight = Column(Integer)
-    time = Column(Integer)
+    weight_increase = Column(Integer)
+    time_m = Column(Integer)
+    time_s = Column(Integer)
     chakusa = Column(String)
     agari_3f = Column(Integer)
     pop_order = Column(Integer)
@@ -473,12 +478,15 @@ class SeisekiData(Base):
             'racehorsekey':self.racehorsekey,
             'num':self.num,
             'waku':self.waku,
+            'lineage_login_code':self.lineage_login_code,
             'order_of_arrival':self.order_of_arrival,
             'kinryo':self.kinryo,
+            'jockey_license_no':self.jockey_license_no,
             'jockey_name':self.jockey_name,
             'trainer_name':self.trainer_name,
             'weight':self.weight,
-            'time':self.time,
+            'time_m':self.time_m,
+            'time_s':self.time_s,
             'chakusa':self.chakusa,
             'agari_3f':self.agari_3f,
             'pop_order':self.pop_order
