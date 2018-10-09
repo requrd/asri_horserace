@@ -451,5 +451,323 @@ class RecommendData(Base):
             'last_leg_power_mark':self.last_leg_power_mark
         }
 
+class SeisekiData(Base):
+    __tablename__ = 'seiseki'
+    racehorsekey = Column(String,primary_key=True)
+    num = Column(Integer)
+    waku = Column(Integer)
+    order_of_arrival = Column(Integer)
+    kinryo = Column(Integer)
+    jockey_name = Column(String)
+    trainer_name = Column(String)
+    weight = Column(Integer)
+    time = Column(Integer)
+    chakusa = Column(String)
+    agari_3f = Column(Integer)
+    pop_order = Column(Integer)
+
+    @property
+    def serialize(self):
+        """Return object data in easily serializeable format"""
+        return {
+            'racehorsekey':self.racehorsekey,
+            'num':self.num,
+            'waku':self.waku,
+            'order_of_arrival':self.order_of_arrival,
+            'kinryo':self.kinryo,
+            'jockey_name':self.jockey_name,
+            'trainer_name':self.trainer_name,
+            'weight':self.weight,
+            'time':self.time,
+            'chakusa':self.chakusa,
+            'agari_3f':self.agari_3f,
+            'pop_order':self.pop_order
+        }
+
+class Returninfo(Base):
+    __tablename__ = 'returninfo'
+    racekey = Column(String,primary_key=True)
+    win1_num = Column(Integer)
+    win1_ret = Column(Integer)
+    win1_pop = Column(Integer)
+    win2_num = Column(Integer)
+    win2_ret = Column(Integer)
+    win2_pop = Column(Integer)
+    win3_num = Column(Integer)
+    win3_ret = Column(Integer)
+    win3_pop = Column(Integer)
+
+    place1_num = Column(Integer)
+    place1_ret = Column(Integer)
+    place1_pop = Column(Integer)
+    place2_num = Column(Integer)
+    place2_ret = Column(Integer)
+    place2_pop = Column(Integer)
+    place3_num = Column(Integer)
+    place3_ret = Column(Integer)
+    place3_pop = Column(Integer)
+    place4_num = Column(Integer)
+    place4_ret = Column(Integer)
+    place4_pop = Column(Integer)
+    place5_num = Column(Integer)
+    place5_ret = Column(Integer)
+    place5_pop = Column(Integer)
+    place6_num = Column(Integer)
+    place6_ret = Column(Integer)
+    place6_pop = Column(Integer)
+
+    wakuren1_num1 = Column(Integer)
+    wakuren1_num2 = Column(Integer)
+    wakuren1_ret = Column(Integer)
+    wakuren1_pop = Column(Integer)
+    wakuren2_num1 = Column(Integer)
+    wakuren2_num2 = Column(Integer)
+    wakuren2_ret = Column(Integer)
+    wakuren2_pop = Column(Integer)
+    wakuren3_num1 = Column(Integer)
+    wakuren3_num2 = Column(Integer)
+    wakuren3_ret = Column(Integer)
+    wakuren3_pop = Column(Integer)
+
+    umaren1_num1 = Column(Integer)
+    umaren1_num2 = Column(Integer)
+    umaren1_ret = Column(Integer)
+    umaren1_pop = Column(Integer)
+    umaren2_num1 = Column(Integer)
+    umaren2_num2 = Column(Integer)
+    umaren2_ret = Column(Integer)
+    umaren2_pop = Column(Integer)
+    umaren3_num1 = Column(Integer)
+    umaren3_num2 = Column(Integer)
+    umaren3_ret = Column(Integer)
+    umaren3_pop = Column(Integer)
+
+    wide1_num1 = Column(Integer)
+    wide1_num2 = Column(Integer)
+    wide1_ret = Column(Integer)
+    wide1_pop = Column(Integer)
+    wide2_num1 = Column(Integer)
+    wide2_num2 = Column(Integer)
+    wide2_ret = Column(Integer)
+    wide2_pop = Column(Integer)
+    wide3_num1 = Column(Integer)
+    wide3_num2 = Column(Integer)
+    wide3_ret = Column(Integer)
+    wide3_pop = Column(Integer)
+    wide4_num1 = Column(Integer)
+    wide4_num2 = Column(Integer)
+    wide4_ret = Column(Integer)
+    wide4_pop = Column(Integer)
+    wide5_num1 = Column(Integer)
+    wide5_num2 = Column(Integer)
+    wide5_ret = Column(Integer)
+    wide5_pop = Column(Integer)
+    wide6_num1 = Column(Integer)
+    wide6_num2 = Column(Integer)
+    wide6_ret = Column(Integer)
+    wide6_pop = Column(Integer)
+    wide7_num1 = Column(Integer)
+    wide7_num2 = Column(Integer)
+    wide7_ret = Column(Integer)
+    wide7_pop = Column(Integer)
+
+    wakutan1_num1 = Column(Integer)
+    wakutan1_num2 = Column(Integer)
+    wakutan1_ret = Column(Integer)
+    wakutan1_pop = Column(Integer)
+    wakutan2_num1 = Column(Integer)
+    wakutan2_num2 = Column(Integer)
+    wakutan2_ret = Column(Integer)
+    wakutan2_pop = Column(Integer)
+    wakutan3_num1 = Column(Integer)
+    wakutan3_num2 = Column(Integer)
+    wakutan3_ret = Column(Integer)
+    wakutan3_pop = Column(Integer)
+
+    umatan1_num1 = Column(Integer)
+    umatan1_num2 = Column(Integer)
+    umatan1_ret = Column(Integer)
+    umatan1_pop = Column(Integer)
+    umatan2_num1 = Column(Integer)
+    umatan2_num2 = Column(Integer)
+    umatan2_ret = Column(Integer)
+    umatan2_pop = Column(Integer)
+    umatan3_num1 = Column(Integer)
+    umatan3_num2 = Column(Integer)
+    umatan3_ret = Column(Integer)
+    umatan3_pop = Column(Integer)
+
+    sanrenpuku1_num1 = Column(Integer)
+    sanrenpuku1_num2 = Column(Integer)
+    sanrenpuku1_num3 = Column(Integer)
+    sanrenpuku1_ret = Column(Integer)
+    sanrenpuku1_pop = Column(Integer)
+    sanrenpuku2_num1 = Column(Integer)
+    sanrenpuku2_num2 = Column(Integer)
+    sanrenpuku2_num3 = Column(Integer)
+    sanrenpuku2_ret = Column(Integer)
+    sanrenpuku2_pop = Column(Integer)
+    sanrenpuku3_num1 = Column(Integer)
+    sanrenpuku3_num2 = Column(Integer)
+    sanrenpuku3_num3 = Column(Integer)
+    sanrenpuku3_ret = Column(Integer)
+    sanrenpuku3_pop = Column(Integer)
+
+    sanrentan1_num1 = Column(Integer)
+    sanrentan1_num2 = Column(Integer)
+    sanrentan1_num3 = Column(Integer)
+    sanrentan1_ret = Column(Integer)
+    sanrentan1_pop = Column(Integer)
+    sanrentan2_num1 = Column(Integer)
+    sanrentan2_num2 = Column(Integer)
+    sanrentan2_num3 = Column(Integer)
+    sanrentan2_ret = Column(Integer)
+    sanrentan2_pop = Column(Integer)
+    sanrentan3_num1 = Column(Integer)
+    sanrentan3_num2 = Column(Integer)
+    sanrentan3_num3 = Column(Integer)
+    sanrentan3_ret = Column(Integer)
+    sanrentan3_pop = Column(Integer)
+
+    @property
+    def serialize(self):
+        """Return object data in easily serializeable format"""
+        return {
+            'racekey':self.racekey,
+            'win1_ret':self.win1_num,
+            'win1_ret':self.win1_ret,
+            'win1_pop':self.win1_pop,
+            'win2_num':self.win2_num,
+            'win2_ret':self.win2_ret,
+            'win2_pop':self.win2_pop,
+            'win3_num':self.win3_num,
+            'win3_ret':self.win3_ret,
+            'win3_pop':self.win3_pop,
+            'place1_num':self.place1_num,
+            'place1_ret':self.place1_ret,
+            'place1_pop':self.place1_pop,
+            'place2_num':self.place2_num,
+            'place2_ret':self.place2_ret,
+            'place2_pop':self.place2_pop,
+            'place3_num':self.place3_num,
+            'place3_ret':self.place3_ret,
+            'place3_pop':self.place3_pop,
+            'place4_num':self.place4_num,
+            'place4_ret':self.place4_ret,
+            'place4_pop':self.place4_pop,
+            'place5_num':self.place5_num,
+            'place5_ret':self.place5_ret,
+            'place5_pop':self.place5_pop,
+            'place6_num':self.place6_num,
+            'place6_ret':self.place6_ret,
+            'place6_pop':self.place6_pop,
+            'wakuren1_num1':self.wakuren1_num1,
+            'wakuren1_num2':self.wakuren1_num2,
+            'wakuren1_ret':self.wakuren1_ret,
+            'wakuren1_pop':self.wakuren1_pop,
+            'wakuren2_num1':self.wakuren2_num1,
+            'wakuren2_num2':self.wakuren2_num2,
+            'wakuren2_ret':self.wakuren2_ret,
+            'wakuren2_pop':self.wakuren2_pop,
+            'wakuren3_num1':self.wakuren3_num1,
+            'wakuren3_num2':self.wakuren3_num2,
+            'wakuren3_ret':self.wakuren3_ret,
+            'wakuren3_pop':self.wakuren3_pop,
+            'umaren1_num1':self.umaren1_num1,
+            'umaren1_num2':self.umaren1_num2,
+            'umaren1_ret':self.umaren1_ret,
+            'umaren1_pop':self.umaren1_pop,
+            'umaren2_num1':self.umaren2_num1,
+            'umaren2_num2':self.umaren2_num2,
+            'umaren2_ret':self.umaren2_ret,
+            'umaren2_pop':self.umaren2_pop,
+            'umaren3_num1':self.umaren3_num1,
+            'umaren3_num2':self.umaren3_num2,
+            'umaren3_ret':self.umaren3_ret,
+            'umaren3_pop':self.umaren3_pop,
+            'wide1_num1':self.wide1_num1,
+            'wide1_num2':self.wide1_num2,
+            'wide1_ret':self.wide1_ret,
+            'wide1_pop':self.wide1_pop,
+            'wide2_num1':self.wide2_num1,
+            'wide2_num2':self.wide2_num2,
+            'wide2_ret':self.wide2_ret,
+            'wide2_pop':self.wide2_pop,
+            'wide3_num1':self.wide3_num1,
+            'wide3_num2':self.wide3_num2,
+            'wide3_ret':self.wide3_ret,
+            'wide3_pop':self.wide3_pop,
+            'wide4_num1':self.wide4_num1,
+            'wide4_num2':self.wide4_num2,
+            'wide4_ret':self.wide4_ret,
+            'wide4_pop':self.wide4_pop,
+            'wide5_num1':self.wide5_num1,
+            'wide5_num2':self.wide5_num2,
+            'wide5_ret':self.wide5_ret,
+            'wide5_pop':self.wide5_pop,
+            'wide6_num1':self.wide6_num1,
+            'wide6_num2':self.wide6_num2,
+            'wide6_ret':self.wide6_ret,
+            'wide6_pop':self.wide6_pop,
+            'wide7_num1':self.wide7_num1,
+            'wide7_num2':self.wide7_num2,
+            'wide7_ret':self.wide7_ret,
+            'wide7_pop':self.wide7_pop,
+            'wakutan1_num1':self.wakutan1_num1,
+            'wakutan1_num2':self.wakutan1_num2,
+            'wakutan1_ret':self.wakutan1_ret,
+            'wakutan1_pop':self.wakutan1_pop,
+            'wakutan2_num1':self.wakutan2_num1,
+            'wakutan2_num2':self.wakutan2_num2,
+            'wakutan2_ret':self.wakutan2_ret,
+            'wakutan2_pop':self.wakutan2_pop,
+            'wakutan3_num1':self.wakutan3_num1,
+            'wakutan3_num2':self.wakutan3_num2,
+            'wakutan3_ret':self.wakutan3_ret,
+            'wakutan3_pop':self.wakutan3_pop,
+            'umatan1_num1':self.umatan1_num1,
+            'umatan1_num2':self.umatan1_num2,
+            'umatan1_ret':self.umatan1_ret,
+            'umatan1_pop':self.umatan1_pop,
+            'umatan2_num1':self.umatan2_num1,
+            'umatan2_num2':self.umatan2_num2,
+            'umatan2_ret':self.umatan2_ret,
+            'umatan2_pop':self.umatan2_pop,
+            'umatan3_num1':self.umatan3_num1,
+            'umatan3_num2':self.umatan3_num2,
+            'umatan3_ret':self.umatan3_ret,
+            'umatan3_pop':self.umatan3_pop,
+            'sanrenpuku1_num1':self.sanrenpuku1_num1,
+            'sanrenpuku1_num2':self.sanrenpuku1_num2,
+            'sanrenpuku1_num3':self.sanrenpuku1_num3,
+            'sanrenpuku1_ret':self.sanrenpuku1_ret,
+            'sanrenpuku1_pop':self.sanrenpuku1_pop,
+            'sanrenpuku2_num1':self.sanrenpuku2_num1,
+            'sanrenpuku2_num2':self.sanrenpuku2_num2,
+            'sanrenpuku2_num3':self.sanrenpuku2_num3,
+            'sanrenpuku2_ret':self.sanrenpuku2_ret,
+            'sanrenpuku2_pop':self.sanrenpuku2_pop,
+            'sanrenpuku3_num1':self.sanrenpuku3_num1,
+            'sanrenpuku3_num2':self.sanrenpuku3_num2,
+            'sanrenpuku3_num3':self.sanrenpuku3_num3,
+            'sanrenpuku3_ret':self.sanrenpuku3_ret,
+            'sanrenpuku3_pop':self.sanrenpuku3_pop,
+            'sanrentan1_num1':self.sanrentan1_num1,
+            'sanrentan1_num2':self.sanrentan1_num2,
+            'sanrentan1_num3':self.sanrentan1_num3,
+            'sanrentan1_ret':self.sanrentan1_ret,
+            'sanrentan1_pop':self.sanrentan1_pop,
+            'sanrentan2_num1':self.sanrentan2_num1,
+            'sanrentan2_num2':self.sanrentan2_num2,
+            'sanrentan2_num3':self.sanrentan2_num3,
+            'sanrentan2_ret':self.sanrentan2_ret,
+            'sanrentan2_pop':self.sanrentan2_pop,
+            'sanrentan3_num1':self.sanrentan3_num1,
+            'sanrentan3_num2':self.sanrentan3_num2,
+            'sanrentan3_num3':self.sanrentan3_num3,
+            'sanrentan3_ret':self.sanrentan3_ret,
+            'sanrentan3_pop':self.sanrentan3_pop
+        }
+
 engine = create_engine('sqlite:///kichiuma.db')
 Base.metadata.create_all(engine)
