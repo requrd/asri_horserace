@@ -10,8 +10,11 @@ class HorsePillar(Base):
     __tablename__ = 'horsepillar'
     
     racehorsekey = Column(String,primary_key=True)
-    racekey = Column(String)
-    
+    racekey = Column(String,ForeignKey('bangumi.racekey'))
+    speed = relationship("SpeedData",uselist=False,backref="racehorse",lazy='joined')
+    speedrank = relationship("SpeedRankData",uselist=False,backref="racehorse",lazy='joined')
+    recommend = relationship("RecommendData",uselist=False,backref="racehorse",lazy='joined')
+    result = relationship("SeisekiData",uselist=False,backref="racehorse",lazy='joined')
     #馬情報
     num = Column(Integer)
     waku = Column(Integer)
@@ -306,7 +309,8 @@ class HorsePillar(Base):
 class BangumiData(Base):
     __tablename__ = 'bangumi'
     racekey = Column(String,primary_key=True)
-    
+    racehorses = relationship("HorsePillar",backref="race")
+    returninfo = relationship("Returninfo",uselist=False,backref="race",lazy='subquery')
     #レース情報
     ymd = Column(String)
     course_code = Column(Integer)
@@ -344,7 +348,7 @@ class BangumiData(Base):
 
 class SpeedData(Base):
     __tablename__ = 'speed'
-    racehorsekey = Column(String,primary_key=True)
+    racehorsekey = Column(String,ForeignKey('horsepillar.racehorsekey'),primary_key=True)
     sp_mod = Column(Integer)
     sp_mod_mark = Column(String)
     sp_mean = Column(Integer)
@@ -397,7 +401,7 @@ class SpeedData(Base):
 
 class SpeedRankData(Base):
     __tablename__ = 'speedrank'
-    racehorsekey = Column(String,primary_key=True)
+    racehorsekey = Column(String,ForeignKey('horsepillar.racehorsekey'),primary_key=True)
     zenso_rank = Column(String)
     kakoso_rank = Column(String)
     zenso1_sp = Column(Integer)
@@ -422,7 +426,7 @@ class SpeedRankData(Base):
 
 class RecommendData(Base):
     __tablename__ = 'recommend'
-    racehorsekey = Column(String,primary_key=True)
+    racehorsekey = Column(String,ForeignKey('horsepillar.racehorsekey'),primary_key=True)
     hyoka = Column(String)
     sp = Column(Integer)
     senko_score = Column(Integer)
@@ -453,7 +457,7 @@ class RecommendData(Base):
 
 class SeisekiData(Base):
     __tablename__ = 'seiseki'
-    racehorsekey = Column(String,primary_key=True)
+    racehorsekey = Column(String,ForeignKey('horsepillar.racehorsekey'),primary_key=True)
     num = Column(Integer)
     waku = Column(Integer)
     lineage_login_code = Column(Integer) 
@@ -494,7 +498,7 @@ class SeisekiData(Base):
 
 class Returninfo(Base):
     __tablename__ = 'returninfo'
-    racekey = Column(String,primary_key=True)
+    racekey = Column(String,ForeignKey('bangumi.racekey'),primary_key=True)
     win1_num = Column(Integer)
     win1_ret = Column(Integer)
     win1_pop = Column(Integer)
