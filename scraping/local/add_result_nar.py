@@ -68,7 +68,8 @@ for w_id in id_list:
         
         ri = Returninfo(racekey = race_id)
         return_infos = soup.find_all("td",class_="dbtbl")[1].find("tr",class_="dbdata")
-        td = return_infos.find_all("td")
+        if return_infos is not None:
+            td = return_infos.find_all("td")
 
         tickets = soup.find_all("td",class_="dbtbl")[1].find_all('td',colspan='3')
         sell_tickets = []
@@ -76,44 +77,46 @@ for w_id in id_list:
             sell_tickets.append(r.text)
 
         ##単勝
-        i = sell_tickets.index('単勝') + 1
-        w = 1
-        for s in td[i].childGenerator():
-            if str(s).find('br') < 0:
-                setattr(ri,'win' + str(w) + '_num',int(s))
-                w += 1
-            
-        w = 1
-        for s in td[i+1].childGenerator():
-            if str(s).find('br') < 0:
-                setattr(ri,'win' + str(w) + '_ret',int(re.sub(r'\D', '',s)))
-                w += 1
-            
-        w = 1
-        for s in td[i+2].childGenerator():
-            if str(s).find('br') < 0:
-                setattr(ri,'win' + str(w) + '_pop',int(s))
-                w += 1
+        if len(sell_tickets) > 0:
+            i = sell_tickets.index('単勝') + 1
+            w = 1
+            for s in td[i].childGenerator():
+                if str(s).find('br') < 0:
+                    setattr(ri,'win' + str(w) + '_num',int(s))
+                    w += 1
+                
+            w = 1
+            for s in td[i+1].childGenerator():
+                if str(s).find('br') < 0:
+                    setattr(ri,'win' + str(w) + '_ret',int(re.sub(r'\D', '',s)))
+                    w += 1
+                
+            w = 1
+            for s in td[i+2].childGenerator():
+                if str(s).find('br') < 0:
+                    setattr(ri,'win' + str(w) + '_pop',int(s))
+                    w += 1
 
         ##複勝
-        i = sell_tickets.index('複勝')*3 + 1
-        w = 1
-        for s in td[i].childGenerator():
-            if str(s).find('br') < 0:
-                setattr(ri,'place' + str(w) + '_num',int(s))
-                w += 1
-            
-        w = 1
-        for s in td[i+1].childGenerator():
-            if str(s).find('br') < 0:
-                setattr(ri,'place' + str(w) + '_ret',int(re.sub(r'\D', '',s)))
-                w += 1
-            
-        w = 1
-        for s in td[i+2].childGenerator():
-            if str(s).find('br') < 0:
-                setattr(ri,'place' + str(w) + '_pop',int(s))
-                w += 1
+        if len(sell_tickets) > 6:
+            i = sell_tickets.index('複勝')*3 + 1
+            w = 1
+            for s in td[i].childGenerator():
+                if str(s).find('br') < 0:
+                    setattr(ri,'place' + str(w) + '_num',int(s))
+                    w += 1
+                
+            w = 1
+            for s in td[i+1].childGenerator():
+                if str(s).find('br') < 0:
+                    setattr(ri,'place' + str(w) + '_ret',int(re.sub(r'\D', '',s)))
+                    w += 1
+                
+            w = 1
+            for s in td[i+2].childGenerator():
+                if str(s).find('br') < 0:
+                    setattr(ri,'place' + str(w) + '_pop',int(s))
+                    w += 1
 
         ##枠連
         if len(tickets) == 9:
@@ -140,27 +143,28 @@ for w_id in id_list:
                     w += 1
 
         ##馬連
-        i = sell_tickets.index('馬連複')*3 + 1
-        w = 1
-        for s in td[i].childGenerator():
-            if str(s).find('br') < 0:
-                num1 = str(s).split('-')[0]
-                num2 = str(s).split('-')[1]
-                setattr(ri,'umaren' + str(w) + '_num1',num1)
-                setattr(ri,'umaren' + str(w) + '_num2',num2)
-                w += 1
-            
-        w = 1
-        for s in td[i+1].childGenerator():
-            if str(s).find('br') < 0:
-                setattr(ri,'umaren' + str(w) + '_ret',int(re.sub(r'\D', '',s)))
-                w += 1
-            
-        w = 1
-        for s in td[i+2].childGenerator():
-            if str(s).find('br') < 0:
-                setattr(ri,'umaren' + str(w) + '_pop',int(s))
-                w += 1
+        if len(sell_tickets) > 0:
+            i = sell_tickets.index('馬連複')*3 + 1
+            w = 1
+            for s in td[i].childGenerator():
+                if str(s).find('br') < 0:
+                    num1 = str(s).split('-')[0]
+                    num2 = str(s).split('-')[1]
+                    setattr(ri,'umaren' + str(w) + '_num1',num1)
+                    setattr(ri,'umaren' + str(w) + '_num2',num2)
+                    w += 1
+                
+            w = 1
+            for s in td[i+1].childGenerator():
+                if str(s).find('br') < 0:
+                    setattr(ri,'umaren' + str(w) + '_ret',int(re.sub(r'\D', '',s)))
+                    w += 1
+                
+            w = 1
+            for s in td[i+2].childGenerator():
+                if str(s).find('br') < 0:
+                    setattr(ri,'umaren' + str(w) + '_pop',int(s))
+                    w += 1
 
         ##枠単
         if len(tickets) == 9:
@@ -168,11 +172,12 @@ for w_id in id_list:
             w = 1
             for s in td[i].childGenerator():
                 if str(s).find('br') < 0:
-                    num1 = str(s).split('-')[0]
-                    num2 = str(s).split('-')[1]
-                    setattr(ri,'wakutan' + str(w) + '_num1',num1)
-                    setattr(ri,'wakutan' + str(w) + '_num2',num2)
-                    w += 1
+                    if s.find('-') > 0:
+                        num1 = str(s).split('-')[0]
+                        num2 = str(s).split('-')[1]
+                        setattr(ri,'wakutan' + str(w) + '_num1',num1)
+                        setattr(ri,'wakutan' + str(w) + '_num2',num2)
+                        w += 1
                 
             w = 1
             for s in td[i+1].childGenerator():
@@ -183,104 +188,109 @@ for w_id in id_list:
             w = 1
             for s in td[i+2].childGenerator():
                 if str(s).find('br') < 0:
-                    setattr(ri,'wakutan' + str(w) + '_pop',int(s))
+                    setattr(ri,'wakutan' + str(w) + '_pop',re.sub(r'\D', '',s))
                     w += 1
 
         ##馬単
-        i = sell_tickets.index('馬連単')*3 + 1
-        w = 1
-        for s in td[i].childGenerator():
-            if str(s).find('br') < 0:
-                num1 = str(s).split('-')[0]
-                num2 = str(s).split('-')[1]
-                setattr(ri,'umatan' + str(w) + '_num1',num1)
-                setattr(ri,'umatan' + str(w) + '_num2',num2)
-                w += 1
-            
-        w = 1
-        for s in td[i+1].childGenerator():
-            if str(s).find('br') < 0:
-                setattr(ri,'umatan' + str(w) + '_ret',int(re.sub(r'\D', '',s)))
-                w += 1
-            
-        w = 1
-        for s in td[i+2].childGenerator():
-            if str(s).find('br') < 0:
-                setattr(ri,'umatan' + str(w) + '_pop',int(s))
-                w += 1
+        if len(sell_tickets) > 0:
+            i = sell_tickets.index('馬連単')*3 + 1
+            w = 1
+            for s in td[i].childGenerator():
+                if str(s).find('br') < 0:
+                    num1 = str(s).split('-')[0]
+                    num2 = str(s).split('-')[1]
+                    setattr(ri,'umatan' + str(w) + '_num1',num1)
+                    setattr(ri,'umatan' + str(w) + '_num2',num2)
+                    w += 1
+                
+            w = 1
+            for s in td[i+1].childGenerator():
+                if str(s).find('br') < 0:
+                    setattr(ri,'umatan' + str(w) + '_ret',int(re.sub(r'\D', '',s)))
+                    w += 1
+                
+            w = 1
+            for s in td[i+2].childGenerator():
+                if str(s).find('br') < 0:
+                    setattr(ri,'umatan' + str(w) + '_pop',int(s))
+                    w += 1
 
         ##ワイド
-        i = sell_tickets.index('ワイド')*3 + 1
-        w = 1
-        for s in td[i].childGenerator():
-            if str(s).find('br') < 0:
-                num1 = str(s).split('-')[0]
-                num2 = str(s).split('-')[1]
-                setattr(ri,'wide' + str(w) + '_num1',num1)
-                setattr(ri,'wide' + str(w) + '_num2',num2)
-                w += 1
-            
-        w = 1
-        for s in td[i+1].childGenerator():
-            if str(s).find('br') < 0:
-                setattr(ri,'wide' + str(w) + '_ret',int(re.sub(r'\D', '',s)))
-                w += 1
-            
-        w = 1
-        for s in td[i+2].childGenerator():
-            if str(s).find('br') < 0:
-                setattr(ri,'wide' + str(w) + '_pop',int(s))
-                w += 1
+        if len(sell_tickets) > 3:
+            i = sell_tickets.index('ワイド')*3 + 1
+            w = 1
+            for s in td[i].childGenerator():
+                if str(s).find('br') < 0:
+                    num1 = str(s).split('-')[0]
+                    num2 = str(s).split('-')[1]
+                    setattr(ri,'wide' + str(w) + '_num1',num1)
+                    setattr(ri,'wide' + str(w) + '_num2',num2)
+                    w += 1
+                
+            w = 1
+            for s in td[i+1].childGenerator():
+                if str(s).find('br') < 0:
+                    setattr(ri,'wide' + str(w) + '_ret',int(re.sub(r'\D', '',s)))
+                    w += 1
+                
+            w = 1
+            for s in td[i+2].childGenerator():
+                if str(s).find('br') < 0:
+                    setattr(ri,'wide' + str(w) + '_pop',int(s))
+                    w += 1
 
         ##三連複
-        i = sell_tickets.index('三連複')*3 + 1
-        w = 1
-        for s in td[i].childGenerator():
-            if str(s).find('br') < 0:
-                num1 = str(s).split('-')[0]
-                num2 = str(s).split('-')[1]
-                num3 = str(s).split('-')[2]
-                setattr(ri,'sanrenpuku' + str(w) + '_num1',num1)
-                setattr(ri,'sanrenpuku' + str(w) + '_num2',num2)
-                setattr(ri,'sanrenpuku' + str(w) + '_num3',num3)
-                w += 1
-            
-        w = 1
-        for s in td[i+1].childGenerator():
-            if str(s).find('br') < 0:
-                setattr(ri,'sanrenpuku' + str(w) + '_ret',int(re.sub(r'\D', '',s)))
-                w += 1
-            
-        w = 1
-        for s in td[i+2].childGenerator():
-            if str(s).find('br') < 0:
-                setattr(ri,'sanrenpuku' + str(w) + '_pop',int(s))
-                w += 1
+        if len(sell_tickets) > 3:
+            i = sell_tickets.index('三連複')*3 + 1
+            w = 1
+            for s in td[i].childGenerator():
+                if str(s).find('br') < 0:
+                    num1 = str(s).split('-')[0]
+                    num2 = str(s).split('-')[1]
+                    num3 = str(s).split('-')[2]
+                    setattr(ri,'sanrenpuku' + str(w) + '_num1',num1)
+                    setattr(ri,'sanrenpuku' + str(w) + '_num2',num2)
+                    setattr(ri,'sanrenpuku' + str(w) + '_num3',num3)
+                    w += 1
+                
+            w = 1
+            for s in td[i+1].childGenerator():
+                if str(s).find('br') < 0:
+                    setattr(ri,'sanrenpuku' + str(w) + '_ret',int(re.sub(r'\D', '',s)))
+                    w += 1
+                
+            w = 1
+            for s in td[i+2].childGenerator():
+                if str(s).find('br') < 0:
+                    setattr(ri,'sanrenpuku' + str(w) + '_pop',int(s))
+                    w += 1
 
         ##三連単
-        i = sell_tickets.index('三連単')*3 + 1
-        w = 1
-        for s in td[i].childGenerator():
-            if str(s).find('br') < 0:
-                num1 = str(s).split('-')[0]
-                num2 = str(s).split('-')[1]
-                num3 = str(s).split('-')[2]
-                setattr(ri,'sanrentan' + str(w) + '_num1',num1)
-                setattr(ri,'sanrentan' + str(w) + '_num2',num2)
-                setattr(ri,'sanrentan' + str(w) + '_num3',num3)
-                w += 1
-            
-        w = 1
-        for s in td[i+1].childGenerator():
-            if str(s).find('br') < 0:
-                setattr(ri,'sanrentan' + str(w) + '_ret',int(re.sub(r'\D', '',s)))
-                w += 1
-            
-        w = 1
-        for s in td[i+2].childGenerator():
-            if str(s).find('br') < 0:
-                setattr(ri,'sanrentan' + str(w) + '_pop',int(s))
-                w += 1
+        if len(sell_tickets) > 3:
+            i = sell_tickets.index('三連単')*3 + 1
+            w = 1
+            for s in td[i].childGenerator():
+                if str(s).find('br') < 0:
+                    if len(str(s).split('-')) > 1:
+                        num1 = str(s).split('-')[0]
+                        num2 = str(s).split('-')[1]
+                        num3 = str(s).split('-')[2]
+                        setattr(ri,'sanrentan' + str(w) + '_num1',num1)
+                        setattr(ri,'sanrentan' + str(w) + '_num2',num2)
+                        setattr(ri,'sanrentan' + str(w) + '_num3',num3)
+                        w += 1
+                
+            w = 1
+            for s in td[i+1].childGenerator():
+                if str(s).find('br') < 0:
+                    setattr(ri,'sanrentan' + str(w) + '_ret',int(re.sub(r'\D', '',s)))
+                    w += 1
+                
+            w = 1
+            for s in td[i+2].childGenerator():
+                if str(s).find('br') < 0:
+                    setattr(ri,'sanrentan' + str(w) + '_pop',re.sub(r'\D', '',s))
+                    w += 1
         session.add(ri)
 
         #個別成績
@@ -301,11 +311,6 @@ for w_id in id_list:
             trainer_name = horse_results[8].a.text
             weight = re.sub(r'\D', '',horse_results[9].text)
             weight_increase = re.sub(r'\D', '',horse_results[10].text)
-            if (horse_results[11].text).find(':') > 0:
-                time_m = int(horse_results[11].text.split(':')[0])
-                time_s = int(horse_results[11].text.split(':')[1]) + (int(horse_results[11].text.split(':')[2]) / 10 )
-                chakusa = horse_results[12].text
-                agari_3f = re.findall(pattern,horse_results[13].text)[0]
             pop_order = re.sub(r'\D', '',horse_results[14].text)
             sd = SeisekiData(racehorsekey = race_id + str(num).zfill(2),
                              order_of_arrival=order_of_arrival,
@@ -319,10 +324,13 @@ for w_id in id_list:
                              trainer_name=trainer_name,
                              weight=weight,
                              weight_increase=weight_increase,
-                             time_m=time_m,
-                             time_s=time_s,
-                             chakusa=chakusa,
-                             agari_3f=agari_3f,
                              pop_order=pop_order)
+            if (horse_results[11].text).find(':') > 0:
+                sd.time_m = int(horse_results[11].text.split(':')[0])
+                sd.time_s = int(horse_results[11].text.split(':')[1]) + (int(horse_results[11].text.split(':')[2]) / 10 )
+                sd.chakusa = horse_results[12].text
+                if len(re.findall(pattern,horse_results[13].text)) > 0:
+                    sd.agari_3f = re.findall(pattern,horse_results[13].text)[0]
+
             session.add(sd)
 session.commit()
