@@ -2,6 +2,7 @@
 from database_setup import Base, BangumiData
 from sqlalchemy.orm import sessionmaker
 import sys
+import codecs
 
 file = sys.argv[1]
 print(file)
@@ -13,7 +14,7 @@ Session = sessionmaker(bind=engine)
 session = Session()
 
 #ここからファイル操作
-with open(file, 'r') as f:
+with codecs.open(file, "r", "shift_jisx0213") as f:
 	for line in f:
 		racekey=line[0:8]
 		kaisaikey=line[0:6]
