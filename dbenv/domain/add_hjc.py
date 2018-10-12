@@ -1,7 +1,7 @@
 ﻿from sqlalchemy import create_engine
 from database_setup import Base, ReturninfoData
 from sqlalchemy.orm import sessionmaker
-import sys
+import sys,codecs
 
 file = sys.argv[1]
 print(file)
@@ -13,7 +13,7 @@ Session = sessionmaker(bind=engine)
 session = Session()
 
 #ここからファイル操作
-with open(file, 'r') as f:
+with codecs.open(file, "r", "shift_jisx0213") as f:
 	for line in f:
 		racekey=line[0:8]
 		win1_num=line[8:10]
