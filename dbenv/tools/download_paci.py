@@ -1,6 +1,6 @@
 import requests,os,sys,zipfile
 from datetime import datetime
-ymd = sys.args[1]
+ymd = sys.argv[1]
 year = ymd[0:4]
 date = ymd[4:8] 
 
