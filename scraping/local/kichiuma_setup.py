@@ -309,7 +309,7 @@ class HorsePillar(Base):
 class BangumiData(Base):
     __tablename__ = 'bangumi'
     racekey = Column(String,primary_key=True)
-    racehorses = relationship("HorsePillar",backref="race")
+    racehorses = relationship("HorsePillar",backref="race",lazy='subquery')
     returninfo = relationship("Returninfo",uselist=False,backref="race",lazy='subquery')
     #レース情報
     ymd = Column(String)
