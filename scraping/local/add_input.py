@@ -342,21 +342,20 @@ for w_id in id_list:
         ls_soup = BeautifulSoup(ls_res.text,'lxml')
         
         #スピード指数ランク追加処理
-        tr = ls_soup.find_all("tr")
+        tr = ls_soup.find_all("tr",height=33)
         w_no = 1
         for r in tr:
-            if len(r) == 21:
-                s = r.find_all('td')
-                zenso_rank = s[2].text
-                kakoso_rank = s[3].text
-                zenso1_sp = re.sub(r'\D', '',s[5].text)
-                zenso2_sp = re.sub(r'\D', '',s[6].text)
-                zenso3_sp = re.sub(r'\D', '',s[7].text)
-                zenso4_sp = re.sub(r'\D', '',s[8].text)
-                zenso5_sp = re.sub(r'\D', '',s[9].text)
-                spr = SpeedRankData(racehorsekey = race_id + str(w_no).zfill(2),zenso_rank = zenso_rank,kakoso_rank = kakoso_rank,zenso1_sp = zenso1_sp,zenso2_sp = zenso2_sp,zenso3_sp = zenso3_sp,zenso4_sp = zenso4_sp,zenso5_sp = zenso5_sp)
-                session.add(spr)
-                w_no += 1
+            s = r.find_all('td')
+            zenso_rank = s[2].text
+            kakoso_rank = s[3].text
+            zenso1_sp = re.sub(r'\D', '',s[5].text)
+            zenso2_sp = re.sub(r'\D', '',s[6].text)
+            zenso3_sp = re.sub(r'\D', '',s[7].text)
+            zenso4_sp = re.sub(r'\D', '',s[8].text)
+            zenso5_sp = re.sub(r'\D', '',s[9].text)
+            spr = SpeedRankData(racehorsekey = race_id + str(w_no).zfill(2),zenso_rank = zenso_rank,kakoso_rank = kakoso_rank,zenso1_sp = zenso1_sp,zenso2_sp = zenso2_sp,zenso3_sp = zenso3_sp,zenso4_sp = zenso4_sp,zenso5_sp = zenso5_sp)
+            session.add(spr)
+            w_no += 1
 
         #推奨馬取得
         params = {'race_id':race_id,'date':date,'no':p_num,'id':course_code,'p':'fp'}
