@@ -375,39 +375,38 @@ for w_id in id_list:
         ls_soup = BeautifulSoup(ls_res.text,'lxml')
         
         #スピード指数ランク追加処理
-        tr = ls_soup.find_all("tr")
+        tr = ls_soup.find_all("tr",height=33)
         w_no = 1
         for r in tr:
-            if len(r) == 21:
-                s = r.find_all('td')
-                rhkey = race_id + str(w_no).zfill(2)
-                zenso_rank = s[2].text
-                kakoso_rank = s[3].text
-                zenso1_sp = re.sub(r'\D', '',s[5].text)
-                zenso2_sp = re.sub(r'\D', '',s[6].text)
-                zenso3_sp = re.sub(r'\D', '',s[7].text)
-                zenso4_sp = re.sub(r'\D', '',s[8].text)
-                zenso5_sp = re.sub(r'\D', '',s[9].text)
-                spr = session.query(SpeedRankData).filter(SpeedRankData.racehorsekey == rhkey).first()
-                if spr is None:
-                    spr = SpeedRankData()
-                    spr_exist_flg = 0
-                else :
-                    spr_exist_flg = 1
+            s = r.find_all('td')
+            rhkey = race_id + str(w_no).zfill(2)
+            zenso_rank = s[2].text
+            kakoso_rank = s[3].text
+            zenso1_sp = re.sub(r'\D', '',s[5].text)
+            zenso2_sp = re.sub(r'\D', '',s[6].text)
+            zenso3_sp = re.sub(r'\D', '',s[7].text)
+            zenso4_sp = re.sub(r'\D', '',s[8].text)
+            zenso5_sp = re.sub(r'\D', '',s[9].text)
+            spr = session.query(SpeedRankData).filter(SpeedRankData.racehorsekey == rhkey).first()
+            if spr is None:
+                spr = SpeedRankData()
+                spr_exist_flg = 0
+            else :
+                spr_exist_flg = 1
 
-                spr.racehorsekey = rhkey
-                spr.zenso_rank = zenso_rank
-                spr.kakoso_rank = kakoso_rank
-                spr.zenso1_sp = zenso1_sp
-                spr.zenso2_sp = zenso2_sp
-                spr.zenso3_sp = zenso3_sp
-                spr.zenso4_sp = zenso4_sp
-                spr.zenso5_sp = zenso5_sp
+            spr.racehorsekey = rhkey
+            spr.zenso_rank = zenso_rank
+            spr.kakoso_rank = kakoso_rank
+            spr.zenso1_sp = zenso1_sp
+            spr.zenso2_sp = zenso2_sp
+            spr.zenso3_sp = zenso3_sp
+            spr.zenso4_sp = zenso4_sp
+            spr.zenso5_sp = zenso5_sp
 
-                if spr_exist_flg == 0:
-                    session.add(spr)
+            if spr_exist_flg == 0:
+                session.add(spr)
 
-                w_no += 1
+            w_no += 1
 
         #推奨馬取得
         params = {'race_id':race_id,'date':date,'no':p_num,'id':course_code,'p':'fp'}
