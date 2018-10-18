@@ -28,6 +28,8 @@ id_list = []
 for r in cr.course_list:
     racelist_params = {'date':date,'id':r[0]}
     response = requests.get(url,params=racelist_params)
+    if response.status_code != 200:
+        response = requests.get(url,params=racelist_params)
     response.encoding = response.apparent_encoding
     soup = BeautifulSoup(response.text,'lxml')
     if soup.title.string != 'エラー':
@@ -46,6 +48,8 @@ for w_id in id_list:
     course_code = w_id
     racelist_params = {'date':date,'id':course_code}
     response = requests.get(url,params=racelist_params)
+    if response.status_code != 200:
+        response = requests.get(url,params=racelist_params)
     response.encoding = response.apparent_encoding
     soup = BeautifulSoup(response.text,'lxml')
     start_race = int(soup.find("div",class_="bango").text)
@@ -60,6 +64,8 @@ for w_id in id_list:
         params = {'race_id':race_id,'date':date,'no':p_num,'id':course_code,'p':p}
         response = requests.get(url,params=params)
         print(response.url)
+        if response.status_code != 200:
+            response = requests.get(url,params=params)
         response.encoding = response.apparent_encoding
         soup = BeautifulSoup(response.text,'lxml')
         title = soup.title.string
@@ -304,6 +310,8 @@ for w_id in id_list:
         #スピード指数取得
         params = {'race_id':race_id,'date':date,'no':p_num,'id':course_code,'p':'sp'}
         sp_res = requests.get(url,params=params)
+        if sp_res.status_code != 200:
+            sp_res = requests.get(url,params=params)
         sp_res.encoding = sp_res.apparent_encoding
         sp_soup = BeautifulSoup(sp_res.text,'lxml')
 
@@ -338,6 +346,8 @@ for w_id in id_list:
         #スピード指数ランク取得
         params = {'race_id':race_id,'date':date,'no':p_num,'id':course_code,'p':'ls'}
         ls_res = requests.get(url,params=params)
+        if ls_res.status_code != 200:
+            ls_res = requests.get(url,params=params)
         ls_res.encoding = ls_res.apparent_encoding
         ls_soup = BeautifulSoup(ls_res.text,'lxml')
         
@@ -360,6 +370,8 @@ for w_id in id_list:
         #推奨馬取得
         params = {'race_id':race_id,'date':date,'no':p_num,'id':course_code,'p':'fp'}
         fp_res = requests.get(url,params=params)
+        if fp_res.status_code != 200:
+            fp_res = requests.get(url,params=params)
         fp_res.encoding = fp_res.apparent_encoding
         fp_soup = BeautifulSoup(fp_res.text,'lxml')
         
