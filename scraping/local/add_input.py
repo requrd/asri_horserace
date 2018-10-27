@@ -81,8 +81,8 @@ for w_id in id_list:
         params_nar = {'k_raceDate':date_nar,'k_raceNo':p_num,'k_babaCode':course_code}
         response_nar = requests.get(url_nar,params=params_nar)
         print(response_nar.url)
-#       if response_nar.status_code != 200:
-#       response_nar = requests.get(url_nar,params=params)
+        if response_nar.status_code != 200:
+            response_nar = requests.get(url_nar,params=params)
         response_nar.encoding = response_nar.apparent_encoding
         soup_nar = BeautifulSoup(response_nar.text,'lxml')
         title_nar = soup_nar.title.string
@@ -143,12 +143,6 @@ for w_id in id_list:
             if (i - 1)%(4) == 0 and i != 1:
                 allHorsePastRows5.append(allHorsePastRows2to5_elm)
             i += 1
-        
-        i = 0
-        for i in range(len(prizelist)):
-            setattr(bd,"prize"+ str(i+1),prizelist[i])
-        
-        session.add(bd)
         
         #馬柱情報
         tr = soup.find_all("tr")
@@ -251,10 +245,12 @@ for w_id in id_list:
                 aHorsePastRows5 = allHorsePastRows5[cnt]
         
                 horseName = aHorsePastRows1.find('a', class_='horseName').text
+                hp.lineageLoginCode = aHorsePastRows1.find('a', class_='horseName').get('href').split('?')[-1].split('=')[-1]
                 zenso1to5Order = aHorsePastRows1.find_all('span', class_="pastRank")
                 zenso1to5Raceinfo = aHorsePastRows1.find_all('div',class_='raceInfo')
                 raceName = []
-                raceUrl = []
+                courseCodeList = []
+                raceNumList = []
                 ninkiBataiju = []
                 timeCourner = []
                 ichakusa =[]
@@ -265,15 +261,12 @@ for w_id in id_list:
                         if aHorsePastRows2.find_all('td')[l].text is not None and aHorsePastRows2.find_all('td')[l].text != '\n':
                             raceName.append(re.split('\n', aHorsePastRows2.find_all('td')[l].text.replace('\n', '').replace('\u3000', ' ')))
                         if aHorsePastRows2.find_all('td')[l].a is not None:
-                            i = 0
-                            urlSplits = []
-                            for urlSplit in re.split('=|&', aHorsePastRows2.find_all('td')[l].a.get('href')):
-                                if i%2 != 0:
-                                    urlSplits.append(urlSplit)
-                                i += 1
-                            raceUrl.append(urlSplits)
+                            params_w = aHorsePastRows2.find_all('td')[l].a.get('href').split('?')[-1].split('&')
+                            courseCodeList.append(params_w[-1].split('=')[-1])
+                            raceNumList.append(params_w[-2].split('=')[-1])                        
                         else:
-                            raceUrl.append(['', '', 0])
+                            courseCodeList.append(0)
+                            raceNumList.append(0)
                         
                 for l in range(len(aHorsePastRows3.find_all('td'))):
                     if l > 2:
@@ -312,8 +305,9 @@ for w_id in id_list:
                             for elm2 in data:
                                 zensoNRow1_raceInfo_data.append(elm2)
                     course_name_z = zensoNRow1_raceInfo_data[4]
-                    course_no_z = int(raceUrl[k][2])
-                    ymd_z = datetime.datetime.strptime(zensoNRow1_raceInfo_data[1], '%y.%m.%d')
+                    course_code_z = courseCodeList[k]
+                    race_num_z = raceNumList[k]
+                    ymd_z = datetime.datetime.strptime(zensoNRow1_raceInfo_data[1], '%y.%m.%d').strftime('%Y%m%d')
                     order_of_arrival = zensoNRow1_raceInfo_data[0]
                     race_name_z = raceName[k]
                     if zensoNRow1_raceInfo_data[5][:1] == '芝':
@@ -329,6 +323,7 @@ for w_id in id_list:
                         time_min_z = int(timeCourner[k][0].split(':')[0])
                         time_sec_z = float(timeCourner[k][0].split(':')[1])
                     baba_z = zensoNRow1_raceInfo_data[2]
+                    horse_num_z = zensoNRow1_raceInfo_data[6].replace('番','')
                     
                     if timeCourner[k][2] == ' ' or timeCourner[k][2] == '非計測':
                         agari_3f = 0
@@ -385,7 +380,8 @@ for w_id in id_list:
                             corner4 = timeCourner[k][1].split('-')[3]
                     
                     setattr(hp,"zenso"+str(zenso_no)+"_course_name",course_name_z)
-                    setattr(hp,"zenso"+str(zenso_no)+"_course_no",course_no_z)
+                    setattr(hp,"zenso"+str(zenso_no)+"_course_code",course_code_z)
+                    setattr(hp,"zenso"+str(zenso_no)+"_race_num",race_num_z)
                     setattr(hp,"zenso"+str(zenso_no)+"_ymd",ymd_z)
                     setattr(hp,"zenso"+str(zenso_no)+"_order_of_arrival",order_of_arrival)
                     setattr(hp,"zenso"+str(zenso_no)+"_race_name",race_name_z[0])
@@ -400,8 +396,7 @@ for w_id in id_list:
                     setattr(hp,"zenso"+str(zenso_no)+"_jockey_name",jockey_name_z)
                     setattr(hp,"zenso"+str(zenso_no)+"_pop_order",pop_order)
                     setattr(hp,"zenso"+str(zenso_no)+"_num_of_all_horse",num_of_all_horse)
-                    #no
-                    #setattr(hp,"zenso"+str(zenso_no)+"_waku",waku)
+                    setattr(hp,"zenso"+str(zenso_no)+"_horse_num",horse_num_z)
                     setattr(hp,"zenso"+str(zenso_no)+"_weight",weight)
                     setattr(hp,"zenso"+str(zenso_no)+"_corner1",corner1)
                     setattr(hp,"zenso"+str(zenso_no)+"_corner2",corner2)

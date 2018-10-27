@@ -318,6 +318,7 @@ class HorsePillar_nar(Base):
     num = Column(Integer)
     waku = Column(Integer)
     horse = Column(String)
+    lineageLoginCode = Column(Integer)
     father = Column(String)
     mother = Column(String)
     motherfather = Column(String)
@@ -358,14 +359,15 @@ class HorsePillar_nar(Base):
     #前走情報
     zenso1_ymd=Column(String)
     zenso1_course_name=Column(String)
-    zenso1_course_no=Column(Integer)
+    zenso1_course_code=Column(Integer)
+    zenso1_race_num=Column(Integer)
     zenso1_num_of_all_horse=Column(Integer)
     zenso1_left_right=Column(String)
     zenso1_baba=Column(String)
     zenso1_race_name=Column(String)
     zenso1_distance=Column(Integer)
     zenso1_num_of_all_horse=Column(Integer)
-#    zenso1_waku=Column(Integer)
+    zenso1_horse_num=Column(Integer)
     zenso1_jockey_name=Column(String)
     zenso1_kinryo=Column(Integer)
     zenso1_weight=Column(Integer)
@@ -383,14 +385,15 @@ class HorsePillar_nar(Base):
 
     zenso2_ymd=Column(String)
     zenso2_course_name=Column(String)
-    zenso2_course_no=Column(Integer)
+    zenso2_course_code=Column(Integer)
+    zenso2_race_num=Column(Integer)
     zenso2_num_of_all_horse=Column(Integer)
     zenso2_left_right=Column(String)
     zenso2_baba=Column(String)
     zenso2_race_name=Column(String)
     zenso2_distance=Column(Integer)
     zenso2_num_of_all_horse=Column(Integer)
-#    zenso2_waku=Column(Integer)
+    zenso2_horse_num=Column(Integer)
     zenso2_jockey_name=Column(String)
     zenso2_kinryo=Column(Integer)
     zenso2_weight=Column(Integer)
@@ -407,14 +410,15 @@ class HorsePillar_nar(Base):
 
     zenso3_ymd=Column(String)
     zenso3_course_name=Column(String)
-    zenso3_course_no=Column(Integer)
+    zenso3_course_code=Column(Integer)
+    zenso3_race_num=Column(Integer)
     zenso3_num_of_all_horse=Column(Integer)
     zenso3_left_right=Column(String)
     zenso3_baba=Column(String)
     zenso3_race_name=Column(String)
     zenso3_distance=Column(Integer)
     zenso3_num_of_all_horse=Column(Integer)
-#    zenso3_waku=Column(Integer)
+    zenso3_horse_num=Column(Integer)
     zenso3_jockey_name=Column(String)
     zenso3_kinryo=Column(Integer)
     zenso3_weight=Column(Integer)
@@ -431,14 +435,15 @@ class HorsePillar_nar(Base):
 
     zenso4_ymd=Column(String)
     zenso4_course_name=Column(String)
-    zenso4_course_no=Column(Integer)
+    zenso4_course_code=Column(Integer)
+    zenso4_race_num=Column(Integer)
     zenso4_num_of_all_horse=Column(Integer)
     zenso4_left_right=Column(String)
     zenso4_baba=Column(String)
     zenso4_race_name=Column(String)
     zenso4_distance=Column(Integer)
     zenso4_num_of_all_horse=Column(Integer)
-#    zenso4_waku=Column(Integer)
+    zenso4_horse_num=Column(Integer)
     zenso4_jockey_name=Column(String)
     zenso4_kinryo=Column(Integer)
     zenso4_weight=Column(Integer)
@@ -455,14 +460,15 @@ class HorsePillar_nar(Base):
 
     zenso5_ymd=Column(String)
     zenso5_course_name=Column(String)
-    zenso5_course_no=Column(Integer)
+    zenso1_course_code=Column(Integer)
+    zenso1_race_num=Column(Integer)
     zenso5_num_of_all_horse=Column(Integer)
     zenso5_left_right=Column(String)
     zenso5_baba=Column(String)
     zenso5_race_name=Column(String)
     zenso5_distance=Column(Integer)
     zenso5_num_of_all_horse=Column(Integer)
- #   zenso5_waku=Column(Integer)
+    zenso5_horse_num=Column(Integer)
     zenso5_jockey_name=Column(String)
     zenso5_kinryo=Column(Integer)
     zenso5_weight=Column(Integer)
@@ -486,6 +492,7 @@ class HorsePillar_nar(Base):
             'num':self.num ,
             'waku':self.waku,
             'horse':self.horse ,
+            'lineageLoginCode':self.lineageLoginCode,
             'father':self.father ,
             'mother':self.mother ,
             'motherfather':self.motherfather ,
@@ -520,12 +527,14 @@ class HorsePillar_nar(Base):
             'trainer_shozoku':self.trainer_shozoku ,
             'zenso1_ymd':self.zenso1_ymd,
             'zenso1_course_name':self.zenso1_course_name,
+            'zenso1_course_code':self.zenso1_course_code,
+            'zenso1_race_num':self.zenso1_race_num,
             'zenso1_left_right':self.zenso1_left_right,
             'zenso1_baba':self.zenso1_baba,
             'zenso1_race_name':self.zenso1_race_name,
             'zenso1_distance':self.zenso1_distance,
             'zenso1_num_of_all_horse':self.zenso1_num_of_all_horse,
-            'zenso1_waku':self.zenso1_waku,
+            'zenso1_horse_num':self.zenso1_horse_num,
             'zenso1_jockey_name':self.zenso1_jockey_name,
             'zenso1_kinryo':self.zenso1_kinryo,
             'zenso1_weight':self.zenso1_weight,
@@ -540,12 +549,14 @@ class HorsePillar_nar(Base):
             'zenso1_win_horse':self.zenso1_win_horse,
             'zenso2_ymd':self.zenso2_ymd,
             'zenso2_course_name':self.zenso2_course_name,
+            'zenso2_course_code':self.zenso2_course_code,
+            'zenso2_race_num':self.zenso2_race_num,
             'zenso2_left_right':self.zenso2_left_right,
             'zenso2_baba':self.zenso2_baba,
             'zenso2_race_name':self.zenso2_race_name,
             'zenso2_distance':self.zenso2_distance,
             'zenso2_num_of_all_horse':self.zenso2_num_of_all_horse,
-            'zenso2_waku':self.zenso2_waku,
+            'zenso2_horse_num':self.zenso2_horse_num,
             'zenso2_jockey_name':self.zenso2_jockey_name,
             'zenso2_kinryo':self.zenso2_kinryo,
             'zenso2_weight':self.zenso2_weight,
@@ -560,12 +571,14 @@ class HorsePillar_nar(Base):
             'zenso2_win_horse':self.zenso2_win_horse,
             'zenso3_ymd':self.zenso3_ymd,
             'zenso3_course_name':self.zenso3_course_name,
+            'zenso3_course_code':self.zenso3_course_code,
+            'zenso3_race_num':self.zenso3_race_num,
             'zenso3_left_right':self.zenso3_left_right,
             'zenso3_baba':self.zenso3_baba,
             'zenso3_race_name':self.zenso3_race_name,
             'zenso3_distance':self.zenso3_distance,
             'zenso3_num_of_all_horse':self.zenso3_num_of_all_horse,
-            'zenso3_waku':self.zenso3_waku,
+            'zenso3_horse_num':self.zenso3_horse_num,
             'zenso3_jockey_name':self.zenso3_jockey_name,
             'zenso3_kinryo':self.zenso3_kinryo,
             'zenso3_weight':self.zenso3_weight,
@@ -580,12 +593,14 @@ class HorsePillar_nar(Base):
             'zenso3_win_horse':self.zenso3_win_horse,
             'zenso4_ymd':self.zenso4_ymd,
             'zenso4_course_name':self.zenso4_course_name,
+            'zenso4_course_code':self.zenso4_course_code,
+            'zenso4_race_num':self.zenso4_race_num,
             'zenso4_left_right':self.zenso4_left_right,
             'zenso4_baba':self.zenso4_baba,
             'zenso4_race_name':self.zenso4_race_name,
             'zenso4_distance':self.zenso4_distance,
             'zenso4_num_of_all_horse':self.zenso4_num_of_all_horse,
-            'zenso4_waku':self.zenso4_waku,
+            'zenso4_horse_num':self.zenso4_horse_num,
             'zenso4_jockey_name':self.zenso4_jockey_name,
             'zenso4_kinryo':self.zenso4_kinryo,
             'zenso4_weight':self.zenso4_weight,
@@ -600,12 +615,14 @@ class HorsePillar_nar(Base):
             'zenso4_win_horse':self.zenso4_win_horse,
             'zenso5_ymd':self.zenso5_ymd,
             'zenso5_course_name':self.zenso5_course_name,
+            'zenso5_course_code':self.zenso5_course_code,
+            'zenso5_race_num':self.zenso5_race_num,
             'zenso5_left_right':self.zenso5_left_right,
             'zenso5_baba':self.zenso5_baba,
             'zenso5_race_name':self.zenso5_race_name,
             'zenso5_distance':self.zenso5_distance,
             'zenso5_num_of_all_horse':self.zenso5_num_of_all_horse,
-            'zenso5_waku':self.zenso5_waku,
+            'zenso5_horse_num':self.zenso5_horse_num,
             'zenso5_jockey_name':self.zenso5_jockey_name,
             'zenso5_kinryo':self.zenso5_kinryo,
             'zenso5_weight':self.zenso5_weight,
