@@ -19,7 +19,7 @@ class HorsePillar(Base):
     num = Column(Integer)
     waku = Column(Integer)
     horse = Column(String)
-    lineageLoginCode = Column(Integer)
+    lineage_login_code = Column(Integer)
     father = Column(String)
     mother = Column(String)
     motherfather = Column(String)
@@ -53,6 +53,7 @@ class HorsePillar(Base):
     jockey_seiseki_nichaku = Column(Integer)
     jockey_seiseki_sanchaku = Column(Integer)
     jokcey_seiseki_chakugai = Column(Integer)
+    rider_license_no = Column(Integer)
     
     trainer_name = Column(String)
     trainer_shozoku = Column(String)
@@ -190,42 +191,43 @@ class HorsePillar(Base):
         return {
             'racehorsekey':self.racehorsekey,
             'racekey':self.rackey,
-            'num':self.num ,
+            'num':self.num,
             'waku':self.waku,
-            'horse':self.horse ,
-            'lineageLoginCode':self.lineageLoginCode,
-            'father':self.father ,
-            'mother':self.mother ,
-            'motherfather':self.motherfather ,
-            'hair':self.hair ,
-            'sex':self.sex ,
-            'age':self.age ,
-            'owner':self.owner ,
-            'producer':self.producer ,
-            'seiseki_all_icchaku':self.seiseki_all_icchaku ,
-            'seiseki_all_nichaku':self.seiseki_all_nichaku ,
-            'seiseki_all_sanchaku':self.seiseki_all_sanchaku ,
-            'seiseki_all_chakugai':self.seiseki_all_chakugai ,
-            'seiseki_dart_left_icchaku':self.seiseki_dart_left_icchaku ,
-            'seiseki_dart_left_nichaku':self.seiseki_dart_left_nichaku ,
-            'seiseki_dart_left_sanchaku':self.seiseki_dart_left_sanchaku ,
-            'seiseki_dart_left_chakugai':self.seiseki_dart_left_chakugai ,
-            'seiseki_dart_right_icchaku':self.seiseki_dart_right_icchaku ,
-            'seiseki_dart_right_nichaku':self.seiseki_dart_right_nichaku ,
-            'seiseki_dart_right_sanchaku':self.seiseki_dart_right_sanchaku ,
-            'seiseki_dart_right_chakugai':self.seiseki_dart_right_chakugai ,
-            'seiseki_this_course_icchaku':self.seiseki_this_course_icchaku ,
-            'seiseki_this_course_nichaku':self.seiseki_this_course_nichaku ,
-            'seiseki_this_course_sanchaku':self.seiseki_this_course_sanchaku ,
-            'seiseki_this_course_chakugai':self.seiseki_this_course_chakugai ,
-            'jockey_name':self.jockey_name ,
-            'jockey_shozoku':self.jockey_shozoku ,
-            'jockey_seiseki_icchaku':self.jockey_seiseki_icchaku ,
-            'jockey_seiseki_nichaku':self.jockey_seiseki_nichaku ,
-            'jockey_seiseki_sanchaku':self.jockey_seiseki_sanchaku ,
-            'jokcey_seiseki_chakugai':self.jokcey_seiseki_chakugai ,
-            'trainer_name':self.trainer_name ,
-            'trainer_shozoku':self.trainer_shozoku ,
+            'horse':self.horse,
+            'lineage_login_code':self.lineage_login_code,
+            'father':self.father,
+            'mother':self.mother,
+            'motherfather':self.motherfather,
+            'hair':self.hair,
+            'sex':self.sex,
+            'age':self.age,
+            'owner':self.owner,
+            'producer':self.producer,
+            'seiseki_all_icchaku':self.seiseki_all_icchaku,
+            'seiseki_all_nichaku':self.seiseki_all_nichaku,
+            'seiseki_all_sanchaku':self.seiseki_all_sanchaku,
+            'seiseki_all_chakugai':self.seiseki_all_chakugai,
+            'seiseki_dart_left_icchaku':self.seiseki_dart_left_icchaku,
+            'seiseki_dart_left_nichaku':self.seiseki_dart_left_nichaku,
+            'seiseki_dart_left_sanchaku':self.seiseki_dart_left_sanchaku,
+            'seiseki_dart_left_chakugai':self.seiseki_dart_left_chakugai,
+            'seiseki_dart_right_icchaku':self.seiseki_dart_right_icchaku,
+            'seiseki_dart_right_nichaku':self.seiseki_dart_right_nichaku,
+            'seiseki_dart_right_sanchaku':self.seiseki_dart_right_sanchaku,
+            'seiseki_dart_right_chakugai':self.seiseki_dart_right_chakugai,
+            'seiseki_this_course_icchaku':self.seiseki_this_course_icchaku,
+            'seiseki_this_course_nichaku':self.seiseki_this_course_nichaku,
+            'seiseki_this_course_sanchaku':self.seiseki_this_course_sanchaku,
+            'seiseki_this_course_chakugai':self.seiseki_this_course_chakugai,
+            'jockey_name':self.jockey_name,
+            'jockey_shozoku':self.jockey_shozoku,
+            'jockey_seiseki_icchaku':self.jockey_seiseki_icchaku,
+            'jockey_seiseki_nichaku':self.jockey_seiseki_nichaku,
+            'jockey_seiseki_sanchaku':self.jockey_seiseki_sanchaku,
+            'jokcey_seiseki_chakugai':self.jokcey_seiseki_chakugai,
+            'rider_license_no':self.rider_license_no,
+            'trainer_name':self.trainer_name,
+            'trainer_shozoku':self.trainer_shozoku,
             'zenso1_ymd':self.zenso1_ymd,
             'zenso1_course_name':self.zenso1_course_name,
             'zenso1_course_code':self.zenso1_course_code,

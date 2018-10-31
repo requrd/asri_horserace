@@ -245,7 +245,8 @@ for w_id in id_list:
                 aHorsePastRows5 = allHorsePastRows5[cnt]
         
                 horseName = aHorsePastRows1.find('a', class_='horseName').text
-                hp.lineageLoginCode = aHorsePastRows1.find('a', class_='horseName').get('href').split('?')[-1].split('=')[-1]
+                hp.lineage_login_code = aHorsePastRows1.find('a', class_='horseName').get('href').split('?')[-1].split('=')[-1]
+                hp.rider_license_no = aHorsePastRows1.find('a', class_='jockeyName').get('href').split('?')[-1].split('=')[-1]
                 zenso1to5Order = aHorsePastRows1.find_all('span', class_="pastRank")
                 zenso1to5Raceinfo = aHorsePastRows1.find_all('div',class_='raceInfo')
                 raceName = []
