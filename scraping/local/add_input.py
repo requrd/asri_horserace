@@ -1,5 +1,5 @@
 from sqlalchemy import create_engine
-from kichiuma_setup import Base,BangumiData,HorsePillar,HorsePillar_nar,SpeedData,SpeedRankData,RecommendData
+from kichiuma_setup import Base,BangumiData,HorsePillar,SpeedData,SpeedRankData,RecommendData
 from sqlalchemy.orm import sessionmaker
 import requests,sys,re
 from bs4 import BeautifulSoup
@@ -151,7 +151,7 @@ for w_id in id_list:
         for r in tr:
             if len(r) == 21:
                 #レース情報を馬柱にセット
-                hp = HorsePillar_nar()
+                hp = HorsePillar()
                 
                 #出走馬カラム
                 num = cnt + 1
