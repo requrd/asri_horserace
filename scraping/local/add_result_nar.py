@@ -17,40 +17,54 @@ year = int(ymd[0:4])
 month = int(ymd[4:6])
 day = int(ymd[6:8])
 
-url ='http://www.kichiuma-chiho.net/php/search.php'
+#url ='http://www.kichiuma-chiho.net/php/search.php'
 nar_url ='http://www2.keiba.go.jp/KeibaWeb/TodayRaceInfo/RaceMarkTable'
+url_nar_racelist = 'http://www.keiba.go.jp/KeibaWeb/TodayRaceInfo/RaceList'
 
 date = str(year) + '/' + str(month) + '/' + str(day)
+date_nar = str(year).zfill(2) + '/' + str(month).zfill(2) + '/' + str(day).zfill(2)
 p = 'res'
 
-#開催会場一覧を取得
+#開催会場一覧をNAR公式から取得
 cr = Courseref()
 id_list = []
 for r in cr.course_list:
-    racelist_params = {'date':date,'id':r[0]}
-    response = requests.get(url,params=racelist_params)
+    racelist_params = {'k_raceDate':date_nar,'k_babaCode':r[0]}
+    response = requests.get(url_nar_racelist,params=racelist_params)
+    if response.status_code != 200:
+        response = requests.get(url,params=racelist_params)
     response.encoding = response.apparent_encoding
     soup = BeautifulSoup(response.text,'lxml')
     if soup.title.string != 'エラー':
         print(soup.title.string)
         if r[0] != 3:
             id_list.append(r[0])
-        kaisailist = soup.select(".kaisai_navi a")
-        for s in kaisailist:
-            w_id = int(str(s).split(";id=")[1].split("\">")[0])
-            if w_id != 3:
+
+        course_list = soup.find_all('a',class_='courseBtn')
+        for c in course_list:
+            w_url = c.get('href')
+            if w_url is not None:
+                w_id = int(w_url.split('?')[-1].split('&')[1].split('=')[-1])
                 id_list.append(w_id)
         break
 
 for w_id in id_list:
-    #レース一覧を取得
+    #レース一覧をNAR公式より取得
     course_code = w_id
-    racelist_params = {'date':date,'id':course_code}
-    response = requests.get(url,params=racelist_params)
+    racelist_params = {'k_raceDate':date_nar,'k_babaCode':course_code}
+    response = requests.get(url_nar_racelist,params=racelist_params)
+    if response.status_code != 200:
+        response = requests.get(url_nar_racelist,params=racelist_params)
     response.encoding = response.apparent_encoding
     soup = BeautifulSoup(response.text,'lxml')
-    start_race = int(soup.find("div",class_="bango").text)
-    num_race = len(soup.select(".bango")) + start_race
+    racelist = soup.find('section',class_='raceTable').find_all('a')
+    start_race = int(soup.find('section',class_='raceTable').find('a').get('href').split('?')[-1].split('&')[1].split('=')[-1])
+    num_race = start_race
+    for r in racelist:
+        if r.get('href') is not None:
+            w_url = r.get('href').split('?')[0]
+            if w_url == '../TodayRaceInfo/DebaTable':
+                num_race += 1
 
     #レース内容を取得
     for no in range(start_race,num_race):

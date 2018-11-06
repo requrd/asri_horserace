@@ -1,8 +1,8 @@
-﻿from sqlalchemy import create_engine
-from kichiuma_setup import Base,BangumiData,HorsePillar,SpeedData,SpeedRankData,RecommendData
+from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-import requests,sys,re
 from bs4 import BeautifulSoup
+import requests,sys,re,datetime,time
+from kichiuma_setup import Base,BangumiData,HorsePillar,SpeedData,SpeedRankData,RecommendData
 from courseutil import Courseref
 
 ymd = sys.argv[1]
@@ -18,55 +18,84 @@ month = int(ymd[4:6])
 day = int(ymd[6:8])
 
 url ='http://www.kichiuma-chiho.net/php/search.php'
+url_nar = 'http://www2.keiba.go.jp/KeibaWeb/TodayRaceInfo/DebaTable'
+url_nar_racelist = 'http://www.keiba.go.jp/KeibaWeb/TodayRaceInfo/RaceList'
 
 date = str(year) + '/' + str(month) + '/' + str(day)
+date_nar = str(year).zfill(2) + '/' + str(month).zfill(2) + '/' + str(day).zfill(2)
 p = 'rf'
 
-#開催会場一覧を取得
+#開催会場一覧をNAR公式から取得
 cr = Courseref()
 id_list = []
 for r in cr.course_list:
-    racelist_params = {'date':date,'id':r[0]}
-    response = requests.get(url,params=racelist_params)
-    response.raise_for_status()
+    racelist_params = {'k_raceDate':date_nar,'k_babaCode':r[0]}
+    response = requests.get(url_nar_racelist,params=racelist_params)
+    if response.status_code != 200:
+        response = requests.get(url,params=racelist_params)
     response.encoding = response.apparent_encoding
     soup = BeautifulSoup(response.text,'lxml')
     if soup.title.string != 'エラー':
         print(soup.title.string)
         if r[0] != 3:
             id_list.append(r[0])
-        kaisailist = soup.select(".kaisai_navi a")
-        for s in kaisailist:
-            w_id = int(str(s).split(";id=")[1].split("\">")[0])
-            if w_id != 3:
+
+        course_list = soup.find_all('a',class_='courseBtn')
+        for c in course_list:
+            w_url = c.get('href')
+            if w_url is not None:
+                w_id = int(w_url.split('?')[-1].split('&')[1].split('=')[-1])
                 id_list.append(w_id)
         break
 
+#開催会場ごとの処理
 for w_id in id_list:
-    #レース一覧を取得
+    #レース一覧をNAR公式より取得
     course_code = w_id
-    racelist_params = {'date':date,'id':course_code}
-    response = requests.get(url,params=racelist_params)
-    response.raise_for_status()
+    racelist_params = {'k_raceDate':date_nar,'k_babaCode':course_code}
+    response = requests.get(url_nar_racelist,params=racelist_params)
+    if response.status_code != 200:
+        response = requests.get(url_nar_racelist,params=racelist_params)
     response.encoding = response.apparent_encoding
     soup = BeautifulSoup(response.text,'lxml')
-    start_race = int(soup.find("div",class_="bango").text)
-    num_race = len(soup.select(".bango")) + start_race
-
-    #レース内容を取得
+    racelist = soup.find('section',class_='raceTable').find_all('a')
+    start_race = int(soup.find('section',class_='raceTable').find('a').get('href').split('?')[-1].split('&')[1].split('=')[-1])
+    num_race = 0
+    for r in racelist:
+        if r.get('href') is not None:
+            w_url = r.get('href').split('?')[0]
+            if w_url == '../TodayRaceInfo/DebaTable':
+                num_race += 1
+    #レース内容を吉馬から取得
     for no in range(start_race,num_race):
         p_num = no
         race_id = ymd + str(p_num).zfill(2) + str(course_code).zfill(2)
-        
+                
         #馬柱取得
         params = {'race_id':race_id,'date':date,'no':p_num,'id':course_code,'p':p}
         response = requests.get(url,params=params)
-        response.raise_for_status()
         print(response.url)
+        if response.status_code != 200:
+            response = requests.get(url,params=params)
         response.encoding = response.apparent_encoding
         soup = BeautifulSoup(response.text,'lxml')
         title = soup.title.string
         print(title)
+
+        #地方競馬取得
+        race_id_nar = str(year) + str(month).zfill(2) + str(day).zfill(2) + str(p_num).zfill(2) + str(course_code)
+        date_nar = str(year) + '/' + str(month).zfill(2) + '/' + str(day).zfill(2)
+        params_nar = {'k_raceDate':date_nar,'k_raceNo':p_num,'k_babaCode':course_code}
+        response_nar = requests.get(url_nar,params=params_nar)
+        print(response_nar.url)
+        if response_nar.status_code != 200:
+            response_nar = requests.get(url_nar,params=params)
+        response_nar.encoding = response_nar.apparent_encoding
+        soup_nar = BeautifulSoup(response_nar.text,'lxml')
+        title_nar = soup_nar.title.string
+        print(title_nar)
+        pastBody = soup_nar.find('section', class_ = 'cardTable').find_all('tbody')
+
         
         #レース情報
         year = soup.title.string.split("　")[2].split("年")[0]
@@ -84,6 +113,7 @@ for w_id in id_list:
         for i in this_info.find("td",id="prize").childGenerator():
             if str(i).find("br") < 0 and str(i).find("賞金"):
                 prizelist.append(int(str(i).replace(',','')))
+        
         bd = session.query(BangumiData).filter(BangumiData.racekey == race_id).first()
         if bd is None:
             bd = BangumiData()
@@ -100,12 +130,33 @@ for w_id in id_list:
         bd.left_right = left_right
         bd.distance = distance
         bd.start_time = start_time
-
+            
         for i in range(len(prizelist)):
             setattr(bd,"prize"+ str(i+1),prizelist[i])
 
         if bd_exist_flg == 0:
             session.add(bd)
+    
+        #地方競馬　レース情報
+        allHorsePastRows1 = pastBody[0].find_all("tr",class_="tBorder")
+        allHorsePastRows2to5 = pastBody[0].find_all("tr",class_="")
+        
+        i = 0
+        allHorsePastRows2 = []
+        allHorsePastRows3 = []
+        allHorsePastRows4 = []
+        allHorsePastRows5 = []
+        
+        for allHorsePastRows2to5_elm in allHorsePastRows2to5:
+            if (i - 2)%(4) == 0:
+                allHorsePastRows2.append(allHorsePastRows2to5_elm)
+            if (i - 3)%(4) == 0:
+                allHorsePastRows3.append(allHorsePastRows2to5_elm)
+            if (i - 0)%(4) == 0 and i != 0:
+                allHorsePastRows4.append(allHorsePastRows2to5_elm)
+            if (i - 1)%(4) == 0 and i != 1:
+                allHorsePastRows5.append(allHorsePastRows2to5_elm)
+            i += 1
         
         #馬柱情報
         tr = soup.find_all("tr")
@@ -113,7 +164,7 @@ for w_id in id_list:
         hpl = []
         for r in tr:
             if len(r) == 21:
-                #出走馬カラム
+                #レース情報を馬柱にセット
                 num = cnt + 1
                 rhkey = race_id + str(num).zfill(2)
                 hp = session.query(HorsePillar).filter(HorsePillar.racehorsekey == rhkey).first()
@@ -122,7 +173,9 @@ for w_id in id_list:
                     hp_exist_flg = 0
                 else :
                     hp_exist_flg = 1
-
+                
+                #出走馬カラム
+                num = cnt + 1
                 waku = int(r.find('td').text)
                 w_horse = r.find('td',class_='horse_box')
                 horse = w_horse.a.text
@@ -142,7 +195,7 @@ for w_id in id_list:
                 owner = horse_features[1]
                 producer = horse_features[2]
 
-                hp.racehorsekey = rhkey
+                hp.racehorsekey = race_id + str(num).zfill(2)
                 hp.racekey = race_id
                 hp.num = num
                 hp.waku = waku
@@ -205,98 +258,159 @@ for w_id in id_list:
                 hp.trainer_shozoku = trainer[1].replace(')','')
                 
                 #成績処理
-                sl = r.find_all('td',valign='top')
-                zenso_no = 1
-                for s in sl:
-                    race_infos = []
-                    q = 0
-                    for s_elm in s.childGenerator():
-                        if str(s_elm).find('br') < 0:
-                            race_infos.append(s_elm)
-                            q += 1
-                            if q == 2:
-                                break
-                    ql = str(s).split('<br/>')[1:6]
-                    for e in ql:
-                        race_infos.append(e)
+                zensoNRow1_raceInfo_data = []
+                aHorsePastRows1 = allHorsePastRows1[cnt]
+                aHorsePastRows2 = allHorsePastRows2[cnt]
+                aHorsePastRows3 = allHorsePastRows3[cnt]
+                aHorsePastRows4 = allHorsePastRows4[cnt]
+                aHorsePastRows5 = allHorsePastRows5[cnt]
+        
+                horseName = aHorsePastRows1.find('a', class_='horseName').text
+                hp.lineage_login_code = aHorsePastRows1.find('a', class_='horseName').get('href').split('?')[-1].split('=')[-1]
+                hp.rider_license_no = aHorsePastRows1.find('a', class_='jockeyName').get('href').split('?')[-1].split('=')[-1]
+                zenso1to5Order = aHorsePastRows1.find_all('span', class_="pastRank")
+                zenso1to5Raceinfo = aHorsePastRows1.find_all('div',class_='raceInfo')
+                raceName = []
+                courseCodeList = []
+                raceNumList = []
+                ninkiBataiju = []
+                timeCourner = []
+                ichakusa =[]
 
-                    kaisai_infos = race_infos[0].split('.')
-                    course_name_z = kaisai_infos[0][:-2]
-                    year = kaisai_infos[0][-2:]
-                    month = kaisai_infos[1]
-                    day = kaisai_infos[2][0:2]
-                    ymd_z = year + month + day
-                    
-                    if s.span is not None:
-                        order_of_arrival = s.span.text
-                    else :
-                        order_of_arrival = 0
-                    
-                    race_name_z = race_infos[2]
-                    course_info = str(race_infos[3]).split(' ')
-                    distance_z = int(course_info[0].replace('m',''))
-                    left_right_z = course_info[1]
-                    time_z = course_info[2]
-                    baba_z = course_info[3]
-                    goal_info = str(race_infos[4]).split(' ')
-                    
-                    if order_of_arrival == 0:
-                        agari_3f = 9999
-                        chakusa = 9999
-                    else :
-                        pattern=r'([+-]?[0-9]+\.?[0-9]*)'
-                        a3 = re.findall(pattern,goal_info[0])
-                        if a3 == []:
-                            agari_3f = 9999
-                        else :
-                            agari_3f = float(a3[0])
-                        ck = re.findall(pattern,goal_info[1])
-                        if ck == []:
-                            chakusa = 9999
-                        else :
-                            chakusa = float(ck[0])
+                #各馬のそれぞれの行のhtmlに含まれるtdでfor文（l番目のtd）
+                for l in range(len(aHorsePastRows2.find_all('td'))):
+                    if l > 2:
+                        if aHorsePastRows2.find_all('td')[l].text is not None and aHorsePastRows2.find_all('td')[l].text != '\n':
+                            raceName.append(re.split('\n', aHorsePastRows2.find_all('td')[l].text.replace('\n', '').replace('\u3000', ' ')))
+                        if aHorsePastRows2.find_all('td')[l].a is not None:
+                            params_w = aHorsePastRows2.find_all('td')[l].a.get('href').split('?')[-1].split('&')
+                            courseCodeList.append(params_w[-1].split('=')[-1])
+                            raceNumList.append(params_w[-2].split('=')[-1])                        
+                        else:
+                            courseCodeList.append(0)
+                            raceNumList.append(0)
                         
-                    kinryo_z = float(str(race_infos[5])[0:4])
-                    jockey_name_z = re.findall(r'(\d+|\D+)', str(race_infos[5]))[3]
+                for l in range(len(aHorsePastRows3.find_all('td'))):
+                    if l > 2:
+                        if aHorsePastRows3.find_all('td')[l].text is not None and aHorsePastRows3.find_all('td')[l].text != '\n':
+                            if len(re.split('\u3000|\n| ', aHorsePastRows3.find_all('td')[l].text.replace('\n', ''))) == 4:
+                                ninkiBataiju.append(re.split('\u3000|\n| ', aHorsePastRows3.find_all('td')[l].text.replace('\n', '')))
+                            else:
+                                ninkiBataiju_elm = []
+                                ninkiBataiju_elm.append(re.split('\u3000|\n| ', aHorsePastRows3.find_all('td')[l].text.replace('\n', ''))[0])
+                                ninkiBataiju_elm.append(re.split('\u3000|\n| ', aHorsePastRows3.find_all('td')[l].text.replace('\n', ''))[1])
+                                ninkiBataiju_elm.append(re.search('[一-龥]{1}\s{1}[一-龥]{1}', aHorsePastRows3.find_all('td')[l].text.replace('\n', '')).group())
+                                ninkiBataiju_elm.append(re.split('\u3000|\n| ', aHorsePastRows3.find_all('td')[l].text.replace('\n', ''))[4])
+                                ninkiBataiju.append(ninkiBataiju_elm)
+                for l in range(len(aHorsePastRows4.find_all('td'))):
+                    if l > 1:
+                        if aHorsePastRows4.find_all('td')[l].text is not None and aHorsePastRows4.find_all('td')[l].text != '\n':
+                            timeCourner.append(re.split('\u3000|\n', aHorsePastRows4.find_all('td')[l].text.replace('\n', '')))
+                for l in range(len(aHorsePastRows5.find_all('td'))):
+                    if l > 2:
+                        if aHorsePastRows5.find_all('td')[l].text is not None and aHorsePastRows5.find_all('td')[l].text != '\n':
+                            ichakusa.append(re.split('\u3000|\n', aHorsePastRows5.find_all('td')[l].text.replace('\n', '')))
+                k = 0
+    
+                #各馬のk走前でfor文
+                zenso_no = 1
+                for k in range(len(zenso1to5Order)):
+                    zensoNRaceinfo = zenso1to5Raceinfo[k]
+                    zensoNOrder = zenso1to5Order[k]
+                    zensoNRow1_raceInfo_data = []
+                    zensoNRow2_raceName_data = []
+                                    
+                    #レース情報取得（Row1）
+                    for elm in zensoNRaceinfo.childGenerator():
+                        if elm.string is not None and elm.string != '\n':
+                            data = re.split('\u3000|\n', elm.string.replace('\n', ''))
+                            for elm2 in data:
+                                zensoNRow1_raceInfo_data.append(elm2)
+                    course_name_z = zensoNRow1_raceInfo_data[4]
+                    course_code_z = courseCodeList[k]
+                    race_num_z = raceNumList[k]
+                    ymd_z = datetime.datetime.strptime(zensoNRow1_raceInfo_data[1], '%y.%m.%d').strftime('%Y%m%d')
+                    order_of_arrival = zensoNRow1_raceInfo_data[0]
+                    race_name_z = raceName[k]
+                    if zensoNRow1_raceInfo_data[5][:1] == '芝':
+                        left_right_z = zensoNRow1_raceInfo_data[5][1:2]
+                        distance_z = zensoNRow1_raceInfo_data[5][2:]
+                    else:
+                        left_right_z = zensoNRow1_raceInfo_data[5][:1]
+                        distance_z = zensoNRow1_raceInfo_data[5][1:]
+                    if timeCourner[k][0] == '':
+                        time_min_z = int(0)
+                        time_sec_z = float(0)
+                    else:
+                        time_min_z = int(timeCourner[k][0].split(':')[0])
+                        time_sec_z = float(timeCourner[k][0].split(':')[1])
+                    baba_z = zensoNRow1_raceInfo_data[2]
+                    horse_num_z = zensoNRow1_raceInfo_data[6].replace('番','')
                     
-                    if len(re.findall(r'(\d+|\D+)', str(race_infos[5]))) > 4:
-                        pop_order = int(re.findall(r'(\d+|\D+)', str(race_infos[5]))[4])
-                    else :
+                    if timeCourner[k][2] == ' ' or timeCourner[k][2] == '非計測':
+                        agari_3f = 0
+                    else:
+                        agari_3f = float(timeCourner[k][2])
+                    
+                    if order_of_arrival == 1:
+                        chakusa = 0
+                        win_horse = horseName
+                    else:
+                        chakusa = ichakusa[k][0]
+                        win_horse = ichakusa[k][1]
+                    
+                    kinryo_z = ninkiBataiju[k][3]
+                    jockey_name_z = ninkiBataiju[k][2]
+
+                    if ninkiBataiju[k][0].replace('人', '') == '':
                         pop_order = 0
+                    else:
+                        pop_order = int(ninkiBataiju[k][0].replace('人', ''))
+
+                    num_of_all_horse = int(zensoNRow1_raceInfo_data[3].replace('頭', ''))
                     
-                    gate_infos = str(race_infos[6]).split(' ')
-                    num_of_all_horse = int(str(gate_infos[0]).replace('ト',''))
-                    waku = str(gate_infos[1])[0]
-                    weight = re.sub(r'\D', '',gate_infos[2])
-                    if gate_infos[2] == "":
+                    if ninkiBataiju[k][1] == '－' or ninkiBataiju[k][1] == '計不':
                         weight = 0
-                    corner1 = 0
-                    corner2 = 0
-                    corner3 = 0
-                    corner4 = 0
-                    
-                    if len(race_infos) > 7:
-                        corners = race_infos[7].split('-')
-                        if len(corners) == 4:
-                            corner1 = corners[::-1][3]
-                        if len(corners) >= 3:
-                            corner2 = corners[::-1][2]
-                        if len(corners) >= 2:
-                            corner3 = corners[::-1][1]
-                        corner4 = corners[::-1][0]
-                    
-                    if len(race_infos) > 8:
-                        win_horse = race_infos[8]
-                    else :
-                        win_horse = '競走除外等により不明'
+                    else:
+                        weight = int(ninkiBataiju[k][1])
+
+                    if timeCourner[k][1] == '':
+                        corner1 = 0
+                        corner2 = 0
+                        corner3 = 0
+                        corner4 = 0
+                    else:
+                        if len(timeCourner[k][1].split('-')) == 1:
+                            corner1 = 0
+                            corner2 = 0
+                            corner3 = 0
+                            corner4 = timeCourner[k][1].split('-')[0]
+                        elif len(timeCourner[k][1].split('-')) == 2:
+                            corner1 = 0
+                            corner2 = 0
+                            corner3 = timeCourner[k][1].split('-')[0]
+                            corner4 = timeCourner[k][1].split('-')[1]
+                        elif len(timeCourner[k][1].split('-')) == 3:
+                            corner1 = 0
+                            corner2 = timeCourner[k][1].split('-')[0]
+                            corner3 = timeCourner[k][1].split('-')[1]
+                            corner4 = timeCourner[k][1].split('-')[2]
+                        elif len(timeCourner[k][1].split('-')) == 4:
+                            corner1 = timeCourner[k][1].split('-')[0]
+                            corner2 = timeCourner[k][1].split('-')[1]
+                            corner3 = timeCourner[k][1].split('-')[2]
+                            corner4 = timeCourner[k][1].split('-')[3]
                     
                     setattr(hp,"zenso"+str(zenso_no)+"_course_name",course_name_z)
+                    setattr(hp,"zenso"+str(zenso_no)+"_course_code",course_code_z)
+                    setattr(hp,"zenso"+str(zenso_no)+"_race_num",race_num_z)
                     setattr(hp,"zenso"+str(zenso_no)+"_ymd",ymd_z)
                     setattr(hp,"zenso"+str(zenso_no)+"_order_of_arrival",order_of_arrival)
-                    setattr(hp,"zenso"+str(zenso_no)+"_race_name",race_name_z)
-                    setattr(hp,"zenso"+str(zenso_no)+"_distance",distance_z)
+                    setattr(hp,"zenso"+str(zenso_no)+"_race_name",race_name_z[0])
                     setattr(hp,"zenso"+str(zenso_no)+"_left_right",left_right_z)
-                    setattr(hp,"zenso"+str(zenso_no)+"_time",time_z)
+                    setattr(hp,"zenso"+str(zenso_no)+"_distance",distance_z)
+                    setattr(hp,"zenso"+str(zenso_no)+"_time_min",time_min_z)
+                    setattr(hp,"zenso"+str(zenso_no)+"_time_sec",time_sec_z)
                     setattr(hp,"zenso"+str(zenso_no)+"_baba",baba_z)
                     setattr(hp,"zenso"+str(zenso_no)+"_agari_3f",agari_3f)
                     setattr(hp,"zenso"+str(zenso_no)+"_chakusa",chakusa)
@@ -304,7 +418,7 @@ for w_id in id_list:
                     setattr(hp,"zenso"+str(zenso_no)+"_jockey_name",jockey_name_z)
                     setattr(hp,"zenso"+str(zenso_no)+"_pop_order",pop_order)
                     setattr(hp,"zenso"+str(zenso_no)+"_num_of_all_horse",num_of_all_horse)
-                    setattr(hp,"zenso"+str(zenso_no)+"_waku",waku)
+                    setattr(hp,"zenso"+str(zenso_no)+"_horse_num",horse_num_z)
                     setattr(hp,"zenso"+str(zenso_no)+"_weight",weight)
                     setattr(hp,"zenso"+str(zenso_no)+"_corner1",corner1)
                     setattr(hp,"zenso"+str(zenso_no)+"_corner2",corner2)
@@ -315,11 +429,12 @@ for w_id in id_list:
                 if hp_exist_flg == 0:
                     session.add(hp)
                 cnt += 1
-                
+                                        
         #スピード指数取得
         params = {'race_id':race_id,'date':date,'no':p_num,'id':course_code,'p':'sp'}
         sp_res = requests.get(url,params=params)
-        sp_res.raise_for_status()
+        if sp_res.status_code != 200:
+            sp_res = requests.get(url,params=params)
         sp_res.encoding = sp_res.apparent_encoding
         sp_soup = BeautifulSoup(sp_res.text,'lxml')
 
@@ -370,7 +485,8 @@ for w_id in id_list:
         #スピード指数ランク取得
         params = {'race_id':race_id,'date':date,'no':p_num,'id':course_code,'p':'ls'}
         ls_res = requests.get(url,params=params)
-        ls_res.raise_for_status()
+        if ls_res.status_code != 200:
+            ls_res = requests.get(url,params=params)
         ls_res.encoding = ls_res.apparent_encoding
         ls_soup = BeautifulSoup(ls_res.text,'lxml')
         
@@ -387,6 +503,7 @@ for w_id in id_list:
             zenso3_sp = re.sub(r'\D', '',s[7].text)
             zenso4_sp = re.sub(r'\D', '',s[8].text)
             zenso5_sp = re.sub(r'\D', '',s[9].text)
+
             spr = session.query(SpeedRankData).filter(SpeedRankData.racehorsekey == rhkey).first()
             if spr is None:
                 spr = SpeedRankData()
@@ -405,13 +522,13 @@ for w_id in id_list:
 
             if spr_exist_flg == 0:
                 session.add(spr)
-
             w_no += 1
 
         #推奨馬取得
         params = {'race_id':race_id,'date':date,'no':p_num,'id':course_code,'p':'fp'}
         fp_res = requests.get(url,params=params)
-        fp_res.raise_for_status()
+        if fp_res.status_code != 200:
+            fp_res = requests.get(url,params=params)
         fp_res.encoding = fp_res.apparent_encoding
         fp_soup = BeautifulSoup(fp_res.text,'lxml')
         
@@ -433,6 +550,7 @@ for w_id in id_list:
                 sp_max = re.sub(r'\D', '',s[11].text)
                 last_leg_power_mark = s[10].text
                 last_leg_power = re.sub(r'\D', '',s[11].text)
+
                 rd = session.query(RecommendData).filter(RecommendData.racehorsekey == rhkey).first()
                 if rd is None:
                     rd = RecommendData()
