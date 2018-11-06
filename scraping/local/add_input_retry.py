@@ -60,7 +60,7 @@ for w_id in id_list:
     soup = BeautifulSoup(response.text,'lxml')
     racelist = soup.find('section',class_='raceTable').find_all('a')
     start_race = int(soup.find('section',class_='raceTable').find('a').get('href').split('?')[-1].split('&')[1].split('=')[-1])
-    num_race = 0
+    num_race = start_race
     for r in racelist:
         if r.get('href') is not None:
             w_url = r.get('href').split('?')[0]
