@@ -1,8 +1,7 @@
 ﻿from sqlalchemy import create_engine
 from database_setup import Base, BangumiData
 from sqlalchemy.orm import sessionmaker
-import sys
-import codecs
+import sys,codecs
 
 file = sys.argv[1]
 print(file)
