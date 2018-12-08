@@ -8,6 +8,7 @@ from .domain.seiseki import SeisekiData
 from .domain.seisekirace import SeisekiRaceData
 from .domain.trainanalysis import TrainAnalysisData
 from .domain.trainoikiri import TrainOikiriData
+from .domain.predict import PredictData
 
 from .master.horsebase import HorsebaseData
 from .master.mastercode import *
