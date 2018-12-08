@@ -25,11 +25,11 @@ echo 'DBファイルコピー開始'
 cp $dbenv/jrdb.db ./
 echo 'DBファイルコピー完了'
 echo 'モジュールコピー開始'
-cp $git_lib/database_setup.py ./
-cp $git_lib/domain/add_sed.py ./
-cp $git_lib/domain/add_srb.py ./
-cp $git_lib/domain/add_hjc.py ./
-cp $git_lib/tools/download_results.py ./
+cp -r $git_lib/horseview ./
+cp $git_lib/tools/update/domain/add_sed.py ./
+cp $git_lib/tools/update/domain/add_srb.py ./
+cp $git_lib/tools/update/domain/add_hjc.py ./
+cp $git_lib/tools/download/download_results.py ./
 echo 'モジュールコピー完了'
 echo '更新処理開始'
 python download_results.py $ymd
