@@ -10,7 +10,7 @@ class RacehorseData(baseobj):
     trainoikiri = relobj("TrainOikiriData",uselist=False, backref=bkrobj("racehorse"),innerjoin=True)
     horse_base = relobj("HorsebaseData",uselist=False,backref=bkrobj("racehorse"),innerjoin=True)
     result = relobj("SeisekiData",uselist=False,foreign_keys=[racehorsekey],innerjoin=False)
-    predict = relobj("PredictData",uselist=False,foreign_keys=[racehorsekey],innerjoin=False)
+    predict = relobj("PredictData",uselist=False,backref=bkrobj("racehorse"),innerjoin=False)
     #インデックスに対して
     horseidx = relobj("HorseIndex",uselist=False,backref=bkrobj("racehorse"))
     jockeyidx = relobj("JockeyIndex",uselist=False,backref=bkrobj("racehorse"))
