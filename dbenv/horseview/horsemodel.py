@@ -1,6 +1,13 @@
 ##テーブル一覧をインポートする
 from .domain.bangumi import BangumiData
-from .domain.index import HorseIndex, JockeyIndex, TrainerIndex, OikiriStateIndex, TrainCourseCodeIndex, HobokusakiIndex
+from .domain.index import (
+    HorseIndex,
+    JockeyIndex,
+    TrainerIndex,
+    OikiriStateIndex,
+    TrainCourseCodeIndex,
+    HobokusakiIndex,
+)
 from .domain.kaisai import KaisaiData
 from .domain.racehorse import RacehorseData
 from .domain.returninfo import ReturninfoData
@@ -19,4 +26,4 @@ from .master.jockey import JockeyData
 from .sessioncontroll import sesobj
 
 ##flask用オブジェクト
-from .sessioncontroll import app,db
+from .sessioncontroll import app, db
