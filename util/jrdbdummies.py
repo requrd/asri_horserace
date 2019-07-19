@@ -1,11 +1,13 @@
 ﻿import numpy as np
+
+
 class CategoryGetter:
-    #開催データ
-    def getKaisaikbn(self,kaisaikbn):
+    # 開催データ
+    def getKaisaikbn(self, kaisaikbn):
         kaisaikbn_d = self.getThreecat(kaisaikbn)
         return kaisaikbn_d
-            
-    def getDayofweek(self,dayofweek):
+
+    def getDayofweek(self, dayofweek):
         dayofweek_d = np.zeros([7])
         if dayofweek == '日':
             dayofweek_d[0] = 1
@@ -22,33 +24,33 @@ class CategoryGetter:
         elif dayofweek == '土':
             dayofweek_d[6] = 1
         return dayofweek_d
-        
-    def getTenko(self,tenko):
+
+    def getTenko(self, tenko):
         tenko_d = self.getSixcat(tenko)
         return tenko_d
-        
-    def getBabaabst(self,baba):
+
+    def getBabaabst(self, baba):
         baba_d = self.getFourcat(baba)
         return baba_d
-        
-    def getBabadetail(self,baba):
+
+    def getBabadetail(self, baba):
         baba_d = self.getThreecat(baba)
         return baba_d
-        
-    def getTurfkind(self,kind):
+
+    def getTurfkind(self, kind):
         kind_d = self.getThreecat(kind)
         return kind_d
-        
-    def getTennatsu(self,ten):
+
+    def getTennatsu(self, ten):
         ten_d = self.getTwocat(ten)
         return ten_d
-        
-    def getStopfreeze(self,st):
+
+    def getStopfreeze(self, st):
         stf_d = self.getTwocat(st)
         return stf_d
-        
-    #番組データ
-    def getDistance(self,dis):
+
+    # 番組データ
+    def getDistance(self, dis):
         dis_d = np.zeros([13])
         if dis == 1000:
             dis_d[0] = 1
@@ -74,27 +76,27 @@ class CategoryGetter:
             dis_d[10] = 1
         elif dis > 3000 and dis <= 3200:
             dis_d[11] = 1
-        else :
+        else:
             dis_d[12] = 1
         return dis_d
-        
-    def getTdscode(self,tds):
+
+    def getTdscode(self, tds):
         tds_d = self.getThreecat(tds)
         return tds_d
-        
-    def getRightleft(self,rl):
+
+    def getRightleft(self, rl):
         rl_d = self.getFourcat(rl)
         return rl_d
-        
-    def getInout(self,inout):
+
+    def getInout(self, inout):
         io_d = self.getFourcat(inout)
         return io_d
-        
-    def getShubetsu(self,s):
+
+    def getShubetsu(self, s):
         s_d = self.getFivecat(s)
         return s_d
-        
-    def getJoken(self,j):
+
+    def getJoken(self, j):
         j_d = np.zeros([11])
         if j == '04':
             j_d[0] = 1
@@ -119,21 +121,21 @@ class CategoryGetter:
         elif j == 'OP':
             j_d[10] = 1
         return j_d
-        
-    def getJuryo(self,j):
+
+    def getJuryo(self, j):
         j_d = self.getFourcat(j)
         return j_d
-        
-    def getGrade(self,g):
+
+    def getGrade(self, g):
         g_d = self.getFivecat(g)
         return g_d
-        
-    def getCourse(self,c):
+
+    def getCourse(self, c):
         c_d = self.getFivecat(c)
         return c_d
-        
-    #WORKTABLEデータ
-    #汎用メソッド利用
+
+    # WORKTABLEデータ
+    # 汎用メソッド利用
     def getNum(self, num):
         num_d = self.getEighteencat(num)
         return num_d
@@ -259,15 +261,16 @@ class CategoryGetter:
         return zenso_race_leg_type_d
 
     def getZensoCorner4courseposition(self, zenso_corner4_course_position):
-        zenso_corner4_course_position = self.getEightcat(zenso_corner4_course_position)
+        zenso_corner4_course_position = self.getEightcat(
+            zenso_corner4_course_position)
         return zenso_corner4_course_position
-        
+
     def getUmakigocode(self, uk):
         uk_d = self.getTwentyeightcat(uk)
         return uk_d
 
-    #WORKTABLEデータ
-    #独自メソッド利用
+    # WORKTABLEデータ
+    # 独自メソッド利用
     def getBacode(self, b):
         b_d = np.zeros([11])
         if b == 1:
@@ -293,7 +296,7 @@ class CategoryGetter:
         else:
             b_d[10] = 1
         return b_d
-        
+
     def getDistanceadjust(self, d):
         d_d = np.zeros([8])
         if d == 0:
@@ -466,17 +469,17 @@ class CategoryGetter:
             t_d[4] = 1
         return t_d
 
-    #汎用メソッド
+    # 汎用メソッド
 
-    def getTwocat(self,num):
+    def getTwocat(self, num):
         two_d = np.zeros([2])
-        if  num == 1:
+        if num == 1:
             two_d[0] = 1
         else:
             two_d[1] = 1
         return two_d
-        
-    def getThreecat(self,num):
+
+    def getThreecat(self, num):
         three_d = np.zeros([3])
         if num == 1:
             three_d[0] = 1
@@ -485,10 +488,10 @@ class CategoryGetter:
         else:
             three_d[2] = 1
         return three_d
-            
-    def getFourcat(self,num):
+
+    def getFourcat(self, num):
         four_d = np.zeros([4])
-        if  num == 1:
+        if num == 1:
             four_d[0] = 1
         elif num == 2:
             four_d[1] = 1
@@ -497,10 +500,10 @@ class CategoryGetter:
         else:
             four_d[3] = 1
         return four_d
-            
-    def getFivecat(self,num):
+
+    def getFivecat(self, num):
         five_d = np.zeros([5])
-        if  num == 1:
+        if num == 1:
             five_d[0] = 1
         elif num == 2:
             five_d[1] = 1
@@ -512,7 +515,7 @@ class CategoryGetter:
             five_d[4] = 1
         return five_d
 
-    def getSixcat(self,num):
+    def getSixcat(self, num):
         six_d = np.zeros([6])
         if num == 1:
             six_d[0] = 1
@@ -528,7 +531,7 @@ class CategoryGetter:
             six_d[5] = 1
         return six_d
 
-    def getSevencat(self,num):
+    def getSevencat(self, num):
         seven_d = np.zeros([7])
         if num == 1:
             seven_d[0] = 1
@@ -546,7 +549,7 @@ class CategoryGetter:
             seven_d[6] = 1
         return seven_d
 
-    def getEightcat(self,num):
+    def getEightcat(self, num):
         eight_d = np.zeros([8])
         if num == 1:
             eight_d[0] = 1
@@ -566,7 +569,7 @@ class CategoryGetter:
             eight_d[7] = 1
         return eight_d
 
-    def getNinecat(self,num):
+    def getNinecat(self, num):
         nine_d = np.zeros([9])
         if num == 1:
             nine_d[0] = 1
@@ -588,7 +591,7 @@ class CategoryGetter:
             nine_d[8] = 1
         return nine_d
 
-    def getTencat(self,num):
+    def getTencat(self, num):
         ten_d = np.zeros([10])
         if num == 1:
             ten_d[0] = 1
@@ -612,7 +615,7 @@ class CategoryGetter:
             ten_d[9] = 1
         return ten_d
 
-    def getElevencat(self,num):
+    def getElevencat(self, num):
         eleven_d = np.zeros([11])
         if num == 1:
             eleven_d[0] = 1
@@ -638,7 +641,7 @@ class CategoryGetter:
             eleven_d[10] = 1
         return eleven_d
 
-    def getTwelvecat(self,num):
+    def getTwelvecat(self, num):
         d = np.zeros([12])
         if num == 1:
             d[0] = 1
@@ -666,7 +669,7 @@ class CategoryGetter:
             d[11] = 1
         return d
 
-    def getEighteencat(self,num):
+    def getEighteencat(self, num):
         d = np.zeros([18])
         if num == 1:
             d[0] = 1
@@ -706,7 +709,7 @@ class CategoryGetter:
             d[17] = 1
         return d
 
-    def getTwentyeightcat(self,num):
+    def getTwentyeightcat(self, num):
         d = np.zeros([28])
         if num == 1:
             d[0] = 1
