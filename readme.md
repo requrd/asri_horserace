@@ -6,4 +6,4 @@ jrdb絡みのものは移管済み。
 
 # Dockerfile
 `docker build ./ -t nvidia-conda`  
-`docker run --name jupyter-lab -p 8888:8888 -it nvidia-conda`  
+`docker run --runtime=nvidia --name jupyter-lab -p 8888:8888 -it nvidia-conda`  
