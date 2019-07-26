@@ -14,7 +14,8 @@ RUN conda create -y -n jupyter_env python=3.6 anaconda && \
     mkdir /code/lib
 
 WORKDIR /code
-ADD ./JRA/util /code/lib
+COPY ./JRA/util /code/lib
 #Launch JUPYTER COMMAND
 EXPOSE 8888
-CMD ["/opt/conda/envs/jupyter_env/bin/jupyter-lab --no-browser --port=8888 --ip=0.0.0.0 --allow-root"]
+CMD ["/opt/conda/envs/jupyter_env/bin/jupyter-lab","--no-browser", "--port=8888", "--ip=0.0.0.0", "--allow-root"]
+##CMD ["/opt/conda/envs/jupyter_env/bin/jupyter-lab --no-browser --port=8888 --ip=0.0.0.0 --allow-root"]
