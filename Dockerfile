@@ -17,7 +17,9 @@ RUN conda create -y -n jupyter_env python=3.6 anaconda && \
 RUN mkdir code && \
     mkdir /opt/lib && \
     git clone https://github.com/astroripple/horseview.git /opt/lib/horseview && \
-    /opt/conda/envs/jupyter_env/bin/pip install flask_sqlalchemy flask_restless flask_migrate
+    /opt/conda/envs/jupyter_env/bin/pip install flask_sqlalchemy flask_restless flask_migrate && \
+    apt-get install graphviz pkg-config -y && \
+    conda install erdalchemy
 
 COPY ./JRA/util /opt/lib
 WORKDIR /code
