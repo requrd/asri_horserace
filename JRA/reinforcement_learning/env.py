@@ -7,7 +7,7 @@ import random
 
 
 class MyEnv(gym.Env):
-    metadata = {'render.modes': ['human', 'ansi']}
+    metadata = {"render.modes": ["human", "ansi"]}
 
     def __init__(self, racemat, labels, returns, pocket_money):
         super().__init__()
@@ -17,14 +17,11 @@ class MyEnv(gym.Env):
         self.pocket_money = pocket_money
 
         # action_space, observation_space, reward_range を設定する
-        self.action_space = gym.spaces.Discrete(
-            len(self.labels[0]))  # 馬券の買い目全て
+        self.action_space = gym.spaces.Discrete(len(self.labels[0]))  # 馬券の買い目全て
         self.observation_space = gym.spaces.Box(
-            low=-20,
-            high=20,
-            shape=self.racemat[0].shape
+            low=-20, high=20, shape=self.racemat[0].shape
         )
-        self.reward_range = [-100., 7000000.]
+        self.reward_range = [-100.0, 7000000.0]
         self.reset()
 
     def reset(self):
@@ -52,7 +49,7 @@ class MyEnv(gym.Env):
             self.money += self.p_ret
 
         # 次のレースへ向けた処理
-#        self.p_race += 1
+        #        self.p_race += 1
         self.p_race = random.randrange(self.num_race)
         self.p_label = self.labels[self.p_race]
         self.p_ret = self.returns[self.p_race]
@@ -62,10 +59,10 @@ class MyEnv(gym.Env):
 
         return next_ob, reward, self.done, {}
 
-    def render(self, mode='human', close=False):
+    def render(self, mode="human", close=False):
         # human の場合はコンソールに出力。ansiの場合は StringIO を返す
-        outfile = StringIO() if mode == 'ansi' else sys.stdout
-        message = str(self.money) + '\n'
+        outfile = StringIO() if mode == "ansi" else sys.stdout
+        message = str(self.money) + "\n"
         outfile.write(message)
         return outfile
 
@@ -82,7 +79,7 @@ class MyEnv(gym.Env):
 
     def is_done(self):
         # 今回は最大で self.MAX_STEPS までとした
-        if (self.money >= self.pockey_money * 10 or self.money < 0):
+        if self.money >= self.pockey_money * 10 or self.money < 0:
             return True
         elif self.steps > self.MAX_STEPS:
             return True

@@ -11,6 +11,6 @@ def db_days(year):
     start_date = int("{}0101".format(year))
     end_date = int("{}1231".format(year))
     kaisais = KaisaiData.query.filter(
-        KaisaiData.ymd >= start_date,
-        KaisaiData.ymd <= end_date).all()
+        KaisaiData.ymd >= start_date, KaisaiData.ymd <= end_date
+    ).all()
     return sorted(set([k.ymd for k in kaisais]))

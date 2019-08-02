@@ -11,15 +11,17 @@ num_max_horse = 18
 # 汎用DBロード
 
 # ここからDB操作
-engine = create_engine('sqlite:///jrdb.db')
+engine = create_engine("sqlite:///jrdb.db")
 Base.metadata.bind = engine
 Session = sessionmaker(bind=engine)
 session = Session()
 
-kaisais = session.query(KaisaiData).order_by(
-    KaisaiData.ymd).filter(
-        KaisaiData.ymd >= '20100101',
-    KaisaiData.ymd <= '20171231').all()
+kaisais = (
+    session.query(KaisaiData)
+    .order_by(KaisaiData.ymd)
+    .filter(KaisaiData.ymd >= "20100101", KaisaiData.ymd <= "20171231")
+    .all()
+)
 
 # 芝処理
 w_winret = []
@@ -42,7 +44,7 @@ for i in range(len(kaisais)):
             p3 = w_race.returninfo.place3_num
             p3_ret = w_race.returninfo.place3_ret
 
-# ★★★ 岡宮追記　start ★★★
+            # ★★★ 岡宮追記　start ★★★
             jockey_score_mat = np.zeros(n)
             info_score_mat = np.zeros(n)
             train_score_mat = np.zeros(n)
@@ -65,14 +67,14 @@ for i in range(len(kaisais)):
             shiage_score_mat = np.zeros(n)
             end_f_score_mat = np.zeros(n)
             oikiri_score_mat = np.zeros(n)
-# ★★★ 岡宮追記　end ★★★
+            # ★★★ 岡宮追記　end ★★★
 
             # 順位データの入力、払戻金の設定
             for k in range(n):
                 w_horse = w_race.racehorses_w[k]
                 idm_mat[k] = w_horse.idm
 
-# ★★★ 岡宮追記　start ★★★
+                # ★★★ 岡宮追記　start ★★★
                 jockey_score_mat[k] = w_horse.jockey_score
                 info_score_mat[k] = w_horse.info_score
                 train_score_mat[k] = w_horse.train_score
@@ -95,7 +97,7 @@ for i in range(len(kaisais)):
                 shiage_score_mat[k] = w_horse.shiage_score
                 end_f_score_mat[k] = w_horse.end_f_score
                 oikiri_score_mat[k] = w_horse.oikiri_score
-# ★★★ 岡宮追記　end ★★★
+                # ★★★ 岡宮追記　end ★★★
 
                 # 払戻金処理
                 if winhorse - 1 == k:
@@ -113,13 +115,12 @@ for i in range(len(kaisais)):
 
             idm_orders = np.argsort(idm_mat)[::-1]
 
-# ★★★ 岡宮追記　start ★★★
+            # ★★★ 岡宮追記　start ★★★
             jockey_score_orders = np.argsort(jockey_score_mat)[::-1]
             info_score_orders = np.argsort(info_score_mat)[::-1]
             train_score_orders = np.argsort(train_score_mat)[::-1]
             trainer_score_orders = np.argsort(trainer_score_mat)[::-1]
-            jockey_rate_rentai_orders = np.argsort(
-                jockey_rate_rentai_mat)[::-1]
+            jockey_rate_rentai_orders = np.argsort(jockey_rate_rentai_mat)[::-1]
             gekiso_score_orders = np.argsort(gekiso_score_mat)[::-1]
             pace_score_orders = np.argsort(pace_score_mat)[::-1]
             up_score_orders = np.argsort(up_score_mat)[::-1]
@@ -128,20 +129,18 @@ for i in range(len(kaisais)):
             ten_score_order_orders = np.argsort(ten_score_order_mat)[::-1]
             pace_score_order_orders = np.argsort(pace_score_order_mat)[::-1]
             up_score_order_orders = np.argsort(up_score_order_mat)[::-1]
-            position_score_order_orders = np.argsort(
-                position_score_order_mat)[::-1]
-            expect_jokey_win_rate_orders = np.argsort(
-                expect_jokey_win_rate_mat)[::-1]
-            expect_jokey_rentai_rate_orders = np.argsort(
-                expect_jokey_rentai_rate_mat)[::-1]
+            position_score_order_orders = np.argsort(position_score_order_mat)[::-1]
+            expect_jokey_win_rate_orders = np.argsort(expect_jokey_win_rate_mat)[::-1]
+            expect_jokey_rentai_rate_orders = np.argsort(expect_jokey_rentai_rate_mat)[
+                ::-1
+            ]
             horse_start_score_orders = np.argsort(horse_start_score_mat)[::-1]
             mambaken_score_orders = np.argsort(mambaken_score_mat)[::-1]
-            train_oikiri_score_orders = np.argsort(
-                train_oikiri_score_mat)[::-1]
+            train_oikiri_score_orders = np.argsort(train_oikiri_score_mat)[::-1]
             shiage_score_orders = np.argsort(shiage_score_mat)[::-1]
             end_f_score_orders = np.argsort(end_f_score_mat)[::-1]
             oikiri_score_orders = np.argsort(oikiri_score_mat)[::-1]
-# ★★★ 岡宮追記　end ★★★
+            # ★★★ 岡宮追記　end ★★★
             # 得点加算処理
             for l in range(n):
                 wp = 0
@@ -184,8 +183,7 @@ for i in range(len(kaisais)):
                     wp += 1
 
                 # 芝適性
-                if (w_horse.turf_adjust_code == 0) or (
-                        w_horse.turf_adjust_code == 3):
+                if (w_horse.turf_adjust_code == 0) or (w_horse.turf_adjust_code == 3):
                     wp -= 1
 
                 # ダ適性
@@ -203,8 +201,7 @@ for i in range(len(kaisais)):
                 # 芝はなし
 
                 # 輸送
-                if (w_horse.yuso == 0) or (
-                        w_horse.yuso == 4) or (w_horse.yuso == 1):
+                if (w_horse.yuso == 0) or (w_horse.yuso == 4) or (w_horse.yuso == 1):
                     wp -= 1
 
                 # 降級フラグ
@@ -240,8 +237,7 @@ for i in range(len(kaisais)):
                     wp -= 1
 
                 # 調教コース種類
-                if (w_horse.train_course_kind == 0) or (
-                        w_horse.train_course_kind == 2):
+                if (w_horse.train_course_kind == 0) or (w_horse.train_course_kind == 2):
                     wp -= 1
 
                 # 坂
@@ -267,13 +263,11 @@ for i in range(len(kaisais)):
                     wp -= 1
 
                 # 調教重点
-                if (w_horse.train_juten != 3):
+                if w_horse.train_juten != 3:
                     wp -= 1
 
                 # 調教量評価
-                if np.argmax(
-                    cg.getTrainvolhyoka(
-                        w_horse.train_vol_hyoka)) >= 3:
+                if np.argmax(cg.getTrainvolhyoka(w_horse.train_vol_hyoka)) >= 3:
                     wp -= 1
 
                 # 追切種類
@@ -282,7 +276,8 @@ for i in range(len(kaisais)):
 
                 # 前走１コース位置
                 if (w_horse.zenso1_course_position == 3) or (
-                        w_horse.zenso1_course_position == 4):
+                    w_horse.zenso1_course_position == 4
+                ):
                     wp -= 1
 
                 # 前走1脚質
@@ -293,7 +288,8 @@ for i in range(len(kaisais)):
 
                 # 前走1,4角コース取り
                 if (w_horse.zenso1_corner4_course_position == 0) or (
-                        w_horse.zenso1_corner4_course_position == 2):
+                    w_horse.zenso1_corner4_course_position == 2
+                ):
                     wp -= 1
 
                 # 前走2コース位置
@@ -307,7 +303,8 @@ for i in range(len(kaisais)):
 
                 # 前走3コース位置
                 if (w_horse.zenso3_course_position == 3) or (
-                        w_horse.zenso3_course_position == 4):
+                    w_horse.zenso3_course_position == 4
+                ):
                     wp -= 1
 
                 # 前走3脚質
@@ -316,9 +313,9 @@ for i in range(len(kaisais)):
                 elif int(w_horse.zenso3_race_leg_type) == 1:
                     wp += 1
 
-# ★★★ 岡宮追記　start ★★★
+                # ★★★ 岡宮追記　start ★★★
                 g = 8
-                if (g > n):
+                if g > n:
                     g = n
                 for m in range(0, g):
                     if jockey_score_orders[m] == l:
@@ -331,16 +328,16 @@ for i in range(len(kaisais)):
                 for m in range(0, 5):
                     if trainer_score_orders[m] == l:
                         wp += 1
-                if (n > 7):
+                if n > 7:
                     if trainer_score_orders[6] == l:
                         wp += 2
                 g = 6
-                if (g > n):
+                if g > n:
                     g = n
                 for m in range(0, g):
                     if jockey_rate_rentai_orders[m] == l:
                         wp += 1
-                if (n > 7):
+                if n > 7:
                     if jockey_rate_rentai_orders[7] == l:
                         wp += 2
                 for m in range(0, 4):
@@ -358,7 +355,7 @@ for i in range(len(kaisais)):
                 if position_score_orders[2] == l:
                     wp += 1
                 g = 6
-                if (g > n):
+                if g > n:
                     g = n
                 for m in range(0, g):
                     if ls_score_order_orders[m] == l:
@@ -369,28 +366,28 @@ for i in range(len(kaisais)):
                 for m in range(15, n):
                     if pace_score_order_orders[m] == l:
                         wp += 1
-                if (n > 7):
+                if n > 7:
                     if up_score_order_orders[7] == l:
                         wp += 1
                 for m in range(12, n):
                     if position_score_order_orders[m] == l:
                         wp += 1
                 g = 8
-                if (g > n):
+                if g > n:
                     g = n
                 for m in range(0, g):
                     if expect_jokey_win_rate_orders[m] == l:
                         wp += 1
                 g = 8
-                if (g > n):
+                if g > n:
                     g = n
                 for m in range(2, g):
                     if expect_jokey_rentai_rate_orders[m] == l:
                         wp += 1
-                if (n > 7):
+                if n > 7:
                     if horse_start_score_orders[7] == l:
                         wp += 1
-                if (n > 6):
+                if n > 6:
                     if mambaken_score_orders[6] == l:
                         wp += 1
                 for m in range(0, 3):
@@ -452,9 +449,15 @@ for i in range(len(kaisais)):
                 if w_horse.zenso1_position == 3:
                     wp -= 1
                 # コーナー順位４
-                if w_horse.zenso1_corner_order4 >= 1 and w_horse.zenso1_corner_order4 <= 4:
+                if (
+                    w_horse.zenso1_corner_order4 >= 1
+                    and w_horse.zenso1_corner_order4 <= 4
+                ):
                     wp += 1
-                if w_horse.zenso1_corner_order4 >= 14 and w_horse.zenso1_corner_order4 <= n:
+                if (
+                    w_horse.zenso1_corner_order4 >= 14
+                    and w_horse.zenso1_corner_order4 <= n
+                ):
                     wp -= 1
                 points.append(wp)
 
@@ -478,7 +481,7 @@ for i in range(len(kaisais)):
             n = len(w_race.racehorses_w)
             idm_mat = np.zeros(n)
 
-# ★★★ 岡宮追記　start ★★★
+            # ★★★ 岡宮追記　start ★★★
             jockey_score_mat = np.zeros(n)
             train_score_mat = np.zeros(n)
             trainer_score_mat = np.zeros(n)
@@ -502,7 +505,7 @@ for i in range(len(kaisais)):
             oikiri_score_mat = np.zeros(n)
             zenso1_natural_score_mat = np.zeros(n)
             zenso1_racep_score_mat = np.zeros(n)
-# ★★★ 岡宮追記　end ★★★
+            # ★★★ 岡宮追記　end ★★★
 
             winhorse = w_race.returninfo.win1_num
             winret = w_race.returninfo.win1_ret
@@ -518,7 +521,7 @@ for i in range(len(kaisais)):
                 w_horse = w_race.racehorses_w[k]
                 idm_mat[k] = w_horse.idm
 
-# ★★★ 岡宮追記　start ★★★
+                # ★★★ 岡宮追記　start ★★★
                 jockey_score_mat[k] = w_horse.jockey_score
                 train_score_mat[k] = w_horse.train_score
                 trainer_score_mat[k] = w_horse.trainer_score
@@ -541,7 +544,7 @@ for i in range(len(kaisais)):
                 oikiri_score_mat[k] = w_horse.oikiri_score
                 zenso1_natural_score_mat[k] = w_horse.zenso1_natural_score
                 zenso1_racep_score_mat[k] = w_horse.zenso1_racep_score
-# ★★★ 岡宮追記　end ★★★
+                # ★★★ 岡宮追記　end ★★★
 
                 # 払戻金処理
                 if winhorse - 1 == k:
@@ -559,12 +562,11 @@ for i in range(len(kaisais)):
 
             idm_orders = np.argsort(idm_mat)[::-1]
 
-# ★★★ 岡宮追記　start ★★★
+            # ★★★ 岡宮追記　start ★★★
             jockey_score_orders = np.argsort(jockey_score_mat)[::-1]
             train_score_orders = np.argsort(train_score_mat)[::-1]
             trainer_score_orders = np.argsort(trainer_score_mat)[::-1]
-            jockey_rate_rentai_orders = np.argsort(
-                jockey_rate_rentai_mat)[::-1]
+            jockey_rate_rentai_orders = np.argsort(jockey_rate_rentai_mat)[::-1]
             gekiso_score_orders = np.argsort(gekiso_score_mat)[::-1]
             pace_score_orders = np.argsort(pace_score_mat)[::-1]
             up_score_orders = np.argsort(up_score_mat)[::-1]
@@ -573,23 +575,19 @@ for i in range(len(kaisais)):
             ten_score_order_orders = np.argsort(ten_score_order_mat)[::-1]
             pace_score_order_orders = np.argsort(pace_score_order_mat)[::-1]
             up_score_order_orders = np.argsort(up_score_order_mat)[::-1]
-            position_score_order_orders = np.argsort(
-                position_score_order_mat)[::-1]
-            expect_jokey_win_rate_orders = np.argsort(
-                expect_jokey_win_rate_mat)[::-1]
-            expect_jokey_rentai_rate_orders = np.argsort(
-                expect_jokey_rentai_rate_mat)[::-1]
+            position_score_order_orders = np.argsort(position_score_order_mat)[::-1]
+            expect_jokey_win_rate_orders = np.argsort(expect_jokey_win_rate_mat)[::-1]
+            expect_jokey_rentai_rate_orders = np.argsort(expect_jokey_rentai_rate_mat)[
+                ::-1
+            ]
             mambaken_score_orders = np.argsort(mambaken_score_mat)[::-1]
-            train_oikiri_score_orders = np.argsort(
-                train_oikiri_score_mat)[::-1]
+            train_oikiri_score_orders = np.argsort(train_oikiri_score_mat)[::-1]
             shiage_score_orders = np.argsort(shiage_score_mat)[::-1]
             end_f_score_orders = np.argsort(end_f_score_mat)[::-1]
             oikiri_score_orders = np.argsort(oikiri_score_mat)[::-1]
-            zenso1_natural_score_orders = np.argsort(
-                zenso1_natural_score_mat)[::-1]
-            zenso1_racep_score_orders = np.argsort(
-                zenso1_racep_score_mat)[::-1]
-# ★★★ 岡宮追記　end ★★★
+            zenso1_natural_score_orders = np.argsort(zenso1_natural_score_mat)[::-1]
+            zenso1_racep_score_orders = np.argsort(zenso1_racep_score_mat)[::-1]
+            # ★★★ 岡宮追記　end ★★★
 
             # 得点加算処理
             for l in range(n):
@@ -633,8 +631,7 @@ for i in range(len(kaisais)):
                     wp += 1
 
                 # 芝適性
-                if (w_horse.turf_adjust_code == 0) or (
-                        w_horse.turf_adjust_code == 3):
+                if (w_horse.turf_adjust_code == 0) or (w_horse.turf_adjust_code == 3):
                     wp -= 1
 
                 # ダ適性
@@ -693,8 +690,7 @@ for i in range(len(kaisais)):
                     wp -= 1
 
                 # 調教コース種類
-                if (w_horse.train_course_kind == 0) or (
-                        w_horse.train_course_kind == 2):
+                if (w_horse.train_course_kind == 0) or (w_horse.train_course_kind == 2):
                     wp -= 1
 
                 # 坂
@@ -719,13 +715,11 @@ for i in range(len(kaisais)):
                     wp -= 1
 
                 # 調教重点
-                if (w_horse.train_juten != 3):
+                if w_horse.train_juten != 3:
                     wp -= 1
 
                 # 調教量評価
-                if np.argmax(
-                    cg.getTrainvolhyoka(
-                        w_horse.train_vol_hyoka)) >= 2:
+                if np.argmax(cg.getTrainvolhyoka(w_horse.train_vol_hyoka)) >= 2:
                     wp -= 1
 
                 # 追切種類
@@ -742,7 +736,8 @@ for i in range(len(kaisais)):
 
                 # 前走1,4角コース取り
                 if (w_horse.zenso1_corner4_course_position == 0) or (
-                        w_horse.zenso1_corner4_course_position == 2):
+                    w_horse.zenso1_corner4_course_position == 2
+                ):
                     wp -= 1
 
                 # 前走2コース位置
@@ -756,17 +751,17 @@ for i in range(len(kaisais)):
 
                 # 前走3コース位置
                 if (w_horse.zenso3_course_position == 3) or (
-                        w_horse.zenso3_course_position == 4):
+                    w_horse.zenso3_course_position == 4
+                ):
                     wp -= 1
 
                 # 前走3脚質
                 if int(w_horse.zenso3_race_leg_type) >= 3:
                     wp -= 1
 
-
-# ★★★ 岡宮追記　start ★★★
+                # ★★★ 岡宮追記　start ★★★
                 g = 8
-                if (g > n):
+                if g > n:
                     g = n
                 for m in range(0, g):
                     if jockey_score_orders[m] == l:
@@ -776,13 +771,13 @@ for i in range(len(kaisais)):
                 for m in range(0, 5):
                     if train_score_orders[m] == l:
                         wp += 1
-                if (n > 7):
+                if n > 7:
                     if train_score_orders[7] == l:
                         wp += 2
                 for m in range(0, 5):
                     if trainer_score_orders[m] == l:
                         wp += 1
-                if (n > 9):
+                if n > 9:
                     if trainer_score_orders[6] == l:
                         wp += 2
                 for m in range(0, 6):
@@ -811,34 +806,34 @@ for i in range(len(kaisais)):
                 for m in range(15, n):
                     if pace_score_order_orders[m] == l:
                         wp += 1
-                if (n > 7):
+                if n > 7:
                     if up_score_order_orders[7] == l:
                         wp -= 0
                 for m in range(15, n):
                     if up_score_order_orders[m] == l:
                         wp += 1
                 g = 15
-                if (g > n):
+                if g > n:
                     g = n
                 for m in range(12, g):
                     if position_score_order_orders[m] == l:
                         wp += 1
                 g = 8
-                if (g > n):
+                if g > n:
                     g = n
                 for m in range(0, g):
                     if expect_jokey_win_rate_orders[m] == l:
                         wp += 1
                 g = 8
-                if (g > n):
+                if g > n:
                     g = n
                 for m in range(2, g):
                     if expect_jokey_rentai_rate_orders[m] == l:
                         wp += 1
-                if (n > 9):
+                if n > 9:
                     if expect_jokey_rentai_rate_orders[9] == l:
                         wp += 2
-                if (n > 9):
+                if n > 9:
                     if mambaken_score_orders[6] == l:
                         wp += 1
                 for m in range(0, 3):
@@ -897,9 +892,15 @@ for i in range(len(kaisais)):
                     wp -= 1
                 if w_horse.zenso1_position == 3:
                     wp += 1
-                if w_horse.zenso1_corner_order4 >= 5 and w_horse.zenso1_corner_order4 <= 6:
+                if (
+                    w_horse.zenso1_corner_order4 >= 5
+                    and w_horse.zenso1_corner_order4 <= 6
+                ):
                     wp += 1
-                if w_horse.zenso1_corner_order4 >= 15 and w_horse.zenso1_corner_order4 <= 17:
+                if (
+                    w_horse.zenso1_corner_order4 >= 15
+                    and w_horse.zenso1_corner_order4 <= 17
+                ):
                     wp += 1
 
                 points.append(wp)
@@ -994,14 +995,18 @@ for i in range(len(t_ret)):
         if tpr > 0:
             place_cnt += 1
     else:
-        ptret.append([mp,
-                      (w_win_ret / cnt),
-                      (w_place_ret / cnt),
-                      (win_cnt / cnt),
-                      (place_cnt / cnt),
-                      w_win_ret,
-                      w_place_ret,
-                      cnt])
+        ptret.append(
+            [
+                mp,
+                (w_win_ret / cnt),
+                (w_place_ret / cnt),
+                (win_cnt / cnt),
+                (place_cnt / cnt),
+                w_win_ret,
+                w_place_ret,
+                cnt,
+            ]
+        )
         mp = tp
         w_win_ret = twr
         w_place_ret = tpr
@@ -1015,14 +1020,18 @@ for i in range(len(t_ret)):
         else:
             place_cnt = 0
     if i == len(t_ret) - 1:
-        ptret.append([mp,
-                      w_win_ret / cnt,
-                      w_place_ret / cnt,
-                      win_cnt / cnt,
-                      place_cnt / cnt,
-                      w_win_ret,
-                      w_place_ret,
-                      cnt])
+        ptret.append(
+            [
+                mp,
+                w_win_ret / cnt,
+                w_place_ret / cnt,
+                win_cnt / cnt,
+                place_cnt / cnt,
+                w_win_ret,
+                w_place_ret,
+                cnt,
+            ]
+        )
 
 # 芝回収率
 for i in range(len(ptret)):
@@ -1059,14 +1068,18 @@ for i in range(len(d_ret)):
         if tpr > 0:
             place_cnt += 1
     else:
-        pdret.append([mp,
-                      (w_win_ret / cnt),
-                      (w_place_ret / cnt),
-                      (win_cnt / cnt),
-                      (place_cnt / cnt),
-                      w_win_ret,
-                      w_place_ret,
-                      cnt])
+        pdret.append(
+            [
+                mp,
+                (w_win_ret / cnt),
+                (w_place_ret / cnt),
+                (win_cnt / cnt),
+                (place_cnt / cnt),
+                w_win_ret,
+                w_place_ret,
+                cnt,
+            ]
+        )
         mp = tp
         w_win_ret = twr
         w_place_ret = tpr
@@ -1080,14 +1093,18 @@ for i in range(len(d_ret)):
         else:
             place_cnt = 0
     if i == len(d_ret) - 1:
-        pdret.append([mp,
-                      w_win_ret / cnt,
-                      w_place_ret / cnt,
-                      win_cnt / cnt,
-                      place_cnt / cnt,
-                      w_win_ret,
-                      w_place_ret,
-                      cnt])
+        pdret.append(
+            [
+                mp,
+                w_win_ret / cnt,
+                w_place_ret / cnt,
+                win_cnt / cnt,
+                place_cnt / cnt,
+                w_win_ret,
+                w_place_ret,
+                cnt,
+            ]
+        )
 
 # ダート回収率
 for i in range(len(pdret)):

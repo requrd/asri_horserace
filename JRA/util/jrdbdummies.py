@@ -9,19 +9,19 @@ class CategoryGetter:
 
     def getDayofweek(self, dayofweek):
         dayofweek_d = np.zeros([7])
-        if dayofweek == '日':
+        if dayofweek == "日":
             dayofweek_d[0] = 1
-        elif dayofweek == '月':
+        elif dayofweek == "月":
             dayofweek_d[1] = 1
-        elif dayofweek == '火':
+        elif dayofweek == "火":
             dayofweek_d[2] = 1
-        elif dayofweek == '水':
+        elif dayofweek == "水":
             dayofweek_d[3] = 1
-        elif dayofweek == '木':
+        elif dayofweek == "木":
             dayofweek_d[4] = 1
-        elif dayofweek == '金':
+        elif dayofweek == "金":
             dayofweek_d[5] = 1
-        elif dayofweek == '土':
+        elif dayofweek == "土":
             dayofweek_d[6] = 1
         return dayofweek_d
 
@@ -98,27 +98,27 @@ class CategoryGetter:
 
     def getJoken(self, j):
         j_d = np.zeros([11])
-        if j == '04':
+        if j == "04":
             j_d[0] = 1
-        elif j == '05':
+        elif j == "05":
             j_d[1] = 1
-        elif j == '08':
+        elif j == "08":
             j_d[2] = 1
-        elif j == '09':
+        elif j == "09":
             j_d[3] = 1
-        elif j == '10':
+        elif j == "10":
             j_d[4] = 1
-        elif j == '15':
+        elif j == "15":
             j_d[5] = 1
-        elif j == '16':
+        elif j == "16":
             j_d[6] = 1
-        elif j == 'A1':
+        elif j == "A1":
             j_d[7] = 1
-        elif j == 'A2':
+        elif j == "A2":
             j_d[8] = 1
-        elif j == 'A3':
+        elif j == "A3":
             j_d[9] = 1
-        elif j == 'OP':
+        elif j == "OP":
             j_d[10] = 1
         return j_d
 
@@ -261,8 +261,7 @@ class CategoryGetter:
         return zenso_race_leg_type_d
 
     def getZensoCorner4courseposition(self, zenso_corner4_course_position):
-        zenso_corner4_course_position = self.getEightcat(
-            zenso_corner4_course_position)
+        zenso_corner4_course_position = self.getEightcat(zenso_corner4_course_position)
         return zenso_corner4_course_position
 
     def getUmakigocode(self, uk):
@@ -353,19 +352,19 @@ class CategoryGetter:
 
     def getGekisotype(self, g):
         g_d = np.zeros([7])
-        if g == '00':
+        if g == "00":
             g_d[0] = 1
-        if g == 'A1':
+        if g == "A1":
             g_d[1] = 1
-        if g == 'A2':
+        if g == "A2":
             g_d[2] = 1
-        if g == 'A3':
+        if g == "A3":
             g_d[3] = 1
-        if g == 'A4':
+        if g == "A4":
             g_d[4] = 1
-        if g == 'B1':
+        if g == "B1":
             g_d[5] = 1
-        if g == 'B2':
+        if g == "B2":
             g_d[6] = 1
         return g_d
 
@@ -415,57 +414,57 @@ class CategoryGetter:
 
     def getHobokusakirank(self, h):
         h_d = np.zeros([6])
-        if h == '0':
+        if h == "0":
             h_d[0] = 1
-        if h == 'A':
+        if h == "A":
             h_d[1] = 1
-        if h == 'B':
+        if h == "B":
             h_d[2] = 1
-        if h == 'C':
+        if h == "C":
             h_d[3] = 1
-        if h == 'D':
+        if h == "D":
             h_d[4] = 1
-        if h == 'E':
+        if h == "E":
             h_d[5] = 1
         return h_d
 
     def getTraintype(self, t):
         t_d = np.zeros([12])
-        if t == '01':
+        if t == "01":
             t_d[0] = 1
-        if t == '02':
+        if t == "02":
             t_d[1] = 1
-        if t == '03':
+        if t == "03":
             t_d[2] = 1
-        if t == '04':
+        if t == "04":
             t_d[3] = 1
-        if t == '05':
+        if t == "05":
             t_d[4] = 1
-        if t == '06':
+        if t == "06":
             t_d[5] = 1
-        if t == '07':
+        if t == "07":
             t_d[6] = 1
-        if t == '08':
+        if t == "08":
             t_d[7] = 1
-        if t == '09':
+        if t == "09":
             t_d[8] = 1
-        if t == '10':
+        if t == "10":
             t_d[9] = 1
-        if t == '11':
+        if t == "11":
             t_d[10] = 1
         return t_d
 
     def getTrainvolhyoka(self, t):
         t_d = np.zeros([5])
-        if t == 'A':
+        if t == "A":
             t_d[0] = 1
-        if t == 'B':
+        if t == "B":
             t_d[1] = 1
-        if t == 'C':
+        if t == "C":
             t_d[2] = 1
-        if t == 'D':
+        if t == "D":
             t_d[3] = 1
-        if t == ' ':
+        if t == " ":
             t_d[4] = 1
         return t_d
 

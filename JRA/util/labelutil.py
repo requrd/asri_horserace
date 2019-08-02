@@ -54,7 +54,7 @@ class Labelref:
                         one = i + 1
                         two = j + 1
                         break
-        return(one, two)
+        return (one, two)
 
     def getUmarenCatnumber(self, n, m):
         return int(self.umaren_ref[n - 1, m - 1])
@@ -72,7 +72,7 @@ class Labelref:
                         one = i + 1
                         two = j + 1
                         break
-        return(one, two)
+        return (one, two)
 
     def getUmatanCatnumber(self, n, m):
         return int(self.umatan_ref[n - 1, m - 1])
@@ -94,7 +94,7 @@ class Labelref:
                             two = j + 1
                             three = k + 1
                             break
-        return(one, two, three)
+        return (one, two, three)
 
     def getSanrenpukuCatnumber(self, n, m, l):
         return int(self.sanrenpuku_ref[n - 1, m - 1, l - 1])
@@ -117,7 +117,7 @@ class Labelref:
                                 two = j + 1
                                 three = k + 1
                                 break
-        return(one, two, three)
+        return (one, two, three)
 
     def getSanrentanCatnumber(self, n, m, l):
         return int(self.sanrentan_ref[n - 1, m - 1, l - 1])
