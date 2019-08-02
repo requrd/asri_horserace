@@ -5,9 +5,10 @@ from bs4 import BeautifulSoup
 
 YEAR = int(datetime.now().strftime("%Y"))
 
+
 def annual_schedule(year=YEAR):
     days = []
-    for month in range(1,13):
+    for month in range(1, 13):
         for day in open_days(month, year):
             days.append(int("{:04d}{:02d}{:02d}".format(year, month, day)))
     return days
