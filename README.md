@@ -1,4 +1,4 @@
-# Analys tools for horseracing
+# Analysis tools for horseracing
 jrdb絡みのものは移管済み。
 メインで使うのは、トレーニングデータ向けのutilが中心。
 

@@ -8,13 +8,13 @@ YEAR = int(datetime.now().strftime("%Y"))
 def annual_schedule(year=YEAR):
     days = []
     for month in range(1,13):
-        for day in open_days(month):
-            days.append("{:04d}{:02d}{:02d}".format(year, month, day))
+        for day in open_days(month, year):
+            days.append(int("{:04d}{:02d}{:02d}".format(year, month, day)))
     return days
 
 
-def open_days(month, year=YEAR):
-    base_url = "https://keiba.yahoo.co.jp/schedule/list/{}".format(
+def open_days(month, year):
+    base_url = "https://keiba.yahoo.co.jp/schedule/list/{}/".format(
         year)
     payload = {"month": str(month)}
     response = requests.get(base_url, payload)
