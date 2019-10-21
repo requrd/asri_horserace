@@ -24,4 +24,4 @@ COPY ./JRA/util /opt/lib
 WORKDIR /code
 #Launch JUPYTER COMMAND
 EXPOSE 8888
-CMD ["/opt/conda/envs/jupyter_env/bin/jupyter-lab","--no-browser", "--port=8888", "--ip=0.0.0.0", "--allow-root"]
+CMD ["/opt/conda/envs/jupyter_env/bin/jupyter-lab","--no-browser", "--port=8888", "--ip=0.0.0.0", "--allow-root", "--NotebookApp.token=''"]
