@@ -7,18 +7,17 @@ YEAR = int(datetime.now().strftime("%Y"))
 
 
 def annual_schedule(year=YEAR):
-    days = []
-    for month in range(1, 13):
-        for day in open_days(month, year):
-            days.append(int("{:04d}{:02d}{:02d}".format(year, month, day)))
-    return days
+    return [
+        int("{:04d}{:02d}{:02d}".format(year, month, day))
+        for day in open_days(month, year)
+        for month in range(1, 13)
+    ]
 
 
 def open_days(month, year):
     base_url = "https://keiba.yahoo.co.jp/schedule/list/{}/".format(year)
     payload = {"month": str(month)}
-    response = requests.get(base_url, payload)
-    soup = BeautifulSoup(response.text, "lxml")
+    soup = BeautifulSoup(requests.get(base_url, payload).text, "lxml")
     return _parse_to_days(soup)
 
 
