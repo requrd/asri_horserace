@@ -6,23 +6,9 @@ class CategoryGetter:
     def getKaisaikbn(self, value):
         return self.categories(3, value)
 
-    def getDayofweek(self, dayofweek):
-        dayofweek_d = np.zeros([7])
-        if dayofweek == "日":
-            dayofweek_d[0] = 1
-        elif dayofweek == "月":
-            dayofweek_d[1] = 1
-        elif dayofweek == "火":
-            dayofweek_d[2] = 1
-        elif dayofweek == "水":
-            dayofweek_d[3] = 1
-        elif dayofweek == "木":
-            dayofweek_d[4] = 1
-        elif dayofweek == "金":
-            dayofweek_d[5] = 1
-        elif dayofweek == "土":
-            dayofweek_d[6] = 1
-        return dayofweek_d
+    def getDayofweek(self, value):
+        types = {"日": 1, "月": 2, "火": 3, "水": 4, "木": 5, "金": 6, "土": 7}
+        return self.categories(7, types[value])
 
     def getTenko(self, value):
         return self.categories(6, value)
@@ -85,31 +71,21 @@ class CategoryGetter:
     def getShubetsu(self, s):
         return self.categories(5, s)
 
-    def getJoken(self, j):
-        j_d = np.zeros([11])
-        if j == "04":
-            j_d[0] = 1
-        elif j == "05":
-            j_d[1] = 1
-        elif j == "08":
-            j_d[2] = 1
-        elif j == "09":
-            j_d[3] = 1
-        elif j == "10":
-            j_d[4] = 1
-        elif j == "15":
-            j_d[5] = 1
-        elif j == "16":
-            j_d[6] = 1
-        elif j == "A1":
-            j_d[7] = 1
-        elif j == "A2":
-            j_d[8] = 1
-        elif j == "A3":
-            j_d[9] = 1
-        elif j == "OP":
-            j_d[10] = 1
-        return j_d
+    def getJoken(self, value):
+        types = {
+            "04": 1,
+            "05": 2,
+            "08": 3,
+            "09": 4,
+            "10": 5,
+            "15": 6,
+            "16": 7,
+            "A1": 8,
+            "A2": 9,
+            "A3": 10,
+            "OP": 11,
+        }
+        return self.categories(11, types[value])
 
     def getJuryo(self, j):
         return self.categories(4, j)
@@ -120,7 +96,7 @@ class CategoryGetter:
     def getCourse(self, c):
         return self.categories(5, c)
 
-    # WORKTABLEデータ
+    # RaceHorse
     # 汎用メソッド利用
     def getNum(self, num):
         return self.categories(18, num)
@@ -150,7 +126,7 @@ class CategoryGetter:
         return self.categories(3, sex)
 
     def getBanushikaicode(self, banushikai_code):
-        return self.getElevencat(banushikai_code)
+        return self.categories(11, banushikai_code)
 
     def getYuso(self, yuso):
         return self.categories(5, yuso)
@@ -221,105 +197,36 @@ class CategoryGetter:
     def getUmakigocode(self, uk):
         return self.categories(28, uk)
 
-    # WORKTABLEデータ
     # 独自メソッド利用
-    def getBacode(self, b):
-        b_d = np.zeros([11])
-        if b == 1:
-            b_d[0] = 1
-        elif b == 2:
-            b_d[1] = 1
-        elif b == 3:
-            b_d[2] = 1
-        elif b == 4:
-            b_d[3] = 1
-        elif b == 5:
-            b_d[4] = 1
-        elif b == 6:
-            b_d[5] = 1
-        elif b == 7:
-            b_d[6] = 1
-        elif b == 8:
-            b_d[7] = 1
-        elif b == 9:
-            b_d[8] = 1
-        elif b == 10:
-            b_d[9] = 1
+    def getBacode(self, value):
+        if (1 > value) or (value > 10):
+            value = 11
+        return self.categories(11, value)
+
+    def getDistanceadjust(self, value):
+        if 0 <= value <= 6:
+            value = value + 1
         else:
-            b_d[10] = 1
-        return b_d
+            value = 8
+        return self.categories(8, value)
 
-    def getDistanceadjust(self, d):
-        d_d = np.zeros([8])
-        if d == 0:
-            d_d[0] = 1
-        if d == 1:
-            d_d[1] = 1
-        if d == 2:
-            d_d[2] = 1
-        if d == 3:
-            d_d[3] = 1
-        if d == 4:
-            d_d[4] = 1
-        if d == 5:
-            d_d[5] = 1
-        if d == 6:
-            d_d[6] = 1
-        if d == 9:
-            d_d[7] = 1
-        return d_d
-
-    def getJockeyshirushi(self, j):
-        j_d = np.zeros([8])
-        if j == 0:
-            j_d[0] = 1
-        if j == 1:
-            j_d[1] = 1
-        if j == 2:
-            j_d[2] = 1
-        if j == 3:
-            j_d[3] = 1
-        if j == 4:
-            j_d[4] = 1
-        if j == 5:
-            j_d[5] = 1
-        if j == 6:
-            j_d[6] = 1
-        if j == 9:
-            j_d[7] = 1
-        return j_d
+    def getJockeyshirushi(self, value):
+        if 0 <= value <= 6:
+            value = value + 1
+        else:
+            value = 8
+        return self.categories(8, value)
 
     def getDartadjustcode(self, d):
-        d_d = np.zeros([5])
-        if d == 0:
-            d_d[0] = 1
-        if d == 1:
-            d_d[1] = 1
-        if d == 2:
-            d_d[2] = 1
-        if d == 3:
-            d_d[3] = 1
-        if d == 5:
-            d_d[4] = 1
-        return d_d
+        if 0 <= value <= 3:
+            value = value + 1
+        else:
+            value = 5
+        return self.categories(5, value)
 
-    def getGekisotype(self, g):
-        g_d = np.zeros([7])
-        if g == "00":
-            g_d[0] = 1
-        if g == "A1":
-            g_d[1] = 1
-        if g == "A2":
-            g_d[2] = 1
-        if g == "A3":
-            g_d[3] = 1
-        if g == "A4":
-            g_d[4] = 1
-        if g == "B1":
-            g_d[5] = 1
-        if g == "B2":
-            g_d[6] = 1
-        return g_d
+    def getGekisotype(self, value):
+        types = {"00": 1, "A1": 2, "A2": 3, "A3": 4, "A4": 5, "B1": 6, "B2": 7}
+        return self.categories(7, types[value])
 
     def getRestreasoncode(self, r):
         r_d = np.zeros([15])
@@ -355,31 +262,16 @@ class CategoryGetter:
             r_d[14] = 1
         return r_d
 
-    def getNorikaeflg(self, n):
-        n_d = np.zeros([3])
-        if n == 0:
-            n_d[0] = 1
-        if n == 1:
-            n_d[1] = 1
-        if n == 9:
-            n_d[2] = 1
-        return n_d
+    def getNorikaeflg(self, value):
+        if 0 <= value <= 1:
+            value = value + 1
+        else:
+            value = 3
+        return self.categories(3, value)
 
-    def getHobokusakirank(self, h):
-        h_d = np.zeros([6])
-        if h == "0":
-            h_d[0] = 1
-        if h == "A":
-            h_d[1] = 1
-        if h == "B":
-            h_d[2] = 1
-        if h == "C":
-            h_d[3] = 1
-        if h == "D":
-            h_d[4] = 1
-        if h == "E":
-            h_d[5] = 1
-        return h_d
+    def getHobokusakirank(self, value):
+        types = {"0": 1, "A": 2, "B": 3, "C": 4, "D": 5, "E": 6}
+        return self.categories(6, types[value])
 
     def getTraintype(self, t):
         t_d = np.zeros([12])
@@ -407,19 +299,9 @@ class CategoryGetter:
             t_d[10] = 1
         return t_d
 
-    def getTrainvolhyoka(self, t):
-        t_d = np.zeros([5])
-        if t == "A":
-            t_d[0] = 1
-        if t == "B":
-            t_d[1] = 1
-        if t == "C":
-            t_d[2] = 1
-        if t == "D":
-            t_d[3] = 1
-        if t == " ":
-            t_d[4] = 1
-        return t_d
+    def getTrainvolhyoka(self, value):
+        types = {"A": 1, "B": 2, "C": 3, "D": 4, " ": 5}
+        return self.categories(5, types[value])
 
     # 汎用メソッド
 
