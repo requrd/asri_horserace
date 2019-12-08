@@ -273,31 +273,8 @@ class CategoryGetter:
         types = {"0": 1, "A": 2, "B": 3, "C": 4, "D": 5, "E": 6}
         return self.categories(6, types[value])
 
-    def getTraintype(self, t):
-        t_d = np.zeros([12])
-        if t == "01":
-            t_d[0] = 1
-        if t == "02":
-            t_d[1] = 1
-        if t == "03":
-            t_d[2] = 1
-        if t == "04":
-            t_d[3] = 1
-        if t == "05":
-            t_d[4] = 1
-        if t == "06":
-            t_d[5] = 1
-        if t == "07":
-            t_d[6] = 1
-        if t == "08":
-            t_d[7] = 1
-        if t == "09":
-            t_d[8] = 1
-        if t == "10":
-            t_d[9] = 1
-        if t == "11":
-            t_d[10] = 1
-        return t_d
+    def getTraintype(self, value):
+        return self.categories(11, int(value))
 
     def getTrainvolhyoka(self, value):
         types = {"A": 1, "B": 2, "C": 3, "D": 4, " ": 5}
