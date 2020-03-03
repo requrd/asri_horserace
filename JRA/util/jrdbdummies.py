@@ -29,35 +29,16 @@ class CategoryGetter:
         return self.categories(2, st)
 
     # 番組データ
-    def getDistance(self, dis):
-        dis_d = np.zeros([13])
-        if dis == 1000:
-            dis_d[0] = 1
-        elif dis > 1000 and dis <= 1200:
-            dis_d[1] = 1
-        elif dis > 1200 and dis <= 1400:
-            dis_d[2] = 1
-        elif dis > 1400 and dis <= 1600:
-            dis_d[3] = 1
-        elif dis > 1600 and dis <= 1800:
-            dis_d[4] = 1
-        elif dis > 1800 and dis <= 2000:
-            dis_d[5] = 1
-        elif dis > 2000 and dis <= 2200:
-            dis_d[6] = 1
-        elif dis > 2200 and dis <= 2400:
-            dis_d[7] = 1
-        elif dis > 2400 and dis <= 2500:
-            dis_d[8] = 1
-        elif dis > 2500 and dis <= 3000:
-            dis_d[9] = 1
-        elif dis > 3000 and dis <= 3200:
-            dis_d[10] = 1
-        elif dis > 3000 and dis <= 3200:
-            dis_d[11] = 1
-        else:
-            dis_d[12] = 1
-        return dis_d
+    def getDistance(self, value):
+        if 2400 < value <= 2500:
+            return self.categories(12, 9)
+        if 2500 < value <= 3000:
+            return self.categories(12, 10)
+        if 3000 < value <= 3200:
+            return self.categories(12, 11)
+        if 3200 < value:
+            return self.categories(12, 12)
+        return self.categories(12, (value / 200) - 4)
 
     def getTdscode(self, tds):
         return self.categories(3, tds)
