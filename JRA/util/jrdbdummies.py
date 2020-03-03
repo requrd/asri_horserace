@@ -72,20 +72,8 @@ class CategoryGetter:
         return self.categories(5, s)
 
     def getJoken(self, value):
-        types = {
-            "04": 1,
-            "05": 2,
-            "08": 3,
-            "09": 4,
-            "10": 5,
-            "15": 6,
-            "16": 7,
-            "A1": 8,
-            "A2": 9,
-            "A3": 10,
-            "OP": 11,
-        }
-        return self.categories(11, types[value])
+        types = ["04","05","08","09","10","15","16","A1","A2","A3","OP"]
+        return self.categories(11, types.index(value))
 
     def getJuryo(self, j):
         return self.categories(4, j)
