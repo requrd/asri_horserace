@@ -6,7 +6,7 @@ jrdb絡みのものは移管済み。
 
 # Dockerfile
 `docker build ./ -t nvidia-conda`  
-``docker run --runtime=nvidia --rm -v `pwd`:/code -p 8888:8888 -it nvidia-conda``  
+``docker run --gpus=all --rm -v `pwd`:/code -p 8888:8888 -it nvidia-conda``  
 
 # DBの更新
 APIのコンテナを利用して、jrdb.dbの存在するディレクトリで更新する。  
