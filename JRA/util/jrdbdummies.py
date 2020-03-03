@@ -216,39 +216,13 @@ class CategoryGetter:
         types = {"00": 1, "A1": 2, "A2": 3, "A3": 4, "A4": 5, "B1": 6, "B2": 7}
         return self.categories(7, types[value])
 
-    def getRestreasoncode(self, r):
-        r_d = np.zeros([15])
-        if r == 0:
-            r_d[0] = 1
-        if r == 1:
-            r_d[1] = 1
-        if r == 2:
-            r_d[2] = 1
-        if r == 3:
-            r_d[3] = 1
-        if r == 4:
-            r_d[4] = 1
-        if r == 5:
-            r_d[5] = 1
-        if r == 6:
-            r_d[6] = 1
-        if r == 7:
-            r_d[7] = 1
-        if r == 11:
-            r_d[8] = 1
-        if r == 12:
-            r_d[9] = 1
-        if r == 13:
-            r_d[10] = 1
-        if r == 14:
-            r_d[11] = 1
-        if r == 15:
-            r_d[12] = 1
-        if r == 16:
-            r_d[13] = 1
-        if r == 21:
-            r_d[14] = 1
-        return r_d
+    def getRestreasoncode(self, value):
+        if 0 <= value <= 7:
+            return self.categories(11, value + 1)
+        if 11 <= value <= 16:
+            return self.categories(11, value - 2)
+        if value == 21:
+            return self.categories(11, 15)
 
     def getNorikaeflg(self, value):
         if 0 <= value <= 1:
