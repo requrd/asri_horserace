@@ -138,3 +138,11 @@ def addHorseScores(scores, horse):
             horse.trainoikiri.end_f_score,
             horse.trainoikiri.oikiri_score
         ]
+
+def standardize(matrix):
+    sds = matrix
+    for i in range(len(matrix)):
+        ss = StandardScaler()
+        ss.fit(matrix[i])
+        sds[i] = ss.transform(matrix[i])
+    return sds
