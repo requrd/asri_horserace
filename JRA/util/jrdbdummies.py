@@ -38,7 +38,7 @@ class CategoryGetter:
             return self.categories(12, 11)
         if 3200 < value:
             return self.categories(12, 12)
-        return self.categories(12, (value / 200) - 4)
+        return self.categories(12, (value // 200) - 4)
 
     def getTdscode(self, tds):
         return self.categories(3, tds)
