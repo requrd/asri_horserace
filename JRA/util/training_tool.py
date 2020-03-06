@@ -1,6 +1,7 @@
 import numpy as np
 
 def createScoreDataMatrix(kaisais):
+    num_max_horse = 18
     num_race = numberOfRaces(kaisais)
     num_score = numberOfScoreFeatures(kaisais[0])
     baseMatrix = np.zeros([num_race,num_max_horse,num_score])
