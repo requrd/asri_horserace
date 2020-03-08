@@ -21,12 +21,12 @@ def _getCategories(kaisais):
 
 def _getRaceCategories(kaisai, race):
     for horse in race.racehorses:
-        hdummies = _getCategory(kaisai, race, horse)
+        horizontal_dummies = _getCategory(kaisai, race, horse)
         if horse.num - 1  == 0:
-            vdummies = hdummies
+            vertical_dummies = horizontal_dummies
         else :
-            vdummies = np.vstack((vdummies,hdummies))
-    return vdummies
+            vertical_dummies = np.vstack((vertical_dummies,horizontal_dummies))
+    return vertical_dummies
 
 def _getCategory(kaisai, race, horse):
     cg = CategoryGetter()
