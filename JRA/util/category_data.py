@@ -20,8 +20,8 @@ def _getCategories(kaisais):
     return categories
 
 def _getRaceCategories(kaisai, race):
-    dummies = None
-    for horse in race.racehorses:
+    horses = sorted(race.racehorses, key=lambda h: h.racehorsekey)
+    for horse in horses:
         if horse.num == 1:
             dummies = _getCategory(kaisai, race, horse)
         else :
@@ -40,4 +40,3 @@ def _getCategory(kaisai, race, horse):
         cg.getBanushikaicode(horse.banushikai_code),
         cg.getTraintype(horse.trainanalysis.train_type)
     ))
-
