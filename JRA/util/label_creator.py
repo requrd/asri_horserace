@@ -2,8 +2,8 @@
 import training_tool
 
 class LabelCreator:
-    def __init__(self, kaisai):
-        num_race = training_tool.numberOfRaces(kaisai)
+    def __init__(self, kaisais):
+        num_race = training_tool.numberOfRaces(kaisais)
         num_max_horse = 18
         self.t_icchaku = np.zeros([num_race,num_max_horse])
         self.t_nichaku = np.zeros([num_race,num_max_horse])
