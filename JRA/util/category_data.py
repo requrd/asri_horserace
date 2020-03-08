@@ -3,9 +3,9 @@ from jrdbdummies import CategoryGetter
 
 def getCategoryData(kaisais):
     categories = getCategories(kaisais)
-    return convertToMatrix(categories)
+    return _convertToMatrix(categories)
     
-def convertToMatrix(categories):
+def _convertToMatrix(categories):
     matrix = np.zeros([len(categories), 18, len(categories[0][0])])
     for raceNum in range(len(categories)):
         for horseNum in range(len(categories[raceNum])):
