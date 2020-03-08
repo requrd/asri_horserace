@@ -2,7 +2,7 @@ import numpy as np
 from jrdbdummies import CategoryGetter
 
 def getCategoryData(kaisais):
-    categories = getCategories(kaisais)
+    categories = _getCategories(kaisais)
     return _convertToMatrix(categories)
     
 def _convertToMatrix(categories):
@@ -12,23 +12,23 @@ def _convertToMatrix(categories):
             matrix[raceNum][horseNum] = categories[raceNum][horseNum]
     return matrix
 
-def getCategories(kaisais):
+def _getCategories(kaisais):
     categories = []
     for kaisai in kaisais:
         for race in kaisai.races:
-            categories.append(getRaceCategories(kaisai, race))
+            categories.append(_getRaceCategories(kaisai, race))
     return categories
 
-def getRaceCategories(kaisai, race):
+def _getRaceCategories(kaisai, race):
     for horse in race.racehorses:
-        w_hdummies = getCategory(kaisai, race, horse)
+        w_hdummies = _getCategory(kaisai, race, horse)
         if horse.num - 1  == 0:
             w_vdummies = w_hdummies
         else :
             w_vdummies = np.vstack((w_vdummies,w_hdummies))
     return w_vdummies
 
-def getCategory(kaisai, race, horse):
+def _getCategory(kaisai, race, horse):
     cg = CategoryGetter()
     return np.hstack((
         cg.getTennatsu(kaisai.tennatsu),
