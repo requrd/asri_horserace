@@ -6,23 +6,23 @@ def createScoreDataMatrix(kaisais):
     num_race = numberOfRaces(kaisais)
     num_score = numberOfScoreFeatures(kaisais[0])
     baseMatrix = np.zeros([num_race,num_max_horse,num_score])
-    return setScores(baseMatrix, kaisais)
+    return _setScores(baseMatrix, kaisais)
 
-def setScores(score_data, kaisais):
+def _setScores(score_data, kaisais):
     w = 0
     for kaisai in kaisais:
         for race in kaisai.races:
-            scores = addKaisaiScores([], kaisai)
-            score_data = setRaceScores(score_data, race, w, scores)
+            scores = _addKaisaiScores([], kaisai)
+            score_data = _setRaceScores(score_data, race, w, scores)
             w = w +1
     return score_data
 
-def setRaceScores(matrix, race, raceNum, kaisaiScores):
+def _setRaceScores(matrix, race, raceNum, kaisaiScores):
     raceScores = kaisaiScores
     raceScores.append(race.num_of_all_horse)
     for horse in race.racehorses:
-        scores = addHorseScores(raceScores, horse)
-        matrix = setScoreData(matrix, raceNum, horse.num - 1, scores)
+        scores = _addHorseScores(raceScores, horse)
+        matrix = _setScoreData(matrix, raceNum, horse.num - 1, scores)
     return matrix
 
 def standardize(matrix):
@@ -40,12 +40,12 @@ def numberOfRaces(kaisais):
     return num_race
 
 def numberOfScoreFeatures(kaisai):
-    dummyScores = addKaisaiScores([], kaisai)
+    dummyScores = _addKaisaiScores([], kaisai)
     dummyScores.append(kaisai.races[0].num_of_all_horse)
-    dummyScores = addHorseScores(dummyScores, kaisai.races[0].racehorses[0])
+    dummyScores = _addHorseScores(dummyScores, kaisai.races[0].racehorses[0])
     return len(dummyScores)
 
-def setScoreData(matrix, raceNum, horseNum, scores):
+def _setScoreData(matrix, raceNum, horseNum, scores):
     features = len(matrix[raceNum, horseNum])
     if features != len(scores):
         return error
@@ -53,7 +53,7 @@ def setScoreData(matrix, raceNum, horseNum, scores):
         matrix[raceNum, horseNum, s] = scores[s]
     return matrix
 
-def addKaisaiScores(scores, kaisai):
+def _addKaisaiScores(scores, kaisai):
     return scores + [
             kaisai.turf_baba_in,
             kaisai.turf_baba_center,
@@ -74,7 +74,7 @@ def addKaisaiScores(scores, kaisai):
         ]
 
 
-def addHorseScores(scores, horse):
+def _addHorseScores(scores, horse):
     return  scores + [
             horse.idm,
             horse.jockey_score,
@@ -140,11 +140,3 @@ def addHorseScores(scores, horse):
             horse.trainoikiri.end_f_score,
             horse.trainoikiri.oikiri_score
         ]
-
-def standardize(matrix):
-    sds = matrix
-    for i in range(len(matrix)):
-        ss = StandardScaler()
-        ss.fit(matrix[i])
-        sds[i] = ss.transform(matrix[i])
-    return sds
