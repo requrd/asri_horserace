@@ -11,18 +11,18 @@ def getCategoryData(kaisais):
                 w_hdummies = np.zeros([0])
                 
                 #開催データ
-                w_tennatsu=cg.getTennatsu(kaisai.tennatsu)
+                w_tennatsu = cg.getTennatsu(kaisai.tennatsu)
                 
                 #レースデータ
-                w_distance=cg.getDistance(race.distance)
+                w_distance = cg.getDistance(race.distance)
                 
                 #競走馬データ
-                w_bacode=cg.getBacode(horse.bacode)
-                w_num=cg.getNum(horse.num)            
-                w_waku=cg.getWaku(horse.waku)            
-                w_torikeshi=cg.getTorikeshi(horse.torikeshi)
-                w_banushikai_code=cg.getBanushikaicode(horse.banushikai_code)
-                w_train_type=cg.getTraintype(horse.trainanalysis.train_type)
+                w_bacode = cg.getBacode(horse.bacode)
+                w_num = cg.getNum(horse.num)            
+                w_waku = cg.getWaku(horse.waku)            
+                w_torikeshi = cg.getTorikeshi(horse.torikeshi)
+                w_banushikai_code = cg.getBanushikaicode(horse.banushikai_code)
+                w_train_type = cg.getTraintype(horse.trainanalysis.train_type)
                 
                 w_hdummies = np.hstack((
                         w_tennatsu,
