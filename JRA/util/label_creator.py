@@ -30,7 +30,6 @@ class LabelCreator:
             self.t_icchaku,
             self.t_nichaku,
             self.t_sanchaku,
-            self.t_sanchaku,
             self.t_yonchaku,
             self.t_gochaku
         ]
