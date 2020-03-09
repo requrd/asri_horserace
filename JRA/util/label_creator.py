@@ -26,3 +26,11 @@ class LabelCreator:
                     elif oa == 5:
                         self.t_gochaku[w_num,horse.num - 1] = 1        
                 w_num += 1
+        self.labels = [
+            self.t_icchaku,
+            self.t_nichaku,
+            self.t_sanchaku,
+            self.t_sanchaku,
+            self.t_yonchaku,
+            self.t_gochaku
+        ]
