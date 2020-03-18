@@ -11,7 +11,7 @@ def annual_schedule(year=YEAR):
 
 
 def open_days(month, year):
-    base_url = "https://keiba.yahoo.co.jp/schedule/list/{}/".format(year)
+    base_url = f"https://keiba.yahoo.co.jp/schedule/list/{year}/"
     payload = {"month": str(month)}
     soup = BeautifulSoup(requests.get(base_url, payload).text, "lxml")
     return [int(f"{year:04d}{month:02d}{day:02d}") for day in _parse_to_days(soup)]
