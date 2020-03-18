@@ -1,4 +1,4 @@
-FROM nvidia/cuda:10.0-cudnn7-runtime-ubuntu18.04
+FROM nvidia/cuda:10.1-cudnn7-runtime-ubuntu18.04
 
 RUN apt update && apt install -y wget vim bzip2 git && \
     wget https://repo.anaconda.com/archive/Anaconda3-2019.03-Linux-x86_64.sh -O Anaconda.sh && \
@@ -16,11 +16,11 @@ RUN conda create -y -n jupyter_env python=3.6 anaconda && \
 #Install JRDB Environment
 RUN mkdir code && \
     mkdir /opt/lib && \
-    apt-get install graphviz graphviz-dev pkg-config -y && \
+    apt install graphviz graphviz-dev pkg-config -y && \
     git clone https://github.com/astroripple/horseview.git /opt/lib/horseview && \
+    git clone https://github.com/astroripple/jra-tools.git /opt/lib/util && \
     /opt/conda/envs/jupyter_env/bin/pip install flask_sqlalchemy flask_restless flask_migrate eralchemy
 
-COPY ./JRA/util /opt/lib
 WORKDIR /code
 #Launch JUPYTER COMMAND
 EXPOSE 8888
