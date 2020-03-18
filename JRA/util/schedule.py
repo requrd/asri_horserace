@@ -7,12 +7,7 @@ YEAR = int(datetime.now().strftime("%Y"))
 
 
 def annual_schedule(year=YEAR):
-    alldays = []
-    for month in range(1, 13):
-        days = open_days(month, year)
-        for day in days:
-            alldays.append(day)
-    return alldays
+    return [day for month in range(1, 13) for day in open_days(month, year)]
 
 
 def open_days(month, year):
