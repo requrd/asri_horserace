@@ -16,11 +16,9 @@ def _convertToMatrix(categories):
 
 
 def _getCategories(kaisais):
-    categories = []
-    for kaisai in kaisais:
-        for race in kaisai.races:
-            categories.append(_getRaceCategories(kaisai, race))
-    return categories
+    return [
+        _getRaceCategories(kaisai, race) for kaisai in kaisais for race in kaisai.races
+    ]
 
 
 def _getRaceCategories(kaisai, race):
