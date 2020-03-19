@@ -1,4 +1,4 @@
-FROM nvidia/cuda:10.1-cudnn7-runtime-ubuntu18.04
+FROM nvidia/cuda:10.0-cudnn7-runtime-ubuntu18.04
 
 RUN apt update && apt install -y wget vim bzip2 git && \
     wget https://repo.anaconda.com/archive/Anaconda3-2019.03-Linux-x86_64.sh -O Anaconda.sh && \
