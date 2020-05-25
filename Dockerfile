@@ -1,27 +1,21 @@
-FROM nvidia/cuda:10.0-cudnn7-runtime-ubuntu18.04
+FROM tensorflow/tensorflow:latest-gpu-jupyter
 
-RUN apt update && apt install -y wget vim bzip2 git && \
-    wget https://repo.anaconda.com/archive/Anaconda3-2019.03-Linux-x86_64.sh -O Anaconda.sh && \
-    /bin/bash Anaconda.sh -b -p /opt/conda && \
-	rm Anaconda.sh
-
-ENV PATH=/opt/conda/bin:$PATH \
-    PYTHONPATH=/opt/lib \
+ENV PYTHONPATH=/opt/lib \
     DB=/code
 
-#Install ANACONDA Environment
-RUN conda create -y -n jupyter_env python=3.6 anaconda && \
-	/opt/conda/envs/jupyter_env/bin/pip install tensorflow-gpu keras jupyter-tensorboard jupyterlab
+#Install Jupyter Environment
+RUN pip install jupyterlab seaborn && \
+    apt install -y fonts-ipaexfont && \
+    echo -e "font.family       : IPAexGothic" >> /usr/local/lib/python3.6/dist-packages/matplotlib/mpl-data/matplotlibrc
 
 #Install JRDB Environment
 RUN mkdir code && \
     mkdir /opt/lib && \
-    apt install graphviz graphviz-dev pkg-config -y && \
     git clone https://github.com/astroripple/horseview.git /opt/lib/horseview && \
     git clone https://github.com/astroripple/jra-tools.git /opt/lib/util && \
-    /opt/conda/envs/jupyter_env/bin/pip install flask_sqlalchemy flask_restless flask_migrate eralchemy
+    pip install flask_sqlalchemy flask_restless flask_migrate
 
 WORKDIR /code
 #Launch JUPYTER COMMAND
 EXPOSE 8888
-CMD ["/opt/conda/envs/jupyter_env/bin/jupyter-lab","--no-browser", "--port=8888", "--ip=0.0.0.0", "--allow-root", "--NotebookApp.token=''"]
+CMD ["jupyter-lab","--no-browser", "--port=8888", "--ip=0.0.0.0", "--allow-root", "--NotebookApp.token=''"]
