@@ -1,11 +1,11 @@
-FROM tensorflow/tensorflow:latest-gpu-jupyter
+FROM tensorflow/tensorflow:latest-gpu-py3-jupyter
 
 ENV PYTHONPATH=/opt/lib \
     DB=/code
 
 #Install Jupyter Environment
-RUN pip install jupyterlab seaborn && \
-    apt install -y fonts-ipaexfont && \
+RUN pip install jupyterlab seaborn graphviz sklearn && \
+    apt install -y fonts-ipaexfont graphviz && \
     echo -e "font.family       : IPAexGothic" >> /usr/local/lib/python3.6/dist-packages/matplotlib/mpl-data/matplotlibrc
 
 #Install JRDB Environment
