@@ -4,8 +4,10 @@ ENV PYTHONPATH=/opt/lib \
     DB=/code
 
 #Install Jupyter Environment
-RUN pip install jupyterlab seaborn graphviz sklearn && \
-    apt install -y fonts-ipaexfont graphviz && \
+RUN pip install --upgrade pip setuptools && \
+    pip install jupyterlab seaborn graphviz sklearn && \
+    apt update && \
+    apt install -y git fonts-ipaexfont graphviz && \
     echo -e "font.family       : IPAexGothic" >> /usr/local/lib/python3.6/dist-packages/matplotlib/mpl-data/matplotlibrc
 
 #Install JRDB Environment
@@ -13,6 +15,7 @@ RUN mkdir code && \
     mkdir /opt/lib && \
     git clone https://github.com/astroripple/horseview.git /opt/lib/horseview && \
     git clone https://github.com/astroripple/jra-tools.git /opt/lib/util && \
+    pip uninstall -y enum34 && \
     pip install flask_sqlalchemy flask_restless flask_migrate
 
 WORKDIR /code
