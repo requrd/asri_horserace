@@ -4,8 +4,8 @@ ENV PYTHONPATH=/opt/lib \
     DB=/code
 
 #Install Jupyter Environment
-RUN pip install --upgrade pip setuptools && \
-    pip install jupyterlab seaborn graphviz sklearn && \
+RUN pip install --upgrade pip && \
+    pip install jupyterlab seaborn graphviz pydotplus sklearn && \
     apt update && \
     apt install -y git fonts-ipaexfont graphviz && \
     echo -e "font.family       : IPAexGothic" >> /usr/local/lib/python3.6/dist-packages/matplotlib/mpl-data/matplotlibrc
