@@ -1,7 +1,8 @@
 FROM tensorflow/tensorflow:latest-gpu-py3-jupyter
 
 ENV PYTHONPATH=/opt/lib \
-    DB=/code
+    DB=/code \
+    SETUPTOOLS_USE_DISTUTILS=stdlib
 
 #Install Jupyter Environment
 RUN pip install --upgrade pip && \
