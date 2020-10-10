@@ -14,4 +14,8 @@ APIのコンテナを利用して、jrdb.dbの存在するディレクトリで�
 前日更新  
 ``docker run --rm -v `pwd`:/code/volume -it sazanami-api /bin/bash /code/tools/database/zenjitsu_update.sh 20190211``  
 成績系データ更新  
-``docker run --rm -v `pwd`:/code/volume -it sazanami-api /bin/bash /code/tools/database/seiseki_update.sh 20190211``
+``docker run --rm -v `pwd`:/code/volume -it sazanami-api /bin/bash /code/tools/database/seiseki_update.sh 20190211``  
+
+一括更新  
+以下の日付を修正して実行する  
+`./database_update.sh`
