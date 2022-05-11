@@ -1,7 +1,7 @@
 FROM tensorflow/tensorflow:latest-gpu-py3-jupyter
 
 ENV PYTHONPATH=/opt/lib \
-    DB=/code \
+    DB=mariadb+pymysql://astroripple:S#tonoprime0407@192.168.0.197/astroripple \
     SETUPTOOLS_USE_DISTUTILS=stdlib
 
 #Install Jupyter Environment
@@ -18,7 +18,7 @@ RUN mkdir code && \
     git clone https://github.com/astroripple/horseview.git /opt/lib/horseview && \
     git clone https://github.com/astroripple/jra-tools.git /opt/lib/util && \
     pip uninstall -y enum34 && \
-    pip install flask_sqlalchemy flask_restless flask_migrate
+    pip install flask_sqlalchemy flask_migrate
 
 WORKDIR /code
 #Launch JUPYTER COMMAND
